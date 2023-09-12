@@ -27,7 +27,11 @@
     "@capacitor/keyboard": "5.0.6",
     "@capacitor/status-bar": "5.0.6",
     "@ionic/angular": "^7.0.0",
+    "chart.js": "^4.4.0",
+    "fullcalendar": "^6.1.8",
     "ionicons": "^7.0.0",
+    "primeflex": "^3.3.1",
+    "primeng": "^16.3.1",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.13.0"
