@@ -1,0 +1,100 @@
+
+<ion-header >
+  <ion-toolbar color="primary">
+      <ion-buttons slot="start">
+          <ion-button (click)="backToAdmin()" >
+              <ion-icon slot="icon-only" name="arrow-round-back"></ion-icon>
+          </ion-button>
+      </ion-buttons>
+      <ion-title >
+              Manage Daily Field Reports
+      </ion-title>
+      <ion-buttons slot="end">
+          <app-adminoptions [currentView]="'dfrs'" (itemSelected)='itemSelected($event)'></app-adminoptions>
+          <app-navmenu></app-navmenu>
+      </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="refreshPage($event, ionrefresher)" #ionrefresher>
+      <ion-refresher-content
+          pullingIcon="arrow-dropdown"
+          pullingText="Pull to refresh"
+          refreshingSpinner="circles"
+          refreshingText="Refreshing...">
+      </ion-refresher-content>
+  </ion-refresher>
+  <ion-grid>
+      <app-admintheadermenu></app-admintheadermenu>
+      <ion-row class="headerRow">
+          <ion-col>
+              Daily Field Reports
+          </ion-col>
+      </ion-row>
+      <ion-row>
+          <ion-col>
+              <p-table [value]="dfrs" [paginator]="true" [rows]="25" #dt [globalFilterFields]="['dfrDate', 'dfrStatus', 'assignedToFullName', 'projectName', 'projectNumber']">
+  
+                   <ng-template pTemplate="caption">
+                     <ion-card class="search-card">
+                        <ion-grid>
+                            <form [formGroup]="form"> 
+                                <ion-row>
+                                    <ion-col size-md="2" offset="1">
+                                    <ion-label>Start Date</ion-label>
+                                    <app-calendarforlist  style="width:100%" (newDateRef)="updateDate($event)" hideLabel="true" dateLabel="Start Date" dateRef="{{form.value.startDate}}" compRef="startDate"  index="-1"></app-calendarforlist>
+                                    </ion-col>
+                                    <ion-col  size-md="2" >
+                                        <ion-label>End Date</ion-label>
+                                        <app-calendarforlist  style="width:100%" (newDateRef)="updateDate($event)" hideLabel="true" dateLabel="End Date" dateRef="{{form.value.endDate}}" compRef="endDate"  index="-1"></app-calendarforlist>
+                                    </ion-col>
+                                    <ion-col  size-md="2" align-self-end >
+                                        <ion-button expand="full" (click)="getDfrs()">Search 
+                                            <ion-icon name="search"></ion-icon>
+                                        </ion-button>    
+                                    </ion-col>
+                                    <ion-col  size-md="3" offset="1" align-self-end >
+                                        <ion-label>Global Filter</ion-label>
+                                        <ion-input type="text"  size="20" placeholder=" " (input)="dt.filterGlobal($event.target.value, 'contains')" ></ion-input>
+                                    </ion-col>
+                                </ion-row>
+                            </form> 
+                        </ion-grid>
+                    </ion-card>   
+           
+                    
+                  </ng-template>
+                  <ng-template pTemplate="header">
+                      <tr>
+                          <th style="width: 50px;"></th>
+                          <th [pSortableColumn]="'dfrDate'">Date  <p-sortIcon></p-sortIcon></th>
+                          <th [pSortableColumn]="'dfrStatus'">Status  <p-sortIcon  ></p-sortIcon></th>
+                          <th [pSortableColumn]="'assignedToFullName'">Assigned To  <p-sortIcon  ></p-sortIcon></th>
+                          <th [pSortableColumn]="'username'">Project Name <p-sortIcon ></p-sortIcon></th>
+                          <th [pSortableColumn]="'emailAddress'">Project Number<p-sortIcon  ></p-sortIcon></th>
+                          <th style="width: 120px;">Actions</th>
+                      </tr>
+                  </ng-template>
+                  <ng-template pTemplate="body" let-dfr>
+                      <tr>
+                          <td><ion-checkbox (ionChange)="boxChecked(dfr._id)" value={{dfr._id}}></ion-checkbox></td>
+                          <td>{{dfr.dfrDate | date: 'longDate'}}</td>
+                          <td>{{dfr.dfrStatus}}</td>
+                          <td>{{dfr.assignedToFullName}}</td>
+                          <td>{{dfr.projectName}}</td>
+                          <td>{{dfr.projectNumber}}</td>
+                          <td>
+                              <button pButton type="button" (click)="viewDFR(dfr)" class="prime-btn" ><i class="pi pi-chevron-right prime-icon" ></i></button>
+                              <button pButton type="button" (click)="copyDFR(dfr)" class="prime-btn"><i class="pi pi-copy prime-icon"></i></button> 
+                              <button pButton *ngIf="dfr.dfrStatus === 'Open'" type="button" (click)="deleteDFR(dfr._id)" class="prime-btn"><i class="pi pi-minus-circle prime-icon"></i></button> 
+                          </td>
+                      </tr>
+                  </ng-template>
+              </p-table>
+          </ion-col>
+      </ion-row>
+     
+  </ion-grid> 
+
+</ion-content>

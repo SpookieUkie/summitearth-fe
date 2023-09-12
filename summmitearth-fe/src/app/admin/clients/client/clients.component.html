@@ -1,0 +1,148 @@
+
+<ion-header >
+    <ion-toolbar color="primary">
+        <ion-title [hidden]="viewWidth < 576">
+          Manage Client
+        </ion-title>
+        <ion-buttons slot="start">
+            <ion-button (click)="backToClientList()" >
+                <ion-icon slot="icon-only" name="arrow-round-back"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+        <ion-buttons slot="end">
+            <ion-button icon-only (click)="showHideFormErrors()">
+                <ion-icon *ngIf="form.valid"   name="checkmark-circle" class="valid"  float-right></ion-icon>
+                <ion-icon *ngIf="!form.valid"  name="warning" class="warning" float-right></ion-icon>
+            </ion-button>
+            <ion-button icon-only (click)="onSaveForm();">
+                    <ion-icon name="save" *ngIf="!form.dirty" class="valid"></ion-icon>
+                    <ion-icon name="save" *ngIf="form.dirty" class='dirty'></ion-icon>
+            </ion-button>
+            <app-adminoptions [currentView]="'adduser'"></app-adminoptions>
+            <app-navmenu></app-navmenu>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+  <ion-content>
+    <ion-refresher slot="fixed" >
+        <ion-refresher-content
+            pullingIcon="arrow-dropdown"
+            pullingText="Pull to refresh"
+            refreshingSpinner="circles"
+            refreshingText="Refreshing...">
+        </ion-refresher-content>
+    </ion-refresher>
+  
+    <ion-grid>
+        
+        <form [formGroup]="form"> 
+        <ion-row class="headerRow" style="margin:0px; padding: 0px;"> 
+            <ion-col size="12">
+               Manage Client
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col size-lg="4" size-xl="3" size="12" size-md="6" size-sm="12">
+            <ion-item>
+                <ion-label position="floating">Client Name</ion-label>
+                <ion-input formControlName='clientName'></ion-input>
+                <div class="error">
+                    <div *ngIf="!form.get('clientName').valid && form.get('clientName').touched">Client Name Required</div>
+                </div>
+            </ion-item>
+            </ion-col>
+            <ion-col  size-lg="4" size-xl="3" size="12" size-md="6" size-sm="12" >
+                <ion-item>
+                    <ion-label position="floating">Address</ion-label>
+                    <ion-input formControlName='address'></ion-input>
+                    <div class="error">
+                        <div *ngIf="!form.get('address').valid && form.get('address').touched">Address Required</div>
+                    </div>
+                </ion-item>
+            </ion-col>
+            <ion-col  size-lg="4" size-xl="3" size="12" size-md="6" size-sm="12">
+                <ion-item>
+                    <ion-label position="floating">City</ion-label>
+                    <ion-input formControlName='city'></ion-input>
+                    <div class="error">
+                        <div *ngIf="!form.get('city').valid && form.get('city').touched">City Required</div>
+                    </div>
+                </ion-item>
+            </ion-col>
+            <ion-col  size-lg="4" size-xl="3" size="12" size-md="6" size-sm="12" >
+                <ion-item>
+                    <ion-label position="floating">Province</ion-label>
+                    <ion-input formControlName='province'></ion-input>
+                    <div class="error">
+                        <div *ngIf="!form.get('province').valid && form.get('province').touched">Province Required</div>
+                    </div>
+                </ion-item>
+            </ion-col>
+            <ion-col  size-lg="4" size-xl="3" size="12" size-md="6" size-sm="12" >
+                <ion-item>
+                    <ion-label position="floating">Postal Code</ion-label>
+                    <ion-input formControlName='postalCode'></ion-input>
+                    <div class="error">
+                        <div *ngIf="!form.get('postalCode').valid && form.get('postalCode').touched">Postal Code Required</div>
+                    </div>
+                </ion-item>
+            </ion-col>
+            <ion-col size-lg="4" size-xl="3" size="12" size-md="6" size-sm="12" >
+                <ion-item>
+                    <ion-label position="floating">Email Address</ion-label>
+                    <ion-input ></ion-input>
+                    <div class="error">
+                      
+                    </div>
+                </ion-item>
+            </ion-col>
+            <ion-col  size-lg="4" size-xl="3" size="12" size-md="6" size-sm="12" >
+                <ion-item>
+                    <ion-label position="floating">Main Phone</ion-label>
+                    <ion-input formControlName="mainPhone"></ion-input>
+                    <div class="error">
+                      
+                    </div>
+                </ion-item>
+            </ion-col>
+            <ion-col  size-lg="4" size-xl="3" size="12" size-md="6" size-sm="12" >
+                <ion-item>
+                    <ion-label position="floating">Cell Phone</ion-label>
+                    <ion-input formControlName="cellPhone"></ion-input>
+                    <div class="error">
+                      
+                    </div>
+                </ion-item>
+            </ion-col>
+
+            <ion-col  size-lg="4" size-xl="3" size="12" size-md="6" size-sm="12" >
+                <ion-item>
+                    <ion-label position="floating">Key Contact</ion-label>
+                    <ion-input formControlName="keyContact"></ion-input>
+                    <div class="error">
+                      
+                    </div>
+                </ion-item>
+            </ion-col>
+
+            <ion-col size-lg="4" size-xl="3" size="12" size-md="6" size-sm="12" >
+                <ion-item>
+                    <ion-label position="stacked">Is Active</ion-label>
+                    <div>
+                        <label class="pillLabelNo">No</label>
+                        <ion-toggle formControlName="isActive" class="pillYesNo" ></ion-toggle>
+                        <label class="pillLabelYes">Yes</label>
+                        <div *ngIf='isMobileDevice' class="pillPadiOS"></div>
+                        <div *ngIf='!isMobileDevice' class="pillPadWeb"></div>
+                    </div>
+                </ion-item>
+            </ion-col>
+            
+        </ion-row>
+        </form>
+    </ion-grid>
+      
+ 
+
+  </ion-content>

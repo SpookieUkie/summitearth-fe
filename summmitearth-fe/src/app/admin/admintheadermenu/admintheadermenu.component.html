@@ -1,0 +1,12 @@
+<ion-row *ngIf="!isMobile">
+  <ion-col size="12" offset-lg="1" offset-xl="2"  offset-md="0" offset-sm="0">
+    <button pButton type="button" size="12" size-sm="12" label="Configure Projects" (click)="moveTo('projects')"></button>
+    <button pButton type="button" size="12" size-sm="12" label="Man. Mud" (click)="moveTo('muds')"></button>
+    <button pButton type="button" size="12" size-sm="12" label="Man. Users" (click)="moveTo('users')"></button>
+    <button pButton type="button" size="12" size-sm="12" label="Man. Clients" (click)="moveTo('clients')"></button>
+    <button pButton type="button" size="12" size-sm="12" label="DFR - EPM" (click)="moveTo('epmDFR')"></button>
+    <button pButton type="button" size="12" size-sm="12" label="DFR - RRR" (click)="moveTo('rrrDFR')"></button>
+    <button pButton type="button" size="12" size-sm="12" label="Daily DWM Audits" (click)="moveTo('dailyauditdwm')"></button>
+   <!-- <button pButton type="button" size="12" size-sm="12" label="Admin Home" (click)="moveTo('adminhome')"></button>--> 
+  </ion-col>
+</ion-row>

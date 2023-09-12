@@ -1,0 +1,379 @@
+
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-buttons slot="start">
+            <ion-button (click)="backToRigList()" >
+                <ion-icon slot="icon-only" name="arrow-round-back"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+        <ion-title [hidden]="viewWidth < 576">
+            Daily Rig <span *ngIf="form.get('rigNameNumber').valid ">{{form.get('rigNameNumber').value}}</span> 
+        </ion-title>
+
+        <ion-buttons slot="end">
+            <ion-button icon-only (click)="showHideFormErrors()">
+                <ion-icon *ngIf="form.valid"   name="checkmark-circle" class="valid" float-right></ion-icon>
+                <ion-icon *ngIf="!form.valid"   name="warning" class="warning" float-right></ion-icon>
+            </ion-button>
+            <ion-button icon-only (click)="onSaveForm();">
+                    <ion-icon name="save" *ngIf="!form.dirty" class="valid"></ion-icon>
+                    <ion-icon name="save" *ngIf="form.dirty" class='dirty'></ion-icon>
+            </ion-button>
+            <ion-button  icon-only (click)="showTopMenu($event)">
+                <ion-icon  name="apps" ></ion-icon>
+            </ion-button>
+            <app-navmenu></app-navmenu>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+  <ion-content>
+    <ion-refresher slot="fixed" (ionRefresh)="refreshPage($event, ionrefresher)" #ionrefresher>
+        <ion-refresher-content
+            pullingIcon="arrow-dropdown"
+            pullingText="Pull to refresh"
+            refreshingSpinner="circles"
+            refreshingText="Refreshing...">
+        </ion-refresher-content>
+    </ion-refresher>
+
+    <app-dfr-header-menu></app-dfr-header-menu>
+    <ion-grid>
+        <form [formGroup]="form" #f="ngForm" >
+
+        <ion-row class="headerRow">
+            <ion-col  >
+                Daily Rig
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col size-lg="4" size-xl="3" size="12"   size-md="12">
+                <ion-item>
+                    <ion-label position="floating">Rig Name/Number</ion-label> 
+                    <ion-input formControlName="rigNameNumber"></ion-input>
+                    <div class="error">
+                        <div *ngIf="!form.get('rigNameNumber').valid &&form.get('rigNameNumber').touched">Rig Name/Number Required</div>
+                    </div>
+                </ion-item>
+            </ion-col>
+
+          <!--<ion-col size-lg="4" size-xl="3" size="12"   size-md="12">
+                <ion-item>
+                    <ion-label position="floating">Disposal Method</ion-label> 
+                    <ion-select size="10" interface="popover" formControlName="disposalMethod">
+                        <ion-select-option *ngFor="let val of disposalMethodList">{{val.value}}</ion-select-option>
+                    </ion-select>
+                    <div class="error">
+                        <div *ngIf="!form.get('disposalMethod').valid &&form.get('disposalMethod').touched">Disposal Method</div>
+                    </div>
+                </ion-item>
+            </ion-col>-->  
+
+            <ion-col size-lg="4" size-xl="3" size="12"   size-md="12">
+                <ion-item>
+                    <ion-label position="floating">Entry Location</ion-label> 
+                    <ion-input  formControlName="entryLocation"></ion-input>
+                    <div class="error">
+                        <div *ngIf="!form.get('entryLocation').valid && form.get('entryLocation').touched">Entry Location Required</div>
+                    </div>
+                </ion-item>
+            </ion-col>
+
+
+            <ion-col size-lg="4" size-xl="3" size="12"   size-md="12">
+                <ion-item>
+                    <ion-label position="floating">Exit Location</ion-label> 
+                    <ion-input  formControlName="exitLocation"></ion-input>
+                    <div class="error">
+                        <div *ngIf="!form.get('exitLocation').valid && form.get('exitLocation').touched">Exit Location Required</div>
+                    </div>
+                </ion-item>
+            </ion-col>
+
+            <ion-col size-lg="4" size-xl="3" size="12"   size-md="12">
+                <ion-item>
+                    <ion-label #crossingLocationLabel position="floating">Crossing Location</ion-label> 
+                    <ion-select #crossingLocation  interface="popover"  formControlName="crossingLocation">
+                            <ion-select-option *ngFor="let val of filteredLocations">{{val.locationName}}</ion-select-option>
+                    </ion-select>
+                    <div class="error">
+                        <div *ngIf="!form.get('crossingLocation').valid && form.get('crossingLocation').touched">Crossing Location Required</div>
+                    </div>
+                </ion-item>
+            </ion-col>
+
+            <ion-col size-lg="4" size-xl="3" size="12"   size-md="12">
+                <ion-item>
+                    <ion-label position="floating">Crossing Name</ion-label> 
+                    <ion-input  formControlName="crossingName"></ion-input>
+                    <div class="error">
+                        <div *ngIf="!form.get('crossingName').valid && form.get('crossingName').touched">Crossing Name Required</div>
+                    </div>
+                </ion-item>
+            </ion-col>
+
+          
+
+            <ion-col size-lg="4" size-xl="3" size="12"   size-md="12">
+                <ion-item>
+                    <ion-label position="floating">Current Activity</ion-label> 
+                    <ion-select size="8"  interface="popover" formControlName="currentActivity">
+                        <ion-select-option *ngFor="let val of currentActivityList" [value]="val.value">{{val.value}}</ion-select-option>
+                    </ion-select>
+                    <div class="error">
+                        <div *ngIf="!form.get('currentActivity').valid && form.get('currentActivity').touched">Current Activity Required</div>
+                    </div>
+                </ion-item>
+            </ion-col>
+
+            <ion-col size-lg="4" size-xl="3" size="12"   size-md="12">
+                <ion-item>
+                    <ion-label position="stacked">Has Mud Been Lab Tested</ion-label>
+                    <div>
+                        <label class="pillLabelNo">No</label>
+                        <ion-toggle formControlName="mudTested" class="pillYesNo" ></ion-toggle>
+                        <label class="pillLabelYes">Yes</label>
+                        <div *ngIf='isMobileDevice' class="pillPadiOS"></div>
+                        <div *ngIf='!isMobileDevice' class="pillPadWeb"></div>
+                    </div>
+                </ion-item>
+            </ion-col>
+
+            <ion-col size-lg="4" size-xl="3" size="12"   size-md="12">
+                <ion-item>
+                    <ion-label position="floating">Crossing Length</ion-label> 
+                    <ion-input type="number" formControlName="crossingLength"></ion-input>
+                    <div class="error">
+                        <div *ngIf="!form.get('crossingLength').valid && form.get('crossingLength').touched">Crossing Length Required</div>
+                    </div>
+                </ion-item>
+            </ion-col>
+
+            <ion-col size-lg="4" size-xl="3" size="12"   size-md="12">
+                <ion-item>       
+                    <span item-right style="width:100%;">
+                        <ion-icon name="help" (click)="presentCrossingPopover($event)" class="icon"></ion-icon>
+                    </span>
+                    <ion-label position="floating" >Crossing Progress</ion-label> 
+                    <ion-input formControlName="crossingProgress"></ion-input>
+                    <div class="error">
+                        <div *ngIf="!form.get('crossingProgress').valid && form.get('crossingProgress').touched">Crossing Progress Required</div>
+                    </div>
+                </ion-item>
+            </ion-col>
+
+            <ion-col size-lg="4" size-xl="3" size="12"   size-md="12">
+                <ion-item class="calcField">
+                    <ion-label  position="floating">Daily Total Crossing Volume</ion-label> 
+                    <ion-input type="number" readonly formControlName="totalCrossingVolume"></ion-input>
+                    <div class="error">
+                        <div *ngIf="!form.get('totalCrossingVolume').valid && form.get('totalCrossingVolume').touched">Daily Total Crossing Volume Required</div>
+                    </div>
+                </ion-item>
+            </ion-col>
+
+            <ion-col size-lg="8" size-xl="6" size="6" >
+                    <ion-item>
+                    <span item-right style="width:100%;">
+                        <ion-icon name="help" (click)="presentCommentsPopover($event)" class="icon"></ion-icon>
+                    </span>
+                    <ion-label  position="floating">Rig Comments</ion-label>
+                    <ion-textarea rows="4" formControlName="rigComments" placeholder="Add Rig Comments"></ion-textarea>
+                    <div class="error">
+                        <div *ngIf="!form.get('rigComments').valid && form.get('rigComments').touched">Additional Comments Required</div>
+                    </div>
+                </ion-item>
+            </ion-col>
+        </ion-row>
+
+        <app-geolocation (newCoords)="updateCoords($event)" [coords]="coords" [showButton]='false' #geolocation></app-geolocation>
+
+        <ion-row class="headerRow">
+            <ion-col>Disposal Summary Results</ion-col>
+        </ion-row>
+
+        <div *ngIf='currentDFRRig !== null'>
+                <div formArrayName="disposalAreas">
+                    <div *ngFor="let disposalArea of form.get('disposalAreas').controls; let j=index;">  
+                        <div [formGroupName]="j"  >
+                                <ion-row>
+                                    <ion-col size-lg="3" size-xl="3" size="11"   size-md="11">
+                                        <ion-item>
+                                            <ion-label position="stacked">Disposal Method</ion-label> 
+                                            <ion-select size="10" interface="popover" formControlName="disposalMethod">
+                                                <ion-select-option *ngFor="let val of disposalMethodList" [value]="val.disposalMethod">{{val.disposalMethod}}</ion-select-option>
+                                            </ion-select>
+                                            <div class="error">
+                                                <div *ngIf="!form.get('disposalAreas').controls[j].get('disposalMethod').valid && !form.get('disposalAreas').controls[j].get('disposalMethod').touched === false">Disposal Method</div>
+                                            </div>
+                                        </ion-item>
+                                    </ion-col>
+
+                                    <ion-col size-lg="3" size-xl="3" size="11"   size-md="11">
+                                        <ion-item>
+                                            <ion-label position="floating">Disposal Area</ion-label> 
+                                            <ion-input  formControlName="disposalArea"></ion-input>
+                                            <div class="error">
+                                                <div *ngIf="!form.get('disposalAreas').controls[j].get('disposalMethod').valid && !form.get('disposalAreas').controls[j].get('disposalArea').touched === false">Disposal Area Required</div>
+                                            </div>
+                                        </ion-item>
+                                    </ion-col>
+
+                                    <ion-col size-lg="3" size-xl="3" size="11"   size-md="11">
+                                        <ion-item>
+                                            <ion-label position="floating">Daily Volume</ion-label> 
+                                            <ion-input type="number" formControlName="dailyVolume" (change)="updateTotalVolume()"></ion-input>
+                                           <div class="error">
+                                                <div *ngIf="!form.get('disposalAreas').controls[j].get('dailyVolume').valid && !form.get('disposalAreas').controls[j].get('dailyVolume').touched === false">Daily Volume Required</div>
+                                            </div>
+                                        </ion-item>
+                                    </ion-col>
+
+                                    <ion-col *ngIf="j !== 0" size-lg="3" size-xl="3"  size-md="1"  >        
+                                            <ion-icon name="close-circle" class="singleRec" color="danger"  (click)="removeDisposal(j)"></ion-icon>   
+                                    </ion-col>
+
+                                </ion-row>
+                    
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+        <ion-row class="headerRow">
+            <ion-col>Field Test Results</ion-col>
+        </ion-row>
+
+        <ion-row *ngIf='currentDFRRig !== null'>
+            <div formArrayName="salinities">
+                <div *ngFor="let salinity of form.get('salinities').controls; let j=index;"> 
+                    <div [formGroupName]="j"  >
+                           <!-- This should work ;( <app-daily-salinity  [formControlName]="j"  [salinity]="salinity"  ></app-daily-salinity> -->
+                           <ion-row>
+                                <ion-col  size-lg="1" size-xl="1" size-md="1">
+                                    <ion-item>
+                                        <ion-label position="floating">pH</ion-label> 
+                                        <ion-input type="number" formControlName="pH"></ion-input>       
+                                        <div class="error">
+                                            <div *ngIf="!form.get('salinities').controls[j].get('pH').valid && !form.get('salinities').controls[j].get('pH').touched === false">Req.</div>
+                                        </div>
+                                    </ion-item>
+                                </ion-col>
+                                <ion-col size-lg="1" size-xl="1" size-md="1">
+                                    <ion-item>
+                                        <ion-label position="floating">Ca</ion-label> 
+                                        <ion-input type="number" formControlName="Ca"></ion-input>
+                                        <div class="error">
+                                            <div *ngIf="!form.get('salinities').controls[j].get('Ca').valid && !form.get('salinities').controls[j].get('Ca').touched === false">Req.</div>
+                                        </div>
+                                    </ion-item>
+                                </ion-col>
+                                <ion-col size-lg="1" size-xl="1" size-md="1">
+                                <ion-item>
+                                    <ion-label position="floating">EC</ion-label> 
+                                    <ion-input type="number" formControlName="EC"></ion-input>   
+                                    <div class="error">
+                                        <div *ngIf="!form.get('salinities').controls[j].get('EC').valid && !form.get('salinities').controls[j].get('EC').touched === false">Req.</div>
+                                    </div>   
+                                </ion-item>
+                                </ion-col>
+                                <ion-col size-lg="1" size-xl="1" size-md="1">
+                                <ion-item>
+                                    <ion-label position="floating">Mg</ion-label> 
+                                    <ion-input type="number" formControlName="Mg"></ion-input>
+                                    <div class="error">
+                                        <div *ngIf="!form.get('salinities').controls[j].get('Mg').valid && !form.get('salinities').controls[j].get('Mg').touched === false">Req.</div>
+                                    </div>
+                                </ion-item>
+                                </ion-col>
+                                <ion-col size-lg="1" size-xl="1" size-md="1">
+                                <ion-item>
+                                    <ion-label position="floating">Na</ion-label> 
+                                    <ion-input type="number" formControlName="Na"></ion-input>
+                                    <div class="error">
+                                        <div *ngIf="!form.get('salinities').controls[j].get('Na').valid && !form.get('salinities').controls[j].get('Na').touched === false">Req.</div>
+                                    </div>
+                                </ion-item>
+                                </ion-col>
+                                <ion-col size-lg="1" size-xl="1" size-md="1">
+                                <ion-item>
+                                    <ion-label position="floating">N</ion-label> 
+                                    <ion-input type="number" formControlName="N"></ion-input>
+                                    <div class="error">
+                                        <div *ngIf="!form.get('salinities').controls[j].get('N').valid && !form.get('salinities').controls[j].get('N').touched === false">Req.</div>
+                                    </div>    
+                                </ion-item>
+                                </ion-col>
+                                <ion-col size-lg="1" size-xl="1" size-md="1">
+                                <ion-item>
+                                    <ion-label position="floating">S</ion-label> 
+                                    <ion-input type="number" formControlName="S"></ion-input>
+                                    <div class="error">
+                                        <div *ngIf="!form.get('salinities').controls[j].get('S').valid && !form.get('salinities').controls[j].get('S').touched === false">Req.</div>
+                                    </div>
+                                </ion-item>
+                                </ion-col>
+                                <ion-col size-lg="1" size-xl="1" size-md="1">
+                                <ion-item>
+                                    <ion-label position="floating">Cl</ion-label> 
+                                    <ion-input type="number" formControlName="Cl"></ion-input>
+                                    <div class="error">
+                                        <div *ngIf="!form.get('salinities').controls[j].get('Cl').valid && !form.get('salinities').controls[j].get('Cl').touched === false">Req.</div>
+                                    </div>   
+                                </ion-item>
+                                </ion-col>
+                                <ion-col size-lg="2" size-xl="2" size-md="2"> <ion-item>
+                                    <ion-label position="stacked">Water Body Crossing</ion-label>
+                                        <div>
+                                            <label class="pillLabelNo">No</label>
+                                            <ion-toggle formControlName="waterBodyCrossing" class="pillYesNo" ></ion-toggle>
+                                            <label class="pillLabelYes">Yes</label>
+                                        </div>
+                                        <div *ngIf='isMobileDevice' class="pillPadiOS"></div>
+                                        <div *ngIf='!isMobileDevice' class="pillPadWeb"></div>
+                                    </ion-item>
+                                </ion-col>
+                                <ion-col size-lg="1" size-xl="1"  size-md="1">
+                                    <ion-item>
+                                        <ion-label position="floating">Daily NTU</ion-label> 
+                                        <ion-input type="number" formControlName="dailyNTU"></ion-input>
+                                        <div class="error">
+                                            <div *ngIf="!form.get('salinities').controls[j].get('dailyNTU').valid && !form.get('salinities').controls[j].get('dailyNTU').touched === false">Req.</div>
+                                        </div>
+                                    </ion-item>
+                                </ion-col>
+                                <ion-col  size-lg="1" size-xl="1"  size-md="1"  >        
+                                        <ion-icon  name="close-circle" class="singleRec" color="danger"  (click)="removeSalinity(j)"></ion-icon>   
+                                </ion-col>
+                            </ion-row>
+                    
+                    </div>
+                </div>
+            </div>
+           <!-- <app-daily-salinity formControlName="test"></app-daily-salinity>--> <!-- This works outside of loop-->
+        </ion-row>
+     
+        <ion-row class="headerRow">
+            <ion-col>Photos</ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col size-lg="12" size-xl="12" size="12">
+                <ion-label>Note: Photos must be saved manually.</ion-label>
+            </ion-col>
+        </ion-row>
+    
+        <ion-row>
+            <ion-col size-lg="12" size-xl="12" size="12" *ngFor="let photo of photoList">
+                <app-dfr-photo [rigPhoto]="photo" [rigPhotoId]="photo._id"></app-dfr-photo>
+             </ion-col>
+        </ion-row>
+
+    </form>
+
+  
+       
+    </ion-grid>
+
+   
+   
+</ion-content>

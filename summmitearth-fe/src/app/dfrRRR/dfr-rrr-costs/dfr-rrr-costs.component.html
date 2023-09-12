@@ -1,0 +1,47 @@
+<ion-header >
+  <ion-toolbar color="primary">
+      <ion-buttons slot="start">
+          <ion-button (click)="backToList()" >
+              <ion-icon slot="icon-only" name="arrow-round-back"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      <ion-title [hidden]="viewWidth < 576">
+        DFR - RRR - Costs
+      </ion-title>
+      <ion-buttons slot="end">
+          <ion-button icon-only (click)="showHideFormErrors()">
+              <ion-icon *ngIf="form.valid"   name="checkmark-circle" class="valid"  class="ion-float-right"></ion-icon>
+              <ion-icon *ngIf="!form.valid"  name="warning" class="warning" class="ion-float-right"></ion-icon>
+          </ion-button>
+          <ion-button icon-only (click)="onSaveForm();">
+              <ion-icon name="save" *ngIf="!form.dirty" class="valid"></ion-icon>
+              <ion-icon name="save" *ngIf="form.dirty" class='dirty'></ion-icon>
+        </ion-button>
+        <!-- <app-checklistoptions (itemSelected)="itemSelected($event)" [currentView]="'LWDFieldInspection'"></app-checklistoptions> -->
+        <app-navmenu></app-navmenu>  
+      </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="refreshPage($event, ionrefresher)" #ionrefresher>
+      <ion-refresher-content
+        pullingIcon="arrow-dropdown"
+        pullingText="Pull to refresh"
+        refreshingSpinner="circles"
+        refreshingText="Refreshing...">
+      </ion-refresher-content>
+    </ion-refresher>
+
+   
+  <ion-grid size="12" >
+    <form [formGroup]="form" >
+        <ion-row class="pageTitleRow" [hidden]="viewWidth > 576"> 
+            <ion-col size="12">
+               DFR - RRR - Vegetation
+            </ion-col>
+        </ion-row>
+    </form>
+  </ion-grid>
+
+</ion-content>

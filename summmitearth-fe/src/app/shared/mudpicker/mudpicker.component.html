@@ -1,0 +1,12 @@
+<ion-content >
+  <ion-item>
+      <ion-label>Current Product: {{currentProduct}}</ion-label> 
+  </ion-item>
+ 
+  <ion-searchbar (ionInput)="setFilter($event)" autofocus  #ionSearchBox></ion-searchbar>
+  <div  *ngIf="showResults" >
+      <ion-list  *ngFor="let mud of filteredMudList" >
+          <ion-item (click)="itemClicked(mud)" (ionClear)=itemCleared()>{{mud.mudProductName}}</ion-item>
+      </ion-list>
+  </div>
+</ion-content>

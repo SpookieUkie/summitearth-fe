@@ -1,0 +1,608 @@
+// Ionic Variables and Theming. For more info, please see:
+// http://ionicframework.com/docs/theming/
+
+/** Ionic CSS Variables **/
+:root {
+  /** primary **/
+  --ion-color-primary: #00859B;
+  --ion-color-primary-rgb: 56, 128, 255;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255, 255, 255;
+  --ion-color-primary-shade: #007588;
+  --ion-color-primary-tint: #1a91a5;
+
+  /** secondary **/
+  --ion-color-secondary: #00AEC7;
+  --ion-color-secondary-rgb: 12, 209, 232;
+  --ion-color-secondary-contrast: #ffffff;
+  --ion-color-secondary-contrast-rgb: 255, 255, 255;
+  --ion-color-secondary-shade: #0bb8cc;
+  --ion-color-secondary-tint: #24d6ea;
+
+  /** tertiary **/
+  --ion-color-tertiary:#4D4D4F;
+  --ion-color-tertiary-rgb: 112, 68, 255;
+  --ion-color-tertiary-contrast: #ffffff;
+  --ion-color-tertiary-contrast-rgb: 255, 255, 255;
+  --ion-color-tertiary-shade: #444446;
+  --ion-color-tertiary-tint: #5f5f61;
+
+    /** forth **/
+    --ion-color-forth:#002A3A;
+    --ion-color-forth-rgb: 112, 68, 255;
+    --ion-color-forth-contrast: #ffffff;
+    --ion-color-forth-contrast-rgb: 255, 255, 255;
+    --ion-color-forth-shade:rgb(0, 35, 49);
+    --ion-color-forth-tint:rgb(0, 51, 71);
+
+
+     /** fifth **/
+     --ion-color-fifth:  #F6BE00;
+     --ion-color-fifth-rgb: 112, 68, 255;
+     --ion-color-fifth-contrast: #000000;
+     --ion-color-fifth-contrast-rgb: 255, 255, 255;
+     --ion-color-fifth-shade: #F6BE00;
+     --ion-color-fifth-tint: #F6BE00;
+
+  /** success **/
+  --ion-color-success: #10dc60;
+  --ion-color-success-rgb: 16, 220, 96;
+  --ion-color-success-contrast: #ffffff;
+  --ion-color-success-contrast-rgb: 255, 255, 255;
+  --ion-color-success-shade: #0ec254;
+  --ion-color-success-tint: #28e070;
+
+  /** warning **/
+  --ion-color-warning: #F6BE00;
+  --ion-color-warning-rgb: 255, 206, 0;
+  --ion-color-warning-contrast: #ffffff;
+  --ion-color-warning-contrast-rgb: 255, 255, 255;
+  --ion-color-warning-shade: #e0b500;
+  --ion-color-warning-tint: #ffd31a;
+
+  /** danger **/
+  --ion-color-danger: #a82f2f;
+  --ion-color-danger-rgb: 245, 61, 61;
+  --ion-color-danger-contrast: #ffffff;
+  --ion-color-danger-contrast-rgb: 255, 255, 255;
+  --ion-color-danger-shade: #d33939;
+  --ion-color-danger-tint: #f25454;
+
+  /** dark **/
+  --ion-color-dark: #222428;
+  --ion-color-dark-rgb: 34, 34, 34;
+  --ion-color-dark-contrast: #ffffff;
+  --ion-color-dark-contrast-rgb: 255, 255, 255;
+  --ion-color-dark-shade: #1e2023;
+  --ion-color-dark-tint: #383a3e;
+
+  /** medium **/
+  --ion-color-medium: #989aa2;
+  --ion-color-medium-rgb: 152, 154, 162;
+  --ion-color-medium-contrast: #ffffff;
+  --ion-color-medium-contrast-rgb: 255, 255, 255;
+  --ion-color-medium-shade: #86888f;
+  --ion-color-medium-tint: #a2a4ab;
+
+  /** light **/
+  --ion-color-light: #f4f5f8;
+  --ion-color-light-rgb: 244, 244, 244;
+  --ion-color-light-contrast: #000000;
+  --ion-color-light-contrast-rgb: 0, 0, 0;
+  --ion-color-light-shade: #d7d8da;
+  --ion-color-light-tint: #f5f6f9;
+
+ 
+  --ion-grid-columns: 12;
+
+  --ion-col-size-lg: 6;
+
+  --action-sheet-ios-text-align: left;
+
+ion-grid {
+  background-color: #f4f5f8;
+}
+
+
+ion-button {
+  align-content: center;
+}
+
+ion-item {
+  --padding: 2x;
+}
+
+ion-input, ion-datetime, ion-select {
+  font-size: 15px;
+}
+
+ion-label {
+  -webkit-font-smoothing: subpixel-antialiased;
+  --color: #F6BE00;
+}
+
+ion-title {
+  line-height: 32px;
+  background: url('../assets/SummitLogoWhite.png') no-repeat center;
+  text-align: left;
+}
+
+
+ion-icon {
+  font-size: 28px;
+}
+
+.prime-icon {
+  font-size: 28px;
+  
+}
+
+.hrList {
+  width: 85%;
+  border-top: 1px solid  #00AEC7;
+}
+
+.prime-btn {
+  color: black;
+  background-color: transparent;
+  height: 28px;
+  border: none;
+  text-align: center;
+}
+
+ion-header{
+  background-color:  #00AEC7;
+}
+
+ion-textarea{
+  border-color: grey;
+  border-width: 1px;
+  border-style: solid;
+  margin-bottom: 5px;
+}
+
+.menuLabel{
+  color:  #Ffffff;
+  text-align:center;
+  width: 100%;
+  padding-left: 0px;
+  padding-right: 0px;
+  background: none;
+  font-size: 15px;
+}
+
+.noRecords {
+  text-align: center;
+}
+
+.dirty{
+  color:  #F6BE00;
+}
+
+.calIcon {
+  font-size: 20px;
+}
+
+.dateTimeRange {
+  background-color: white;
+}
+
+.paddedItem {
+  --ion-background-color:#f4f5f8;
+  border: none;
+}
+
+.pageTitleRow {
+  background-color: #DDDDDD;
+  color:#000000;
+  font-weight: bold;
+  height: 30px;
+  text-align: center;
+  padding: 0px;
+  padding-bottom: 10px;
+  margin:0px;
+}
+  
+.headerRow {
+  background-color: #00AEC7;
+  color: #ffffff;
+  font-weight: bold;
+  height: 30px;
+  text-align: center;
+  padding: 0px;
+  margin:0px;
+}
+
+.calculatedRow {
+  background-color:#218ca1;
+  color: #ffffff;
+  font-weight: bold;
+  height: 30px;
+  text-align: center;
+  padding: 0px;
+  margin:0px;
+}
+
+.calOver {
+  font-weight: bold;
+  background-color: Red;
+  text-align: center;
+  color: black;
+}
+
+.calUnder {
+  font-weight: bold;
+  background-color: #218ca1;
+  text-align: center;
+  color:white;
+}
+
+.readonly {
+  background-color:lightgrey;
+}
+
+.mudSummaryGrid {
+  background-color: white;
+  border-width: 1px;
+  border-color: black;
+
+
+.mudSummaryGridHeaderRow {
+  font-weight:bold;
+  border-width: 1px;
+  border-top-style: solid;
+  border-color: black;
+}
+
+
+
+  ion-row {
+    border-width: 1px;
+    border-bottom-style: solid;
+    border-color: black;
+  }
+
+  ion-col {
+    border-width: 1px;
+    border-right-style: solid;
+    border-color: black;
+  }
+}
+
+
+.radioIonItem {
+  background-color: white;
+}
+
+.radioLabelCol {
+  
+  background-color: white; 
+  padding-top: 5px; 
+  padding-left: 2px; 
+  padding-bottom: 0px;
+}
+
+.radioLabelVal {
+  font-size:.8em;
+}
+
+.radioGrid {
+  background-color: white; 
+  padding: 0px; 
+  margin: 0px;
+}
+
+.radioPItem {
+  font-size: .85em;
+}
+
+.radioPItem2 {
+  font-size: .85em;
+}
+
+.radioPItem2a {
+  font-size: .85em;
+  padding-left:5px;
+}
+
+.radioCol {
+  --ion-grid-column-padding: 0px;
+  background-color: white; 
+  margin: 0px;
+  padding:0px;
+  padding-top: 0px; 
+  padding-left: 0px; 
+  padding-bottom: 0px;
+}
+
+.radioDivItem {
+  padding-top: 5px; 
+  margin: 0px;  
+  border-style: none;
+}
+
+.radioItem {
+  padding: 0px;
+  margin: 0px;
+  border:none;
+}
+
+.radioErrorIos {
+  height: 28px; 
+  padding-top: 12px;
+  color:#a82f2f;
+  font-size: 13px;
+}
+
+.radioErrorWeb {
+  height: 21px; 
+  padding-top: 5px;
+  color:#a82f2f;
+  font-size: 13px;
+  vertical-align: bottom;
+}
+
+
+.calcField {
+  //background-color: #eeeeee;
+  --ion-background-color:#dddddd;
+}
+
+.error {
+  color:#a82f2f;
+  font-size: 13px;
+  height: 16px;
+}
+
+.singleRec {
+  font-size:32px;
+  float:right;
+  color:black;
+}
+.singleRecDirty {
+  font-size:32px;
+  float:right;
+  color: #F6BE00;
+}
+
+.subtitle {
+  font-weight:bold;
+  background-color: #85e8c5;
+}
+
+.submitForm {
+  align-content: center;
+}
+
+.warning {
+  color:#F6BE00;
+}
+
+.valid {
+  color:rgb(207, 207, 207);
+}
+
+.on {
+  color:rgb(2, 160, 2);
+}
+
+.issue {
+  color:#a82f2f;
+}
+
+.notificationIcon {
+  color: white;
+}
+
+.menu{
+  color:black;
+}
+
+.calendarPopover {
+  .popover-wrapper{
+    .popover-content{
+      width:90vw;
+      max-width:370px;
+    }
+  }
+}
+
+.dfrMenuPopover {
+  .popover-wrapper{
+    .popover-content{
+      width:90vw;
+      max-width:200px;
+    }
+  }
+}
+
+.cacheAlert {
+  /*width:90vw;
+  max-width:450px; */
+  .alert-wrapper{
+    width:90vw;
+    max-width:450px;
+  }
+}
+
+
+ion-popover{
+  ion-backdrop{
+    opacity: .2 !important;
+  }
+  .popover-wrapper{
+    .popover-content{
+      width:90vw;
+      max-width:450px;
+    }
+  }
+}
+
+.mudPopover {
+  .popover-wrapper{
+    .popover-content {
+      top: 5% !important;
+      left: 25% !important;
+      max-width:450px;
+      //transform: translate(-50%, -50%) !important; // Breaks popuplist
+      overflow: auto;
+    }
+  }
+}
+
+
+.genericPickerPopover {
+  .popover-wrapper{
+    .popover-content {
+      top: 5% !important;
+      left: 25% !important;
+      max-width:450px;
+      //transform: translate(-50%, -50%) !important; // Breaks popuplist
+      overflow: auto;
+    }
+  }
+}
+
+.calendarGrid {
+  padding :0;
+  margin :0;
+  width: 100%;
+  background-color: transparent;
+  --ion-grid-padding: 0;
+  align-items: left;
+}
+
+.calendarGridRow {
+  padding :0;
+  margin :0;
+  --ion-grid-row-padding: 0;
+}
+
+.calendarGridCol {
+  padding :0;
+  margin :0;
+  --ion-grid-column-padding: 0;
+}
+
+
+.ios {
+  --highlight-height: 2px;
+
+}
+
+
+  .corpSecondary {
+    color: #218ca1;
+  }
+
+  .corpPrimary {
+    color: #00a9c2;
+  }
+
+  .submitDFR{
+    color:   #F6BE00;
+    font-weight:bold;
+  }
+  
+  .item-inner {
+    flex-direction: row-reverse !important;
+  }
+  .icon{
+    color: grey !important;
+    margin: 5px 5px -113px 0 !important;
+    background-color: transparent;
+    font-size: 22px;
+   // padding: 0px 7px 12px 0px;
+    float:right;
+    text-align:right;
+  }
+
+  .item-inner {
+    flex-direction: row-reverse !important;
+  }
+  .iconHeader{
+    color: white !important;
+    //margin: 5px 5px -10px 0 !important;
+    background-color: transparent;
+    font-size: 22px;
+    padding: 0px 7px 12px 0px;
+    float:right;
+    text-align:right;
+  }
+
+  .item-inner {
+    flex-direction: row-reverse !important;
+  }
+  .iconListBox{
+    color: white !important;
+    margin: 5px 5px -10px 0 !important;
+    background-color: transparent;
+    font-size: 22px;
+    padding: 0px 7px 12px 0px;
+    float:right;
+    text-align:right;
+  }
+
+  .tooltip {
+    text-align: center;
+    background-color: #00a9c2;
+    background-image: none;
+    padding: 0px;
+    margin: 0px;
+    color: white;
+  }
+
+
+  .pillPadiOS {
+    height: 14px;
+  }
+
+  .pillPadWeb {
+    height: 8px;
+  }
+
+  .pillYesNo {
+    margin-left: 30px;
+  }
+
+  .pillLabelNo{
+    margin: 9px 0 0 0;
+    position: absolute;
+  }
+  
+  .pillLabelYes {
+    margin: 9px 0 0 10px;
+    position: absolute;
+  }
+
+
+  .pillStatus {
+    margin-left: 70px;
+  }
+
+  .pillLabelInactive{
+    margin: 9px 0 0 0;
+    position: absolute;
+  }
+  
+  .pillLabelActive {
+    margin: 9px 0 0 10px;
+    position: absolute;
+  }
+
+  .naPopupNote .modal-wrapper {
+    height: 270px;
+    top: 20%;
+    position: absolute; 
+    display: block;  
+ }
+
+ .globalFilter {
+    background-color: #efefef;
+    border-style: solid;
+    border-color: grey;
+    border-width: 1px;
+ }
+
+
+}

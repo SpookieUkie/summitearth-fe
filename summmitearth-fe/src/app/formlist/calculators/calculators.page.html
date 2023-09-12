@@ -1,0 +1,38 @@
+
+<ion-header >
+    <ion-toolbar color="primary">
+        <ion-title [hidden]="viewWidth < 576">
+      Calculators
+        </ion-title>
+        <ion-buttons slot="start">
+            <ion-button (click)="backToList()" >
+                <ion-icon slot="icon-only" name="arrow-round-back"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+        <ion-buttons slot="end">
+            <app-navmenu></app-navmenu>  
+        </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content>
+    <ion-refresher slot="fixed" (ionRefresh)="refreshPage($event, ionrefresher)" #ionrefresher>
+        <ion-refresher-content
+          pullingIcon="arrow-dropdown"
+          pullingText="Pull to refresh"
+          refreshingSpinner="circles"
+          refreshingText="Refreshing...">
+        </ion-refresher-content>
+      </ion-refresher>
+   
+ 
+    
+    <ion-list lines="solid" size-md="6" size-xl="10" offset-md="3" size-lg="10" offset-md="1" size="10" #ionSlidingList>
+      <ion-item detail *ngFor="let item of callists" (click)="gotoLink(item.formLink)">
+        <ion-label>{{item.formName}} (Ver:{{item.version}})</ion-label>
+        <ion-label *ngIf="viewWidth > 576">{{item.comments}}</ion-label>
+      </ion-item>
+    </ion-list>
+  
+  </ion-content>
+  

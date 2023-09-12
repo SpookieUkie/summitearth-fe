@@ -1,0 +1,80 @@
+
+<ion-grid>
+    <form [formGroup]="form" >
+        <ion-row class="headerRow">
+            <ion-col size="12" class="subtitleText">
+                Daily Disposal Summary <span item-right style="width:100%;">
+                        <ion-icon name="help"  (click)="presentPopover($event)" class="iconHeader"></ion-icon>
+                    </span>
+            </ion-col>
+        </ion-row>
+      
+        <ion-row>
+            <ion-col size-lg="6" size-xl="4" size="12"   size-md="12">
+                <ion-item class="calcField">
+                    <ion-label position="floating" ># of Daily Active Rigs</ion-label> 
+                    <ion-input type="number" readonly formControlName="numberOfActiveDrillsAndRigs"></ion-input>
+                    <span class="error" *ngIf="!form.get('numberOfActiveDrillsAndRigs').valid && form.get('numberOfActiveDrillsAndRigs').touched">Number of Active Drills/Rigs Required</span>
+                </ion-item>
+            </ion-col>
+        
+            <ion-col size-lg="6" size-xl="4" size="12"  size-md="12">
+                <ion-item>
+                    <ion-label position="floating" >Spray Field Conditions * </ion-label> 
+                    <ion-select  formControlName="sprayFieldConditions">
+                        <ion-select-option *ngFor="let val of sprayFieldConditions">{{val.value}}</ion-select-option>
+                    </ion-select>
+                    <span class="error" *ngIf="!form.get('sprayFieldConditions').valid && form.get('sprayFieldConditions').touched">Spray Field Conditions Required</span>
+                </ion-item>
+            </ion-col>
+
+            <ion-col size-lg="6" size-xl="4" size="12"  size-md="12">
+                <ion-item>
+                    <ion-label position="floating" >Remaining Volume in Storage to be Disposed</ion-label> 
+                    <ion-input type="number" formControlName="remainingVolumeInStorage"></ion-input>
+                    <span class="error" *ngIf="!form.get('remainingVolumeInStorage').valid && form.get('remainingVolumeInStorage').touched">Remaining Volume in Storage Required</span>
+                </ion-item>
+            </ion-col>
+        </ion-row>
+
+       
+        <ion-row>
+            <ion-col size-lg="6" size-xl="4" size="12"   size-md="12" *ngFor="let disposal of disposalList let i = index" >
+                <app-disposal-summary (valChanged)="sumValChanged()" [disposal]="disposal"></app-disposal-summary>
+            </ion-col>
+        </ion-row>
+        
+        <ion-row class="calculatedRow">
+            <ion-col>
+                Project To Date Disposal Summary
+            </ion-col>
+        </ion-row>
+        
+        <ion-row>
+            <ion-col size-lg="4" size-xl="3" size="12" size-md="12">
+                <ion-item class="calcField">
+                    <ion-label position="floating">Total Vol Generated</ion-label> 
+                    <ion-input type="number" formControlName="projectToDateTotal" readonly value={{getTotalRigSummaryForAll()}}></ion-input>
+                </ion-item>
+            </ion-col>
+         
+            <ion-col size-lg="4" size-xl="3" size="12"   size-md="12" *ngFor="let disposal of disposalList let i = index" >
+               <app-disposal-summary-locked [disposal]="disposal"></app-disposal-summary-locked>
+            </ion-col>
+
+        </ion-row>
+
+        <ion-row class="calculatedRow">
+            <ion-col>
+                 Project To Date Crossing Summary
+            </ion-col>
+        </ion-row>
+
+        <ion-row>
+           <ion-col size-lg="2" size-xl="2" size="2"  size-md="4" size-sm="4" *ngFor="let crossingLocation of crossingLocationSummaryList let i = index" >
+               <app-crossing-summary [crossing]="crossingLocation" [index]="i"></app-crossing-summary> 
+           </ion-col>
+        </ion-row>
+
+    </form>
+</ion-grid>

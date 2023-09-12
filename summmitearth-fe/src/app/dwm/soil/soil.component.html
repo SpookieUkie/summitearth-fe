@@ -1,0 +1,286 @@
+<ion-header >
+  <ion-toolbar color="primary">
+      <ion-buttons slot="start">
+          <ion-button (click)="backToList()" >
+              <ion-icon slot="icon-only" name="arrow-round-back"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      <ion-title [hidden]="viewWidth < 576">
+        DWM - LWD - Soil Info
+      </ion-title>
+      <ion-buttons slot="end">
+          <ion-button icon-only (click)="showHideFormErrors()">
+              <ion-icon *ngIf="form.valid"   name="checkmark-circle" class="valid"  class="ion-float-right"></ion-icon>
+              <ion-icon *ngIf="!form.valid"  name="warning" class="warning" class="ion-float-right"></ion-icon>
+          </ion-button>
+          <ion-button icon-only (click)="onSaveForm();">
+              <ion-icon name="save" *ngIf="!form.dirty" class="valid"></ion-icon>
+              <ion-icon name="save" *ngIf="form.dirty" class='dirty'></ion-icon>
+        </ion-button>
+        <!-- <app-checklistoptions (itemSelected)="itemSelected($event)" [currentView]="'LWDFieldInspection'"></app-checklistoptions> -->
+       <!--<app-navmenu></app-navmenu>  --> 
+      </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+ <app-topmenu></app-topmenu>
+  <ion-grid size="12" >
+    <form [formGroup]="form" >
+         <ion-row class="headerRow" style="margin:0px; padding: 0px;"> 
+            <ion-col size="12">
+                Soil Information
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size-lg="3" size-xl="4" size="12"   size-md="6">
+              <ion-item>
+                <ion-label position="floating">Sample ID</ion-label> 
+                <ion-input  mode="md" formControlName="sampleId" ></ion-input>
+                <div class="error">
+                    <div *ngIf="!form.get('sampleId').valid && form.get('sampleId').touched">Land Owner Required</div>
+                </div>
+              </ion-item>
+            </ion-col>
+            
+            <ion-col size-lg="3" size-xl="4" size="12"   size-md="6">
+              <ion-item>
+                <ion-label position="floating">Land Location</ion-label> 
+                <ion-input  mode="md" formControlName="landLocation" ></ion-input>
+                <div class="error">
+                  <div *ngIf="!form.get('landLocation').valid && form.get('landLocation').touched">Land Location Required</div>
+                </div>
+              </ion-item>
+            </ion-col>
+
+            <ion-col size-lg="3" size-xl="4" size="12"   size-md="6">
+              <app-calendarforform [inlineFormGroupName]="'sampleDate'" [fieldName]="'sampleDate'" [isMobileDevice]="isMobileDevice" [inlineFormGroup]="form" [sectionTitle]="'Sample Date'"></app-calendarforform>
+           </ion-col>
+
+            <ion-col size-lg="3" size-xl="4" size="12"   size-md="6">
+              <ion-item>
+                <ion-label position="floating">Horizon</ion-label> 
+                <ion-input  mode="md" formControlName="horizon" ></ion-input>
+                <div class="error">
+                  <div *ngIf="!form.get('horizon').valid && form.get('horizon').touched">Land Location Required</div>
+                </div>
+              </ion-item>
+            </ion-col>
+
+            <ion-col size-lg="3" size-xl="4" size="12"   size-md="6">
+              <ion-item>
+                <ion-label position="floating">Soil Type</ion-label> 
+                <ion-input  mode="md" formControlName="soilType" ></ion-input>
+                <div class="error">
+                  <div *ngIf="!form.get('soilType').valid && form.get('soilType').touched">Land Location Required</div>
+                </div>
+              </ion-item>
+            </ion-col>
+
+
+            <ion-col size-lg="3" size-xl="4" size="12"   size-md="6">
+              <ion-item>
+                <ion-label position="floating">Horizon Depth</ion-label> 
+                <ion-input  mode="md" formControlName="soilType" ></ion-input>
+                <div class="error">
+                  <div *ngIf="!form.get('soilType').valid && form.get('soilType').touched">Land Location Required</div>
+                </div>
+              </ion-item>
+            </ion-col>
+
+            <ion-col size-lg="3" size-xl="4" size="12"   size-md="6">
+              <ion-item>
+                <ion-label position="floating">Texture</ion-label> 
+                <ion-input  mode="md" formControlName="texture" ></ion-input>
+                <div class="error">
+                  <div *ngIf="!form.get('texture').valid && form.get('texture').touched">Land Location Required</div>
+                </div>
+              </ion-item>
+            </ion-col>
+           
+          </ion-row>
+      <ion-row class="headerRow" style="margin:0px; padding: 0px;"> 
+          <ion-col size="12">
+            Soil Salinities
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size-lg="2" size-xl="3" size="12"   size-md="6">
+          <ion-item>
+            <ion-label position="floating">Soil Density</ion-label> 
+            <ion-input  mode="md" formControlName="soilDensity" ></ion-input>
+            <div class="error">
+                <div *ngIf="!form.get('soilDensity').valid && form.get('soilDensity').touched">Land Owner Required</div>
+            </div>
+          </ion-item>
+        </ion-col>
+        <ion-col size-lg="2" size-xl="3" size="12"   size-md="6">
+          <ion-item>
+            <ion-label position="floating">pH</ion-label> 
+            <ion-input  mode="md" formControlName="pH" ></ion-input>
+            <div class="error">
+                <div *ngIf="!form.get('pH').valid && form.get('pH').touched">Land Owner Required</div>
+            </div>
+          </ion-item>
+        </ion-col>
+        <ion-col size-lg="2" size-xl="3" size="12"   size-md="6">
+          <ion-item>
+            <ion-label position="floating">EC</ion-label> 
+            <ion-input  mode="md" formControlName="ec" ></ion-input>
+            <div class="error">
+                <div *ngIf="!form.get('ec').valid && form.get('ec').touched">EC Required</div>
+            </div>
+          </ion-item>
+        </ion-col>
+        <ion-col size-lg="2" size-xl="3" size="12"   size-md="6">
+          <ion-item>
+            <ion-label position="floating">Cl</ion-label> 
+            <ion-input  mode="md" formControlName="cl" ></ion-input>
+            <div class="error">
+                <div *ngIf="!form.get('cl').valid && form.get('cl').touched">Cl Required</div>
+            </div>
+          </ion-item>
+        </ion-col>
+
+        <ion-col size-lg="2" size-xl="3" size="12"   size-md="6">
+          <ion-item>
+            <ion-label position="floating">Total Hardness</ion-label> 
+            <ion-input  mode="md" formControlName="totalHardness" ></ion-input>
+            <div class="error">
+                <div *ngIf="!form.get('totalHardness').valid && form.get('totalHardness').touched">Total Hardness Required</div>
+            </div>
+          </ion-item>
+        </ion-col>
+        <ion-col size-lg="2" size-xl="3" size="12"   size-md="6">
+          <ion-item>
+            <ion-label position="floating">Ca</ion-label> 
+            <ion-input  mode="md" formControlName="ca" ></ion-input>
+            <div class="error">
+                <div *ngIf="!form.get('ca').valid && form.get('ca').touched">Calcium Required</div>
+            </div>
+          </ion-item>
+        </ion-col>
+
+        <ion-col size-lg="2" size-xl="3" size="12"   size-md="6">
+          <ion-item>
+            <ion-label position="floating">Mg</ion-label> 
+            <ion-input  mode="md" formControlName="mg" ></ion-input>
+            <div class="error">
+                <div *ngIf="!form.get('mg').valid && form.get('mg').touched">Magnesium Required</div>
+            </div>
+          </ion-item>
+        </ion-col>
+
+        <ion-col size-lg="2" size-xl="3" size="12"   size-md="6">
+          <ion-item>
+            <ion-label position="floating">Na</ion-label> 
+            <ion-input  mode="md" formControlName="na" ></ion-input>
+            <div class="error">
+                <div *ngIf="!form.get('na').valid && form.get('na').touched">Sodium Required</div>
+            </div>
+          </ion-item>
+        </ion-col>
+
+        <ion-col size-lg="2" size-xl="3" size="12"   size-md="6">
+          <ion-item>
+            <ion-label position="floating">SAR</ion-label> 
+            <ion-input  mode="md" formControlName="sar" ></ion-input>
+            <div class="error">
+                <div *ngIf="!form.get('sar').valid && form.get('sar').touched">SAR Required</div>
+            </div>
+          </ion-item>
+        </ion-col>
+
+        <ion-col size-lg="2" size-xl="3" size="12"   size-md="6">
+          <ion-item>
+            <ion-label position="floating">Nitrogren</ion-label> 
+            <ion-input  mode="md" formControlName="n" ></ion-input>
+            <div class="error">
+                <div *ngIf="!form.get('n').valid && form.get('n').touched">SAR Required</div>
+            </div>
+          </ion-item>
+        </ion-col>
+
+        <ion-col size-lg="2" size-xl="3" size="12"   size-md="6">
+          <ion-item>
+            <ion-label position="floating">Potassium</ion-label> 
+            <ion-input  mode="md" formControlName="k" ></ion-input>
+            <div class="error">
+                <div *ngIf="!form.get('k').valid && form.get('k').touched">Potassium Required</div>
+            </div>
+          </ion-item>
+        </ion-col>
+
+        <ion-col size-lg="2" size-xl="3" size="12"   size-md="6">
+          <ion-item>
+            <ion-label position="floating">Sulphate</ion-label> 
+            <ion-input  mode="md" formControlName="so" ></ion-input>
+            <div class="error">
+                <div *ngIf="!form.get('so').valid && form.get('so').touched">Sulphate Required</div>
+            </div>
+          </ion-item>
+        </ion-col>
+
+        <ion-col size-lg="2" size-xl="3" size="12"   size-md="6">
+          <ion-item>
+            <ion-label position="floating">Soil Category</ion-label> 
+            <ion-input  mode="md" formControlName="soilCategory" ></ion-input>
+            <div class="error">
+                <div *ngIf="!form.get('soilCategory').valid && form.get('soilCategory').touched">Soil Category Required</div>
+            </div>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="headerRow" style="margin:0px; padding: 0px;"> 
+        <ion-col size="12">
+          Soil Location
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col size-lg="2" size-xl="3" size="12"   size-md="6">
+        <ion-item>
+          <ion-label position="floating">South of NE</ion-label> 
+          <ion-input  mode="md" formControlName="southOfNE" ></ion-input>
+          <div class="error">
+              <div *ngIf="!form.get('southOfNE').valid && form.get('southOfNE').touched">Location Required</div>
+          </div>
+        </ion-item>
+      </ion-col>
+
+      <ion-col size-lg="2" size-xl="3" size="12"   size-md="6">
+        <ion-item>
+          <ion-label position="floating">West of NE</ion-label> 
+          <ion-input  mode="md" formControlName="westOfNE" ></ion-input>
+          <div class="error">
+              <div *ngIf="!form.get('westOfNE').valid && form.get('westOfNE').touched">Location Required</div>
+          </div>
+        </ion-item>
+      </ion-col>
+
+      <ion-col size-lg="2" size-xl="3" size="12"   size-md="6">
+        <ion-item>
+          <ion-label position="floating">Latitude</ion-label> 
+          <ion-input  mode="md" formControlName="latitude" ></ion-input>
+          <div class="error">
+              <div *ngIf="!form.get('latitude').valid && form.get('latitude').touched">Location Required</div>
+          </div>
+        </ion-item>
+      </ion-col>
+
+      <ion-col size-lg="2" size-xl="3" size="12"   size-md="6">
+        <ion-item>
+          <ion-label position="floating">Longitude</ion-label> 
+          <ion-input  mode="md" formControlName="longitude" ></ion-input>
+          <div class="error">
+              <div *ngIf="!form.get('longitude').valid && form.get('longitude').touched">Location Required</div>
+          </div>
+        </ion-item>
+      </ion-col>
+
+    </ion-row>
+
+    </form>
+  </ion-grid>
+</ion-content>

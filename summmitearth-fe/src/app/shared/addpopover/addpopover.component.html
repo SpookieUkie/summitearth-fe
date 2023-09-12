@@ -1,0 +1,10 @@
+<ion-item>
+  <span item-right style="width:100%;">
+    <ion-icon name="add-circle-outline" (click)="presentTechPopover($event)" class="icon"></ion-icon>
+  </span>
+  <ion-label position="floating">{{sectionTitle}}</ion-label> 
+  <ion-input  mode="md" [formControlName]="fieldName" (click)="showPopup('showView')"></ion-input>
+  <div class="error">
+     <!-- <div *ngIf="!form.get('tech1Name').valid && form.get('tech1Name').touched">Tech 1 Required</div> -->
+  </div>
+</ion-item>

@@ -1,0 +1,117 @@
+<ion-grid size="12">
+    <form [formGroup]="form" >
+
+        <ion-row>
+               
+            <ion-col size-lg="6" size-xl="3" size="12"  size-md="12">
+               <ion-item>
+                    <ion-label position="floating">Charge Label</ion-label>
+                    <ion-input  mode="md" formControlName="chargeLabel"></ion-input>
+                    <div class="error">
+                        <div *ngIf="!form.get('chargeLabel').valid &&form.get('chargeLabel').touched">Charge Label</div>
+                    </div>
+               </ion-item>
+            </ion-col>
+
+            <ion-col size-lg="2" size-xl="2" size="2"  size-md="2">
+                <ion-item>
+                    <ion-label position="floating">Unit Type</ion-label>
+                    <ion-input  formControlName="unitType"></ion-input>
+                    <div class="error">
+                        <div *ngIf="!form.get('unitType').valid &&form.get('unitType').touched">Unit Type Required</div>
+                    </div>
+                </ion-item>
+            </ion-col>
+
+            <ion-col size-lg="2" size-xl="2" size="2"  size-md="2">
+              <ion-item>
+                  <ion-label  position="floating">Default Qty</ion-label>
+                  <ion-input type="number"  formControlName="defaultQty"></ion-input>
+                  <div class="error">
+                      <div *ngIf="!form.get('defaultQty').valid &&form.get('defaultQty').touched">Default Qty Required</div>
+                  </div>
+              </ion-item>
+           </ion-col>
+
+           <ion-col size-lg="2" size-xl="2" size="2"  size-md="2">
+              <ion-item>
+                  <ion-label position="floating">Client Cost</ion-label>
+                  <ion-input  formControlName="clientCost"></ion-input>
+                  <div class="error">
+                      <div *ngIf="!form.get('clientCost').valid &&form.get('clientCost').touched">Client Cost Required</div>
+                  </div>
+              </ion-item>
+           </ion-col>
+
+           <ion-col size-lg="2" size-xl="2" size="2"  size-md="2">
+              <ion-item>
+                  <ion-label position="floating">Qty Included</ion-label>
+                  <ion-input type="number"  formControlName="qtyIncluded"></ion-input>
+                  <div class="error">
+                      <div *ngIf="!form.get('qtyIncluded').valid &&form.get('qtyIncluded').touched">Qty Included Required</div>
+                  </div>
+              </ion-item>
+          </ion-col>
+
+    
+
+          <ion-col size-lg="2" size-xl="2" size="2"  size-md="2">
+              <ion-item>
+                  <ion-label position="floating">Equipment Cost</ion-label>
+                  <ion-input  formControlName="equipmentCost"></ion-input>
+                  <div class="error">
+                      <div *ngIf="!form.get('equipmentCost').valid &&form.get('equipmentCost').touched">Equipment Cost Required</div>
+                  </div>
+              </ion-item>
+          </ion-col>
+
+          <ion-col size-lg="2" size-xl="2" size="2"  size-md="2">
+              <ion-item>
+                  <ion-label position="floating">Percent Markup</ion-label>
+                  <ion-input  formControlName="percentMarkup"></ion-input>
+                  <div class="error">
+                      <div *ngIf="!form.get('percentMarkup').valid &&form.get('percentMarkup').touched">Percent Markup Required</div>
+                  </div>
+              </ion-item>
+          </ion-col>
+
+          <ion-col size-lg="2" size-xl="2" size="2"  size-md="2" >
+              <ion-item>
+                  <ion-label position="stacked">Show by Default</ion-label>
+                  <div>
+                      <label class="pillLabelNo">No</label>
+                      <ion-toggle formControlName="showByDefault" class="pillYesNo" ></ion-toggle>
+                      <label class="pillLabelYes">Yes</label>
+                      <div *ngIf='isMobileDevice' class="pillPadiOS"></div>
+                      <div *ngIf='!isMobileDevice' class="pillPadWeb"></div>
+                  </div>
+              </ion-item>
+          </ion-col>
+        
+     
+          <ion-col  size-lg="2" size-xl="2" size="2"  size-md="2" >
+              <ion-item>
+                  <ion-label position="stacked">Is Active</ion-label>
+                  <div>
+                      <label class="pillLabelNo">No</label>
+                      <ion-toggle formControlName="isActive" class="pillYesNo" ></ion-toggle>
+                      <label class="pillLabelYes">Yes</label>
+                      <div *ngIf='isMobileDevice' class="pillPadiOS"></div>
+                      <div *ngIf='!isMobileDevice' class="pillPadWeb"></div>
+                  </div>
+              </ion-item>
+          </ion-col>
+           
+
+           
+        </ion-row>
+        <ion-row>
+          <hr >
+        </ion-row>
+        
+        
+        
+
+        </form>
+    
+</ion-grid>

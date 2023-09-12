@@ -1,0 +1,19 @@
+
+  <ion-grid>
+      <ion-row class="headerRow" style="margin:0px; padding: 0px;"> 
+          <ion-col size="12">
+             {{reportTitle}}
+          </ion-col>
+      </ion-row>
+    <ion-row>
+        <ion-col size="12" align-self-center >
+            <div style='text-align: center' *ngIf="data === undefined">
+                <ion-spinner name="crescent" ></ion-spinner>
+            </div>
+            <div style='text-align: center'>
+            <p-chart type="{{chartType}}" #chart  height="42vh" [options]="options" [data]="data"></p-chart>
+          </div>
+        </ion-col>
+    </ion-row>
+
+  </ion-grid>

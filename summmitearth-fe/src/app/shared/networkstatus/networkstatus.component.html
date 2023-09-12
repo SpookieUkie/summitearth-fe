@@ -1,0 +1,7 @@
+<div *ngIf="status !== null">
+    <ion-item>
+        <ion-label>Network Status</ion-label>
+        <ion-icon name="wifi" class="issue" *ngIf="status === undefined || status.connected === false" (click)="showPopover($event)"></ion-icon>
+        <ion-icon name="wifi" class="on" *ngIf="status !== undefined && status.connected"  (click)="showPopover($event)"></ion-icon>
+     </ion-item>
+</div>

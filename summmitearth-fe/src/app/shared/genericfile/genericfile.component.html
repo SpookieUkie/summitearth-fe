@@ -1,0 +1,57 @@
+
+<ion-card>
+    <ion-grid size="12" size-lg='12'>
+     <form [formGroup]="form">  
+         <ion-row size="12">
+              <ion-col size-md="11"  size-lg="11" size-sm="11" size-xs="11" size-xl="11" >
+                    <ion-item>
+                        <input *ngIf="os==='web'" type="file" accept=".xlsx,.xls,.doc, .docx,.ppt, .pptx,.txt,.pdf"  #filePicker single (change)="onFileChosenWeb($event)"/>  
+                        <ion-button *ngIf="os==='ios'" (click)="onFileChosenIOS(event)"> Choose File</ion-button>
+                        <ion-button *ngIf="os==='android'" (click)="onFileChosenAndroid(event)"> Choose File</ion-button>
+                    </ion-item>
+                 
+              </ion-col>
+
+              <ion-col size-md="1" size-lg="1" size-xl="1" size-xs="1" size-sm="1" >
+                    <ion-icon name="close-circle" (click)="deleteFile()" class="singleRec" color="danger"  ></ion-icon>
+              </ion-col>
+
+              
+           
+              <ion-col size-md="11"  size-lg="11" size-sm="11" size-xs="11" size-xl="11" >
+                    <ion-item>
+                        <ion-label  position="floating">Filename</ion-label>
+                        <ion-input  mode="md" formControlName="displayName" ></ion-input>
+                    </ion-item>
+              </ion-col>
+
+              <ion-col size-md="1" size-lg="1" size-xl="1" size-xs="1" size-sm="1" >
+                      <ion-icon name="save" *ngIf="!form.dirty" (click)="saveFile()"  class="singleRec" ></ion-icon>
+                      <ion-icon name="save" *ngIf="form.dirty" (click)="saveFile()"  class="singleRecDirty" ></ion-icon>
+              </ion-col>
+           
+
+              <ion-col size-md="11"  size-lg="11" size-sm="11" size-xs="11" size-xl="11" >
+                    <ion-item>
+                        <ion-label  position="floating">File Comments</ion-label>
+                        <ion-textarea rows="3" formControlName="fileComments" placeholder=" "></ion-textarea>
+                    </ion-item>
+              </ion-col>
+             
+
+              <ion-col  size-md="1"  size-lg="1" size-sm="1" size-xs="1" size-xl="1" (click)="viewFile()">
+                    <div [ngClass]="getClass()" [hidden]="genericFile._id === undefined" style="float:right; margin-top: 5px;">
+                        <div class="fi-content" >{{getLabel()}}</div>
+                    </div>
+              </ion-col>
+  
+             
+          </ion-row>
+          <ion-row>
+              
+           
+          </ion-row>
+
+      </form> 
+    </ion-grid>
+ </ion-card>

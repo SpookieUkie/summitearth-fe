@@ -1,0 +1,332 @@
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-buttons slot="start">
+            <ion-button (click)="backToDFRList()" >
+                <ion-icon slot="icon-only" name="arrow-round-back"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+        <ion-title [hidden]="viewWidth < 576">
+        Daily Field Report - Summary - <span *ngIf="currentDFR !== undefined"> {{currentDFR.dfrStatus}}</span> 
+        </ion-title>
+
+        <ion-buttons slot="end">
+            <ion-button icon-only (click)="showHideFormErrors()">
+                <ion-icon *ngIf="form.valid"   name="checkmark-circle" class="valid"  class="ion-float-right"></ion-icon>
+                <ion-icon *ngIf="!form.valid"  name="warning" class="warning" class="ion-float-right"></ion-icon>
+            </ion-button>
+            <ion-button icon-only (click)="onSaveForm();">
+                    <ion-icon name="save" *ngIf="!form.dirty" class="valid"></ion-icon>
+                    <ion-icon name="save" *ngIf="form.dirty" class='dirty'></ion-icon>
+            </ion-button>
+            <ion-button  icon-only (click)="showTopMenu($event)">
+                <ion-icon  name="apps" ></ion-icon>
+            </ion-button>
+          <app-navmenu></app-navmenu>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+<ion-refresher slot="fixed" (ionRefresh)="refreshPage($event, ionrefresher)" #ionrefresher>
+        <ion-refresher-content
+          pullingIcon="arrow-dropdown"
+          pullingText="Pull to refresh"
+          refreshingSpinner="circles"
+          refreshingText="Refreshing...">
+        </ion-refresher-content>
+      </ion-refresher>
+<ion-content>
+    <ion-grid size="12">
+        <app-dfr-header-menu></app-dfr-header-menu>
+        <form [formGroup]="form" >
+            <ion-row class="headerRow" style="margin:0px; padding: 0px;"> 
+                <ion-col size="12">
+                    Daily Summary Information: {{form.get('dfrDate').value | date}}
+                </ion-col>
+            </ion-row>
+            
+            <ion-row>
+                <ion-col size-lg="6" size-xl="3" size="12"   size-md="12">
+                    <ion-item>
+                        <ion-label position="floating">Project Name</ion-label> 
+                        <ion-input  mode="md" formControlName="projectName"  autocorrect ></ion-input>
+                        <div class="error">
+                            <div *ngIf="!form.get('projectName').valid &&form.get('projectName').touched">Project Name Required</div>
+                        </div>
+                    </ion-item>
+                </ion-col>
+        
+                <ion-col size-lg="6" size-xl="3" size="12"  size-md="12">
+                   <ion-item>
+                        <span item-right style="width:100%;">
+                            <ion-icon name="help" (click)="presentProjectNumberPopover($event)" class="icon"></ion-icon>
+                        </span>
+                        <ion-label position="floating">Project Number</ion-label>
+                        <ion-input type="number" readonly  mode="md" formControlName="projectNumber" autocorrect ></ion-input>
+                        <div class="error">
+                            <div *ngIf="!form.get('projectNumber').valid &&form.get('projectNumber').touched">Project Number Required</div>
+                        </div>
+                   </ion-item>
+                </ion-col>
+
+                <ion-col size-lg="6" size-xl="3" size="12"  size-md="12">
+                    <ion-item>
+                        <ion-label position="floating">Project Type</ion-label>
+                        <ion-input  formControlName="projectType"></ion-input>
+                        <div class="error">
+                            <div *ngIf="!form.get('projectType').valid &&form.get('projectType').touched">Project Type Required</div>
+                        </div>
+                    </ion-item>
+                </ion-col>
+            
+               
+                    <ion-col size-lg="6" size-xl="3" size="12" size-md="12">
+                       
+                        <div *ngIf="!isMobile">
+                            <ion-item>
+                                <ion-label position="floating">Date</ion-label> 
+                                
+                                        <ion-grid class="calendarGrid">
+                                            <ion-row class="calendarGridRow" class="ion-justify-content-center">
+                                                <ion-col class="calendarGridCol" size="1" class="ion-align-self-center">
+                                                    <ion-icon name="calendar" class="calIcon" (click)="showCalendar($event, this.form.value.dfrDate);" icon-only></ion-icon>
+                                                </ion-col>
+                                                <ion-col class="calendarGridCol" size="11">
+                                                    <ion-input placeholder="DFR Date" #dfrDate readonly formControlName="dfrDate" ></ion-input>
+                                                </ion-col>
+                                            </ion-row>
+                                        </ion-grid>
+                                
+                                
+                                <div class="error">
+                                    <div *ngIf="!form.get('dfrDate').valid && form.get('dfrDate').touched">Date Required</div>
+                                </div>
+                            </ion-item>
+                        </div>
+
+                        <div *ngIf="isMobile">                     
+                            <ion-item>
+                                <ion-label position="stacked">Date</ion-label>
+                                <ion-datetime class="dateTimeRange" formControlName='dfrDate' displayFormat="MM/DD/YYYY" ></ion-datetime>
+                                <div class="error">
+                                    <div *ngIf="!form.get('dfrDate').valid && form.get('dfrDate').touched">Date Required</div>
+                                </div>
+                            </ion-item>
+                            
+                         </div>
+                    </ion-col>
+               
+
+               
+            </ion-row>
+            
+            <ion-row>
+                <ion-col size-lg="6" size-xl="3" size="12" size-md="12">
+                    <ion-item>
+                        <ion-label position="floating">Project Location</ion-label>
+                        <ion-input formControlName="projectLocation" autocorrect> </ion-input>
+                        <div class="error">
+                            <div *ngIf="!form.get('projectLocation').valid && form.get('projectLocation').touched">Project Location Required</div>
+                        </div>
+                    </ion-item>
+                </ion-col>
+            
+                <ion-col size-lg="6" size-xl="3" size="12" size-md="12">
+                    <ion-item>
+                        <ion-label position="floating" size="6">Superintendent</ion-label> 
+                        <ion-input  formControlName="superIntendent"></ion-input>
+                            <div class="error">
+                                <div *ngIf="!form.get('superIntendent').valid &&form.get('superIntendent').touched">SuperIntendent Required</div>
+                            </div>
+                    </ion-item>
+                </ion-col>
+            
+                <ion-col size-lg="6" size-xl="3" size="12" size-md="12">
+                    <ion-item>
+                        <ion-label position="floating">Enviro Lead</ion-label> 
+                        <ion-input  formControlName="enviroLead"></ion-input>
+                        <div class="error">
+                            <div *ngIf="!form.get('enviroLead').valid &&form.get('enviroLead').touched">Enviro Lead Required</div>
+                        </div>
+                    </ion-item>
+                </ion-col>
+            
+                <ion-col size-lg="6" size-xl="3" size="12" size-md="12">
+                    <ion-item>
+                        <ion-label position="floating">Summit PM</ion-label> 
+                        <ion-input formControlName="summitProjectManager"></ion-input>
+                        <div class="error">
+                            <div *ngIf="!form.get('summitProjectManager').valid &&form.get('summitProjectManager').touched">Summit Project Manager Required</div>
+                        </div>
+                       
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+            
+            
+            <ion-row>
+                <ion-col size-lg="6" size-xl="3" size="12" size-md="12">
+                    <ion-item>
+                        <ion-label #clientSelectLabel position="floating">Client</ion-label> 
+                        <ion-select #clientSelect  formControlName="client"  (ionChange)="setClientId($event)" >
+                            <ion-select-option   *ngFor="let val of clients" [value]="val">{{val.clientName}}</ion-select-option>
+                        </ion-select>
+                        <div class="error">
+                            <div *ngIf="!form.get('client').valid &&form.get('client').touched">Client Required</div>
+                        </div>
+                    </ion-item>
+                </ion-col>
+            
+                <ion-col size-lg="6" size-xl="3" size="12" size-md="12">
+                    <ion-item>
+                        <ion-label position="floating" size="6">Solids Disposal Method</ion-label> 
+                        <ion-select multiple="true" formControlName="solidsDisposalMethod">
+                            <ion-select-option *ngFor="let val of disposalMethodsList">{{val.disposalMethod}}</ion-select-option>
+                        </ion-select>
+                        <div class="error">
+                            <div *ngIf="!form.get('solidsDisposalMethod').valid &&form.get('solidsDisposalMethod').touched">Solids Disposal Method Required</div>
+                        </div>
+                    
+                    </ion-item>
+                </ion-col>
+            
+                <ion-col size-lg="6" size-xl="3" size="12" size-md="12">
+                    <ion-item>
+                        <ion-label  position="floating">Liquids Disposal Method</ion-label>
+                        <ion-select multiple="true" formControlName="liquidsDisposalMethod">
+                            <ion-select-option *ngFor="let val of disposalMethodsList">{{val.disposalMethod}}</ion-select-option>
+                        </ion-select>
+                        <div class="error">
+                            <div *ngIf="!form.get('liquidsDisposalMethod').valid &&form.get('liquidsDisposalMethod').touched">Liquids Disposal Method Required</div>
+                        </div>
+                        
+                    </ion-item>
+                </ion-col>
+            
+                <ion-col size-lg="6" size-xl="3" size="12" size-md="12">
+                    <ion-item>
+                        <ion-label position="floating">Contact</ion-label> 
+                        <ion-input  formControlName="contactInformation"></ion-input>
+                        <div class="error">
+                            <div *ngIf="!form.get('contactInformation').valid &&form.get('contactInformation').touched">Contact Information Required</div>
+                        </div>
+                        
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+            
+            <ion-row>
+                <ion-col size-lg="6" size-xl="3" size="12" size-md="12">
+                    <ion-item>
+                        <ion-label position="floating">Installed Pipe Size</ion-label>
+                        <ion-input  formControlName="installedPipeSize" ></ion-input>
+                        <div class="error">
+                            <div *ngIf="!form.get('installedPipeSize').valid &&form.get('installedPipeSize').touched">Installed Pipe Size Required</div>
+                        </div>    
+                       
+                    </ion-item>
+                </ion-col>
+            
+                <ion-col size-lg="6" size-xl="3" size="12" size-md="12">
+                    <ion-item>
+                        <ion-label position="floating">Reaming Progression</ion-label>
+                        <ion-input size="6" formControlName="reamingProgression"></ion-input>
+                        <div class="error">
+                            <div *ngIf="!form.get('reamingProgression').valid &&form.get('reamingProgression').touched">Reaming Progression Required</div>
+                        </div> 
+                    
+                    </ion-item>
+                </ion-col>
+            
+                <ion-col size-lg="6" size-xl="3" size="12" size-md="12">
+                    <ion-item>
+                        <ion-label position="floating">Weather</ion-label>
+                        <ion-input formControlName="currentWeather"></ion-input>
+                       
+                        <div class="error">
+                            <div *ngIf="!form.get('currentWeather').valid &&form.get('currentWeather').touched">Current Weather Required</div>
+                        </div> 
+      
+                    </ion-item>
+                </ion-col>
+            
+                <ion-col size-lg="6" size-xl="3" size="12" size-md="12">
+                    <ion-item>
+                    <ion-label position="floating">Forecast</ion-label> 
+                    <ion-input formControlName="forecastWeather"></ion-input>
+                    <div class="error">
+                        <div *ngIf="!form.get('forecastWeather').valid &&form.get('forecastWeather').touched">Weather Forecast Required</div>
+                    </div> 
+                    
+                    </ion-item>
+                </ion-col>
+           
+            </ion-row>
+            
+            
+            <ion-row>
+                <ion-col size-lg="6" size-xl="3" size="12" size-md="12">
+                    <ion-item>
+                        <ion-label position="floating">Summit Field Rep</ion-label>
+                        <ion-input placeholder="Field Rep" formControlName="summitFieldRepresentative" ></ion-input>
+                        <div class="error">
+                            <div *ngIf="!form.get('summitFieldRepresentative').valid &&form.get('summitFieldRepresentative').touched">Summit Field Representitive Required</div>
+                        </div> 
+                    </ion-item>
+                </ion-col>
+            
+                <ion-col size-lg="6" size-xl="3" size="12" size-md="12">
+                    <ion-item>
+                        <ion-label position="floating">Summit Rep Contact Information</ion-label>
+                        <ion-input size="6" placeholder="Contact" formControlName="summitFieldContactInformation"></ion-input>
+                        <div class="error">
+                            <div *ngIf="!form.get('summitFieldContactInformation').valid &&form.get('summitFieldContactInformation').touched">Summit Field Representitive Required</div>
+                        </div>
+                   
+                    </ion-item>
+                </ion-col>
+            
+                <ion-col size-lg="6" size-xl="3" size="12" size-md="12">
+                    <ion-item>
+                        <ion-label position="floating">Hours of Work</ion-label>
+                        <ion-input placeholder="Work Hours"  formControlName="hoursOfWork"></ion-input> 
+                        <div class="error">
+                            <div *ngIf="!form.get('hoursOfWork').valid && form.get('hoursOfWork').touched">Hours of Work Required</div>
+                        </div>
+                    </ion-item>
+                </ion-col>
+
+                <ion-col *ngIf="currentUser.isAdmin" size-lg="6" size-xl="3" size="12" size-md="12">
+                    <ion-item>
+                        <span item-right style="width:100%;">
+                            <ion-icon name="add-circle-outline" (click)="presentTechPopover($event)" class="icon"></ion-icon>
+                        </span>
+                        <ion-label position="floating">Assigned To</ion-label>
+                        <ion-input readonly placeholder="Assign To" formControlName="assignedToFullName" #assignedTo ></ion-input> 
+                        <div class="error">
+                            <div> </div>
+                        </div>
+                    </ion-item>
+                </ion-col>
+
+            
+            </ion-row>
+
+            <ion-row>
+                <ion-col size="10" offset="1">
+                    <ion-item>
+                        <ion-label  position="floating" >Daily Activity Summary</ion-label>
+                        <ion-textarea rows="4" placeHolder="Add Daily Summary" formControlName="dailyActivitySummary"></ion-textarea>
+                        <span class="error" *ngIf="!form.get('dailyActivitySummary').valid && form.get('dailyActivitySummary').touched">Daily Activity Summary Required</span>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+            
+            <ion-row >
+                <ion-col size="10" offset="1" style="height: 40px;">
+                   
+                </ion-col>
+            </ion-row>
+
+            </form>
+        
+    </ion-grid>
+</ion-content>

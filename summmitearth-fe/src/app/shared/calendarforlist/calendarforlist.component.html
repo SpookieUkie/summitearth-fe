@@ -1,0 +1,12 @@
+
+<ion-label *ngIf="!hideLabel">{{dateLabel}}</ion-label>
+<ion-grid class="calendarGrid" >
+    <ion-row class="calendarGridRow" justify-content-center>
+        <ion-col class="calendarGridCol" size="1" align-self-center>
+            <ion-icon name="calendar"  (click)="showCalendar($event);" icon-only></ion-icon>
+        </ion-col>
+        <ion-col class="calendarGridCol" size="11">
+            <ion-input placeholder="{{dateLabel}}"  #myDate  readonly  value="{{dateVal}}" ></ion-input>
+        </ion-col>
+    </ion-row>
+</ion-grid>

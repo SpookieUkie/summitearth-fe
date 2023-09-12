@@ -1,0 +1,16 @@
+<ion-item [formGroup]="inlineFormGroup">
+  <ion-label position="floating">{{sectionTitle}}</ion-label> 
+    <ion-grid class="calendarGrid">
+      <ion-row class="calendarGridRow" class="ion-justify-content-center">
+          <ion-col class="calendarGridCol" size="1" class="ion-align-self-center">
+              <ion-icon name="calendar" class="calIcon" (click)="showCalendar($event, this.inlineFormGroup.value[fieldName])" icon-only></ion-icon>
+          </ion-col>
+          <ion-col class="calendarGridCol" size="11">
+              <ion-input placeholder="Pick a Date" #refDate readonly formControlName="{{inlineFormGroupName}}" ></ion-input>
+          </ion-col>
+      </ion-row>
+  </ion-grid>
+  <div class="error">
+     <!--  <div *ngIf="!inlineFormGroup.get('refDate').valid && inlineFormGroup.get('refDate').touched">Date Required</div> -->
+  </div>
+</ion-item>

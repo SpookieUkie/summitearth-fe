@@ -1,0 +1,12 @@
+<ion-content >
+    <ion-item>
+        <ion-label>Select a Name 2</ion-label> 
+    </ion-item>
+   
+    <ion-searchbar (ionInput)="setFilter($event)" autofocus  #ionSearchBox></ion-searchbar>
+    <div  *ngIf="showResults" >
+        <ion-list  *ngFor="let tech of filteredUserList" >
+            <ion-item (click)="itemClicked(tech)" (ionClear)=itemCleared()>{{tech.firstName + ' ' + tech.lastName}}</ion-item>
+        </ion-list>
+    </div>
+  </ion-content>

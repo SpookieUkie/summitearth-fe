@@ -1,0 +1,82 @@
+
+<ion-header >
+    <ion-toolbar color="primary">
+        <ion-buttons slot="start">
+            <ion-button (click)="backToList()" >
+                <ion-icon slot="icon-only" name="arrow-round-back"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        <ion-title [hidden]="viewWidth < 576">
+       Daily Audit DWM List
+        </ion-title>
+        <ion-buttons slot="end">
+            <ion-button icon-only (click)="createNewReport()">
+              <ion-icon name="add-circle"  ></ion-icon>
+            </ion-button>
+            <app-navmenu></app-navmenu>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+  <ion-content>
+    <ion-refresher slot="fixed" (ionRefresh)="refreshPage($event, ionrefresher)" #ionrefresher>
+        <ion-refresher-content
+          pullingIcon="arrow-dropdown"
+          pullingText="Pull to refresh"
+          refreshingSpinner="circles"
+          refreshingText="Refreshing...">
+        </ion-refresher-content>
+      </ion-refresher>
+      
+
+    <ion-card class="search-card">
+        <ion-card-content>
+              <ion-grid>
+                  <form [formGroup]="form"> 
+                    <ion-row>
+                      <ion-col size-md="3" offset="1">
+                        <ion-label>Start Date</ion-label>
+                        <ion-datetime class="dateTimeRange" formControlName='startDate' (ionChange)="startDateChange($event)"  displayFormat="MM/DD/YYYY" ></ion-datetime>
+                      </ion-col>
+                      <ion-col  size-md="3" >
+                          <ion-label>End Date</ion-label>
+                          <ion-datetime class="dateTimeRange" formControlName='endDate' (ionChange)="endDateChange($event)" displayFormat="MM/DD/YYYY" ></ion-datetime>
+                      </ion-col>
+                      <ion-col  size-md="3" style="padding-bottom: 2px;" align-self-end >
+                          <ion-button expand="full" (click)="getDailyAuditList()" shape="full" color='secondary'>
+                            <ion-icon name="search"></ion-icon>Search </ion-button>    
+                      </ion-col>
+                    </ion-row>
+                  </form>
+              </ion-grid>
+        </ion-card-content>
+    </ion-card>
+
+    
+    <ion-list lines="solid" size-md="6" size-xl="10" offset-md="3" size-lg="10" offset-md="1" size="10" #ionSlidingList>
+      <ion-item-sliding  size-md="6" offset-md="3" *ngFor="let item of reportList"  #slidingItem>
+        <div *ngIf="!isPhone">
+          <ion-item  size-xl="10" size-lg="10" offset-md="1" size="10" detail (click)="itemClicked(item)">
+            <ion-label>Job Number: {{item.jobNumber}}</ion-label>
+            <ion-label>Date: {{item.inspectionDate.substring(0, 10)  }}</ion-label>
+            <ion-label>Status: {{item.reportStatus}}</ion-label>
+          </ion-item>
+        </div>
+
+        <div *ngIf="isPhone">
+            <ion-item  size-xl="10" size-lg="10" offset-md="1" size="10" detail (click)="itemClicked(item)">
+              <ion-label>{{item.jobNumber}}</ion-label>
+              <ion-label>{{item.inspectionDate.substring(0, 10) }}</ion-label>
+              <ion-label>{{item.reportStatus}}</ion-label>
+            </ion-item>
+          </div>
+       
+        <ion-item-options side="end" >
+            <ion-item-option *ngIf="item.reportStatus!='Submitted'" color='primary' (click)="editReport(item, slidingItem)">Edit</ion-item-option>
+            <ion-item-option color='secondary' (click)="copyReport(item, slidingItem)">Copy</ion-item-option>
+            <ion-item-option *ngIf="item.reportStatus!='Submitted'" color="danger" (click)="deleteReport(item._id, slidingItem)">Delete</ion-item-option>  
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-list>
+
+</ion-content>

@@ -1,0 +1,299 @@
+<ion-header >
+  <ion-toolbar color="primary">
+      <ion-buttons slot="start">
+          <ion-button (click)="backToList()" >
+              <ion-icon slot="icon-only" name="arrow-round-back"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      <ion-title [hidden]="viewWidth < 576">
+        DWM - LWD - Land Info
+      </ion-title>
+      <ion-buttons slot="end">
+          <ion-button icon-only (click)="showHideFormErrors()">
+              <ion-icon *ngIf="form.valid"   name="checkmark-circle" class="valid"  class="ion-float-right"></ion-icon>
+              <ion-icon *ngIf="!form.valid"  name="warning" class="warning" class="ion-float-right"></ion-icon>
+          </ion-button>
+          <ion-button icon-only (click)="onSaveForm();">
+              <ion-icon name="save" *ngIf="!form.dirty" class="valid"></ion-icon>
+              <ion-icon name="save" *ngIf="form.dirty" class='dirty'></ion-icon>
+        </ion-button>
+        <!-- <app-checklistoptions (itemSelected)="itemSelected($event)" [currentView]="'LWDFieldInspection'"></app-checklistoptions> -->
+       <!--<app-navmenu></app-navmenu>  --> 
+      </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+ <app-topmenu></app-topmenu>
+  <ion-grid size="12" >
+    <form [formGroup]="form" >
+         <ion-row class="headerRow" style="margin:0px; padding: 0px;"> 
+            <ion-col size="12">
+                Water Access Owner Information
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size-lg="3" size-xl="4" size="12"   size-md="6">
+              <ion-item>
+                <ion-label position="floating">Legal Title Holder</ion-label> 
+                <ion-input  mode="md" formControlName="waterOwnerName" ></ion-input>
+                <div class="error">
+                    <div *ngIf="!form.get('waterOwnerName').valid && form.get('waterOwnerName').touched">Land Owner Required</div>
+                </div>
+              </ion-item>
+            </ion-col>
+            
+            <ion-col size-lg="3" size-xl="4" size="12"   size-md="6">
+              <ion-item>
+                <ion-label position="floating"> Location</ion-label> 
+                <ion-input  mode="md" formControlName="waterLocation" ></ion-input>
+                <div class="error">
+                  <div *ngIf="!form.get('waterOwnerName').valid && form.get('waterOwnerName').touched">Land Location Required</div>
+                </div>
+              </ion-item>
+            </ion-col>
+
+            <ion-col size-lg="3" size-xl="4" size="12"   size-md="6">
+              <app-calendarforform [inlineFormGroupName]="'consentDate'" [fieldName]="'consentDate'" [isMobileDevice]="isMobileDevice" [inlineFormGroup]="form" [sectionTitle]="'Consent Date'"></app-calendarforform>
+           </ion-col>
+
+            <ion-col size-lg="3" size-xl="4" size="12"   size-md="6">
+              <ion-item>
+                <ion-label position="floating">Agreement Number</ion-label> 
+                <ion-input  mode="md" formControlName="agreementNumber" ></ion-input>
+                <div class="error">
+                  <div *ngIf="!form.get('agreementNumber').valid && form.get('agreementNumber').touched">Land Location Required</div>
+                </div>
+              </ion-item>
+            </ion-col>
+
+            <ion-col size-lg="3" size-xl="4" size="12"   size-md="6">
+              <ion-item>
+                <ion-label position="floating">Cost for Water</ion-label> 
+                <ion-input  mode="md" formControlName="costOfWater" ></ion-input>
+                <div class="error">
+                  <div *ngIf="!form.get('costOfWater').valid && form.get('costOfWater').touched">Land Location Required</div>
+                </div>
+              </ion-item>
+            </ion-col>
+
+            <ion-col size-lg="3" size-xl="4" size="12" size-md="6" size-sm="12"  >
+              <app-pillyesnoroot [isMobileDevice]="isMobileDevice" [fieldName]="'isTDLRequired'" 
+              [inlineFormGroup]="form"  [sectionTitle]="'TDL Required'"></app-pillyesnoroot>
+            </ion-col>
+
+
+            <!--   <ion-col size-lg="3" size-xl="4" size="12" size-md="6" size-sm="12"  >
+              <app-pillyesnoroot [isMobileDevice]="isMobileDevice" [fieldName]="'multiWellDisposal'" 
+              [inlineFormGroup]="form"  [sectionTitle]="'Is Multi Well Disposal'"></app-pillyesnoroot>
+            </ion-col>-->
+
+          </ion-row>
+
+          <ion-row class="headerRow" style="margin:0px; padding: 0px;"> 
+            <ion-col size="12">
+                Water Salinities
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col size-lg="2" size-xl="1" size="12"   size-md="6">
+              <ion-item>
+                <ion-label position="floating">pH</ion-label> 
+                <ion-input  mode="md" formControlName="pH" ></ion-input>
+                <div class="error">
+                  <div *ngIf="!form.get('pH').valid && form.get('pH').touched">pH Required</div>
+                </div>
+              </ion-item>
+            </ion-col>
+
+            <ion-col size-lg="2" size-xl="1"  size="12"   size-md="6">
+              <ion-item>
+                <ion-label position="floating">EC</ion-label> 
+                <ion-input  mode="md" formControlName="ec" ></ion-input>
+                <div class="error">
+                  <div *ngIf="!form.get('ec').valid && form.get('ec').touched">EC Required</div>
+                </div>
+              </ion-item>
+            </ion-col>
+
+            <ion-col size-lg="2" size-xl="1"  size="12"   size-md="6">
+              <ion-item>
+                <ion-label position="floating">Sulphate (mg/L)</ion-label> 
+                <ion-input  mode="md" formControlName="so4" ></ion-input>
+                <div class="error">
+                  <div *ngIf="!form.get('so4').valid && form.get('so4').touched">Sulphate Required</div>
+                </div>
+              </ion-item>
+            </ion-col>
+
+            <ion-col size-lg="2" size-xl="1"  size="12"   size-md="6">
+              <ion-item>
+                <ion-label position="floating">Chroride (mg/L)</ion-label> 
+                <ion-input  mode="md" formControlName="cl" ></ion-input>
+                <div class="error">
+                  <div *ngIf="!form.get('cl').valid && form.get('cl').touched">Chroride Required</div>
+                </div>
+              </ion-item>
+            </ion-col>
+
+            <ion-col size-lg="2" size-xl="1"  size="12"   size-md="6">
+              <ion-item>
+                <ion-label position="floating">Calcium (mg/L)</ion-label> 
+                <ion-input  mode="md" formControlName="ca" ></ion-input>
+                <div class="error">
+                  <div *ngIf="!form.get('ca').valid && form.get('ca').touched">Calcium Required</div>
+                </div>
+              </ion-item>
+            </ion-col>
+
+
+            <ion-col size-lg="2" size-xl="1"  size="12"   size-md="6">
+              <ion-item>
+                <ion-label position="floating">Magnesium (mg/L)</ion-label> 
+                <ion-input  mode="md" formControlName="mg" ></ion-input>
+                <div class="error">
+                  <div *ngIf="!form.get('mg').valid && form.get('mg').touched">Magnesium Required</div>
+                </div>
+              </ion-item>
+            </ion-col>
+
+            <ion-col size-lg="2" size-xl="1"  size="12"   size-md="6">
+              <ion-item>
+                <ion-label position="floating">Sodium (mg/L)</ion-label> 
+                <ion-input  mode="md" formControlName="na" ></ion-input>
+                <div class="error">
+                  <div *ngIf="!form.get('na').valid && form.get('na').touched">Sodium Required</div>
+                </div>
+              </ion-item>
+            </ion-col>
+
+
+            <ion-col size-lg="2" size-xl="1"  size="12"   size-md="6">
+              <ion-item>
+                <ion-label position="floating">SAR</ion-label> 
+                <ion-input  mode="md" formControlName="sar" ></ion-input>
+                <div class="error">
+                  <div *ngIf="!form.get('sar').valid && form.get('sar').touched">SAR Required</div>
+                </div>
+              </ion-item>
+            </ion-col>
+
+            <ion-col size-lg="2" size-xl="1"  size="12"   size-md="6">
+              <ion-item>
+                <ion-label position="floating"> Total Nitrogen (mg/L) </ion-label> 
+                <ion-input  mode="md" formControlName="n" ></ion-input>
+                <div class="error">
+                  <div *ngIf="!form.get('n').valid && form.get('n').touched">Total Nitrogen Required</div>
+                </div>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+
+
+          <ion-row class="headerRow" style="margin:0px; padding: 0px;"> 
+            <ion-col size="12">
+                Water Permit Information
+            </ion-col>
+          </ion-row>
+
+
+          <ion-row>
+            <ion-col size-lg="3" size-xl="2"  size="12"   size-md="6">
+              <ion-item>
+                <ion-label position="floating"> Permit Number</ion-label> 
+                <ion-input  mode="md" formControlName="permitNumber" ></ion-input>
+                <div class="error">
+                  <div *ngIf="!form.get('permitNumber').valid && form.get('permitNumber').touched">Permit Number Required</div>
+                </div>
+              </ion-item>
+            </ion-col>
+
+            <ion-col size-lg="3" size-xl="2"  size="12"   size-md="6">
+              <ion-item>
+                <ion-label position="floating"> Purpose of Water Diversion</ion-label> 
+                <ion-input  mode="md" formControlName="purposeOfWaterDiversion" ></ion-input>
+                <div class="error">
+                  <div *ngIf="!form.get('purposeOfWaterDiversion').valid && form.get('purposeOfWaterDiversion').touched">Purpose of Water Diversion Required</div>
+                </div>
+              </ion-item>
+            </ion-col>
+
+            <ion-col size-lg="3" size-xl="2"  size="12"   size-md="6">
+              <ion-item>
+                <ion-label position="floating"> Source of Water</ion-label> 
+                <ion-input  mode="md" formControlName="sourceOfWater" ></ion-input>
+                <div class="error">
+                  <div *ngIf="!form.get('sourceOfWater').valid && form.get('sourceOfWater').touched">Source of Water Required</div>
+                </div>
+              </ion-item>
+            </ion-col>
+
+
+            <ion-col size-lg="3" size-xl="2"  size="12"   size-md="6">
+              <ion-item>
+                <ion-label position="floating"> Source Type</ion-label> 
+                <ion-input  mode="md" formControlName="sourceType" ></ion-input>
+                <div class="error">
+                  <div *ngIf="!form.get('sourceType').valid && form.get('sourceType').touched">Source Tpye Required</div>
+                </div>
+              </ion-item>
+            </ion-col>
+
+
+            <ion-col size-lg="3" size-xl="2"  size="12"   size-md="6">
+              <ion-item>
+                <ion-label position="floating"> Point of Diversion</ion-label> 
+                <ion-input  mode="md" formControlName="pointOfDiversion" ></ion-input>
+                <div class="error">
+                  <div *ngIf="!form.get('pointOfDiversion').valid && form.get('pointOfDiversion').touched">Point of Diversion Required</div>
+                </div>
+              </ion-item>
+            </ion-col>
+
+            <ion-col size-lg="3" size-xl="2"  size="12"   size-md="6">
+              <ion-item>
+                <ion-label position="floating"> Point of Use</ion-label> 
+                <ion-input  mode="md" formControlName="pointOfUse" ></ion-input>
+                <div class="error">
+                  <div *ngIf="!form.get('pointOfUse').valid && form.get('pointOfUse').touched">Point of Use Required</div>
+                </div>
+              </ion-item>
+            </ion-col>
+
+            <ion-col size-lg="3" size-xl="2"  size="12"   size-md="6">
+              <ion-item>
+                <ion-label position="floating">Max Rate of Diversion</ion-label> 
+                <ion-input  mode="md" formControlName="maxRateOfDiversion" ></ion-input>
+                <div class="error">
+                  <div *ngIf="!form.get('maxRateOfDiversion').valid && form.get('maxRateOfDiversion').touched">Max Rate of Diversion Required</div>
+                </div>
+              </ion-item>
+            </ion-col>
+
+            <ion-col size-lg="3" size-xl="2"  size="12"   size-md="6">
+              <ion-item>
+                <ion-label position="floating">Max Volume Required</ion-label> 
+                <ion-input  mode="md" formControlName="maxVolumeAllowed" ></ion-input>
+                <div class="error">
+                  <div *ngIf="!form.get('maxVolumeAllowed').valid && form.get('maxVolumeAllowed').touched">Max Volume Required</div>
+                </div>
+              </ion-item>
+            </ion-col>
+
+            <ion-col size-lg="3" size-xl="2"  size="12"   size-md="6">
+              <ion-item>
+                <ion-label position="floating">Max Dropdown</ion-label> 
+                <ion-input  mode="md" formControlName="maxDropdown" ></ion-input>
+                <div class="error">
+                  <div *ngIf="!form.get('maxDropdown').valid && form.get('maxDropdown').touched">Max Volume Required</div>
+                </div>
+              </ion-item>
+            </ion-col>
+
+
+          </ion-row>
+
+    </form>
+  </ion-grid>
+</ion-content>

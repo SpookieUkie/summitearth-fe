@@ -1,0 +1,38 @@
+<ion-row>
+  <ion-col size-lg="2" size-xl="2" size="11"   size-md="2">
+    <ion-item>
+        <ion-label position="floating">Latitude</ion-label> 
+        <ion-input  #latitude></ion-input>
+    </ion-item>
+  </ion-col>
+
+  <ion-col size-lg="2" size-xl="2" size="11"   size-md="2">
+    <ion-item>
+        <ion-label position="floating">Longitude</ion-label> 
+        <ion-input   #longitude></ion-input>
+    </ion-item>
+  </ion-col>
+
+  <ion-col size-lg="2" size-xl="2" size="11"   size-md="2">
+    <ion-item>
+        <ion-label position="floating">Altitude</ion-label> 
+        <ion-input #altitude></ion-input>
+    </ion-item>
+  </ion-col>
+
+  <ion-col *ngIf="getOrientation" size-lg="2" size-xl="2" size="11"   size-md="2">
+    <ion-item>
+        <ion-label position="floating">Degrees</ion-label> 
+        <ion-input #degrees></ion-input>
+    </ion-item>
+  </ion-col>
+
+  <ion-col *ngIf="getOrientation" size-lg="2" size-xl="2" size="11"   size-md="2">
+    <ion-item>
+        <ion-label position="floating">Direction</ion-label> 
+        <ion-input #direction></ion-input>
+    </ion-item>
+  </ion-col>
+
+  
+</ion-row>

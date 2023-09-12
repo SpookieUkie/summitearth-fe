@@ -1,0 +1,87 @@
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-buttons slot="start">
+            <ion-button (click)="backToDFR()" >
+                <ion-icon slot="icon-only" name="arrow-round-back"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+        <ion-title [hidden]="viewWidth < 576">
+        Daily Field Report - Rigs
+        </ion-title>
+
+        <ion-buttons slot="end">
+            <ion-button icon-only (click)="showHideFormErrors()">
+                <div *ngIf="form !== null && form !== undefined">
+                    <ion-icon *ngIf="activeSummary.form.valid"   name="checkmark-circle" class="valid"  float-right></ion-icon>
+                    <ion-icon *ngIf="!activeSummary.form.valid"  name="warning" class="warning" float-right></ion-icon>
+                </div>
+            </ion-button>
+            <ion-button icon-only (click)="onSaveForm();">
+                <div *ngIf="form !== null && form !== undefined">
+                  <ion-icon name="save" *ngIf="!activeSummary.form.dirty" class="valid"></ion-icon>
+                  <ion-icon name="save" *ngIf="activeSummary.form.dirty" class='dirty'></ion-icon>
+                </div>
+            </ion-button>
+            <ion-button   icon-only (click)="showTopMenu($event)">
+                <ion-icon  name="apps" ></ion-icon>
+            </ion-button>
+            <app-navmenu></app-navmenu>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+  
+  <ion-content>
+    
+    <ion-refresher slot="fixed" (ionRefresh)="refreshPage($event, ionrefresher)" #ionrefresher>
+        <ion-refresher-content
+          pullingIcon="arrow-dropdown"
+          pullingText="Pull to refresh"
+          refreshingSpinner="circles"
+          refreshingText="Refreshing...">
+        </ion-refresher-content>
+      </ion-refresher>
+      <app-dfr-header-menu></app-dfr-header-menu>
+     <ion-grid>
+        <ion-row class="headerRow">
+            <ion-col>
+               Daily Rig List
+            </ion-col>
+        </ion-row>
+     </ion-grid> 
+    <ion-list lines="solid" size-md="6" offset-md="3" size-lg="10" offset-md="1">
+
+      <!--<div *ngIf="isPhone">
+        <ion-item  >
+          <ion-label>Rig Name</ion-label>
+          <ion-label>Disposal Method</ion-label>
+          <ion-label>Crossing Location</ion-label>
+        </ion-item>
+      </div>-->
+
+      <ion-item-sliding  size-md="6" offset-md="3"   *ngFor="let item of dfrRigList$ | async"  #slidingItem>
+        <div *ngIf="!isPhone">
+          <ion-item detail (click)="itemClicked(item)">
+            <ion-label>Crossing Location: {{item.crossingLocation}}</ion-label>
+            <ion-label>Rig Name: {{item.rigNameNumber}}</ion-label>
+            <ion-label>Crossing Volume: {{item.totalCrossingVolume}}</ion-label>
+          </ion-item>
+        </div>
+
+        <div *ngIf="isPhone">
+          <ion-item detail (click)="itemClicked(item)">
+              <ion-label>{{item.crossingLocation}}</ion-label>
+              <ion-label>{{item.rigNameNumber}}</ion-label>
+              <ion-label>{{item.totalCrossingVolume}}</ion-label>
+          </ion-item>
+        </div>
+        <ion-item-options side="end">
+            <ion-item-option color='primary' (click)="editRig(item, slidingItem)">Edit</ion-item-option>
+            <!-- <ion-item-option color='secondary' (click)="copyRig(item, slidingItem)">Copy</ion-item-option>-->
+            <ion-item-option color="danger" (click)="deleteRig(item._id, slidingItem)">Delete</ion-item-option>  
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-list> 
+
+    <app-activity-summary #activeSummary></app-activity-summary>
+
+  </ion-content>

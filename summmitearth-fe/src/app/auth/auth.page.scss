@@ -1,0 +1,33 @@
+.vertical-align-content > *
+{
+     display: flex!important;
+     align-content: center!important;
+     align-items: center!important;
+}
+
+.signin {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    height: 100%;
+    background-image: url('backdrop.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    overflow: hidden;
+   
+}
+
+ion-item {
+    --ion-background-color:rgba(255, 255, 255, 0.6)
+}
+
+.headerRowLogin {
+    background-color: rgba(0, 174, 199, .8);
+    color: #ffffff;
+    font-weight: bold;
+    height: 30px;
+    text-align: center;
+    padding: 0px;
+    margin:0px;
+}

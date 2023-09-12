@@ -1,0 +1,22 @@
+
+ion-thumbnail {
+    min-width: 160px;    
+    min-height: 100px;
+   
+}
+
+ion-popover {
+    div.popover-content {
+        top: 10% !important;
+        left: 10% !important;
+        transform: translate(-50%, -50%) !important;
+        width: 100px;
+  }
+}
+
+.photo .popover-content {
+        top: 0 !important;
+        width: 100px;
+  
+}
+

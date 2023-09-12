@@ -1,0 +1,13 @@
+<ion-item [formGroup]="inlineFormGroup" >
+  <ion-grid class="radioGrid" [formGroupName]="inlineFormGroupName" >
+    <ion-item>
+      <ion-label position="floating">{{sectionTitle}}</ion-label> 
+      <ion-input  mode="md"  [formControlName]="fieldName"  ></ion-input>
+     <!-- <div class="error">
+          <div *ngIf="!form.get('companyContact').valid && form.get('companyCompany').touched">Company Contact Required</div>
+      </div>
+    </ion-item> -->
+
+</ion-item>
+
+

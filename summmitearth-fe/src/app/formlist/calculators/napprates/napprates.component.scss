@@ -1,0 +1,43 @@
+ion-input {
+    background-color: white;
+    height: 22px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: black;
+    margin-right: 5px;
+    max-width: 150px;
+    min-width: 70px;
+}
+
+
+label {
+    width: 150px !important;
+    max-width: 150px;
+    text-align: right;
+    margin-right: 5px;
+    font-size: .9em;
+}
+
+
+
+.warning {
+    font-weight: bold;
+    color: Red;
+    text-align: center;
+
+}
+
+
+
+ion-text{
+    font-size: 12px;
+    width: 250px;
+}
+
+
+/*
+ion-row {
+    border-color: black;
+    border-style: solid;
+    border-width: 1px;
+}*/

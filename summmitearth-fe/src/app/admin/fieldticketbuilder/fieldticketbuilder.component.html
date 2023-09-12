@@ -1,0 +1,85 @@
+<ion-header >
+    <ion-toolbar color="primary">
+       <!-- <ion-buttons slot="start">
+            <ion-button (click)="backToProjectList()" >
+                <ion-icon slot="icon-only" name="arrow-round-back"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+        <ion-title [hidden]="viewWidth > 576">
+             Build Field Ticket
+        </ion-title>
+        <ion-buttons slot="end">
+            <app-adminoptions (itemSelected)="addLocation()" [currentView]="'editproject'"></app-adminoptions>
+            <ion-button icon-only (click)="saveProject()">
+                <ion-icon name="save"  ></ion-icon>
+            </ion-button>
+            <app-navmenu></app-navmenu>
+        </ion-buttons>  -->
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-grid>
+      <ion-row class="headerRow" style="margin:0px; padding: 0px;"> 
+          <ion-col size="12">
+              Field Ticket Builder
+          </ion-col>
+      </ion-row>
+ 
+      <form [formGroup]="form" >
+          <ion-row>
+              <ion-col size-lg="1" size-xl="1" size-md="1">
+                 <ion-icon name="search" (click)="showItemPicker($event)" color="primary"></ion-icon>
+              </ion-col>
+              <ion-col size-lg="2" size-xl="2" size-md="2">
+                  <ion-item>
+                    <ion-label position="stacked">Selected Product</ion-label> 
+                    <ion-input #selectedLabel ></ion-input>
+                  </ion-item>
+               </ion-col>
+               <ion-col size="1">
+                  <ion-item>
+                      <ion-label position="stacked">Qty</ion-label> 
+                      <ion-input #selectedQty ></ion-input>
+                  </ion-item>
+              </ion-col>
+              <ion-col size="1">
+                  <ion-item>
+                      <ion-label position="stacked">Rate</ion-label> 
+                      <ion-input #selectedRate ></ion-input>
+                  </ion-item>
+              </ion-col>
+              <ion-col size="1">
+                  <ion-item>
+                      <ion-label position="stacked">Amt</ion-label> 
+                      <ion-input #selectedAmount ></ion-input>
+                  </ion-item>
+              </ion-col>
+               <ion-col size-lg="1" size-xl="1" size-md="1">
+                  <ion-icon name="add-circle" (click)="addItem($event)" color="primary"></ion-icon>
+               </ion-col>
+          </ion-row>
+      </form>
+      <ion-row>
+        <ion-list>
+            <ion-reorder-group disabled="false" (ionItemReorder)="itemsReordered($event)" #endGrid>
+                <ion-item *ngFor="let i of mainItems let i = index">
+                    <ion-grid>
+                        <ion-row>
+                              <ion-col size-lg="3" size-xl="3"   size-md="3">
+                                  <ion-input [value]="d['locationName']" (input)="d['locationName'] = $event.target.value"></ion-input>
+                              </ion-col>
+                              
+                        </ion-row>   
+                    </ion-grid>
+                    <ion-reorder slot="end"></ion-reorder>
+                </ion-item>      
+            </ion-reorder-group>
+        </ion-list>
+      </ion-row>
+    </ion-grid>
+    
+  
+
+  // Drag drop sections. auto add specific proejct ones based on tech and not tech
+</ion-content>

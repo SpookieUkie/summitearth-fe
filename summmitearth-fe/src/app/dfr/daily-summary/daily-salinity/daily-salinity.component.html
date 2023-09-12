@@ -1,0 +1,102 @@
+<form [formGroup]="form" >
+  <ion-row>
+      <ion-col  size-lg="1" size-xl="1" size-md="1">
+          <ion-item>
+          <ion-label position="floating">pH</ion-label> 
+          <ion-input type="number" formControlName="pH"></ion-input>
+          <div class="error">
+              <div *ngIf="!form.get('pH').valid && form.get('pH').touched">pH Required</div>
+          </div>
+      </ion-item>
+      </ion-col>
+      <ion-col size-lg="1" size-xl="1" size-md="1">
+      <ion-item>
+          <ion-label position="floating">Ca</ion-label> 
+          <ion-input type="number" formControlName="Ca"></ion-input>
+          <div class="error">
+              <div *ngIf="!form.get('Ca').valid && form.get('Ca').touched">Ca Required</div>
+          </div>
+      </ion-item>
+      </ion-col>
+      <ion-col size-lg="1" size-xl="1" size-md="1">
+      <ion-item>
+          <ion-label position="floating">EC</ion-label> 
+          <ion-input type="number" formControlName="EC"></ion-input>
+          <div class="error">
+              <div *ngIf="!form.get('EC').valid && form.get('EC').touched">EC Required</div>
+          </div>
+      </ion-item>
+      </ion-col>
+      <ion-col size-lg="1" size-xl="1" size-md="1">
+      <ion-item>
+          <ion-label position="floating">Mg</ion-label> 
+          <ion-input type="number" formControlName="Mg"></ion-input>
+          <div class="error">
+              <div *ngIf="!form.get('Mg').valid && form.get('Mg').touched">Mg Required</div>
+          </div>
+      </ion-item>
+      </ion-col>
+      <ion-col size-lg="1" size-xl="1" size-md="1">
+      <ion-item>
+          <ion-label position="floating">Na</ion-label> 
+          <ion-input type="number" formControlName="Na"></ion-input>
+          <div class="error">
+              <div *ngIf="!form.get('Na').valid && form.get('Na').touched">Na Required</div>
+          </div>
+      </ion-item>
+      </ion-col>
+      <ion-col size-lg="1" size-xl="1" size-md="1">
+      <ion-item>
+          <ion-label position="floating">N</ion-label> 
+          <ion-input type="number" formControlName="N"></ion-input>
+          <div class="error">
+              <div *ngIf="!form.get('N').valid && form.get('N').touched">Na Required</div>
+          </div>
+      </ion-item>
+      </ion-col>
+      <ion-col size-lg="1" size-xl="1" size-md="1">
+      <ion-item>
+          <ion-label position="floating">S</ion-label> 
+          <ion-input type="number" formControlName="S"></ion-input>
+          <div class="error">
+              <div *ngIf="!form.get('S').valid && form.get('S').touched">S Required</div>
+          </div>
+      </ion-item>
+      </ion-col>
+      <ion-col size-lg="1" size-xl="1" size-md="1">
+      <ion-item>
+          <ion-label position="floating">Cl</ion-label> 
+          <ion-input type="number" formControlName="Cl"></ion-input>
+          <div class="error">
+              <div *ngIf="!form.get('Cl').valid && form.get('Cl').touched">Cl Required</div>
+          </div>
+      </ion-item>
+      </ion-col>
+      <ion-col size-lg="2" size-xl="2" size-md="3">
+        <ion-item>
+            <ion-label position="floating">Water Body Crossing</ion-label> 
+            <ion-select  formControlName="waterBodyCrossing">
+                <ion-select-option>No</ion-select-option>
+                <ion-select-option>Yes</ion-select-option>
+            </ion-select>
+            <div class="error">
+                <div *ngIf="!form.get('waterBodyCrossing').valid && form.get('waterBodyCrossing').touched">Water Body Crossing Required</div>
+            </div>
+        </ion-item>
+      </ion-col>
+      <ion-col size-lg="1" size-xl="1"  size-md="1">
+        <ion-item>
+            <ion-label position="floating">Daily NTU</ion-label> 
+            <ion-input type="number" formControlName="dailyNTU"></ion-input>
+            <div class="error">
+                <div *ngIf="!form.get('dailyNTU').valid && form.get('dailyNTU').touched">Daily NTU Required</div>
+            </div>
+        </ion-item>
+      </ion-col>
+      <ion-col  size-lg="1" size-xl="1"  size-md="1">
+          <ion-button color="danger" (click)="removeSalinitiy()" >Remove</ion-button>
+      </ion-col>
+         
+     
+  </ion-row>
+</form>

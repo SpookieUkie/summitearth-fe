@@ -1,0 +1,260 @@
+<ion-header >
+  <ion-toolbar color="primary">
+      <ion-buttons slot="start">
+          <ion-button (click)="backToList()" >
+              <ion-icon slot="icon-only" name="arrow-round-back"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      <ion-title [hidden]="viewWidth < 576">
+        DWM - LWD
+      </ion-title>
+      <ion-buttons slot="end">
+          <ion-button icon-only (click)="showHideFormErrors()">
+              <ion-icon *ngIf="form.valid"   name="checkmark-circle" class="valid"  class="ion-float-right"></ion-icon>
+              <ion-icon *ngIf="!form.valid"  name="warning" class="warning" class="ion-float-right"></ion-icon>
+          </ion-button>
+          <ion-button icon-only (click)="onSaveForm();">
+              <ion-icon name="save" *ngIf="!form.dirty" class="valid"></ion-icon>
+              <ion-icon name="save" *ngIf="form.dirty" class='dirty'></ion-icon>
+        </ion-button>
+        <!-- <app-checklistoptions (itemSelected)="itemSelected($event)" [currentView]="'LWDFieldInspection'"></app-checklistoptions> -->
+       <!--<app-navmenu></app-navmenu>  --> 
+      </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+ <app-topmenu></app-topmenu>
+  <ion-grid size="12" >
+    <form [formGroup]="form" >
+         <ion-row class="headerRow" style="margin:0px; padding: 0px;"> 
+            <ion-col size="12">
+                General Information
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size-lg="3" size-xl="4" size="12"   size-md="6">
+              <ion-item>
+                <ion-label position="floating">Sampling Company</ion-label> 
+                <ion-input  mode="md" formControlName="samplingCompany" ></ion-input>
+                <div class="error">
+                    <div *ngIf="!form.get('samplingCompany').valid && form.get('samplingCompany').touched">Sampling Company Required</div>
+                </div>
+              </ion-item>
+            </ion-col>
+            
+            <ion-col size-lg="3" size-xl="4" size="12"   size-md="6">
+              <app-addpopover [isMobileDevice]="isMobileDevice" [fieldName]="'companyContactName'" 
+              [inlineFormGroup]="form"  [fieldId]="'companyContactId'"  [sectionTitle]="'Company Contact'"></app-addpopover>  
+            </ion-col>
+
+            <ion-col size-lg="3" size-xl="4" size="12" size-md="6" size-sm="12"  >
+              <app-pillyesnoroot [isMobileDevice]="isMobileDevice" [fieldName]="'qaqcLocation'" 
+              [inlineFormGroup]="form"  [sectionTitle]="'QA/QC Location'"></app-pillyesnoroot>
+            </ion-col>
+
+            <ion-col size-lg="3" size-xl="4" size="12" size-md="6" size-sm="12"  >
+              <app-pillyesnoroot [isMobileDevice]="isMobileDevice" [fieldName]="'postSamplingRequired'" 
+              [inlineFormGroup]="form"  [sectionTitle]="'Post Sampling Required'"></app-pillyesnoroot>
+            </ion-col>
+
+            <ion-col size-lg="3" size-xl="4" size="12" size-md="6" size-sm="12"  >
+              <app-pillyesnoroot [isMobileDevice]="isMobileDevice" [fieldName]="'multiWellDisposal'" 
+              [inlineFormGroup]="form"  [sectionTitle]="'Is Multi Well Disposal'"></app-pillyesnoroot>
+            </ion-col>
+
+            <ion-col size-lg="3" size-xl="3" size="12"  size-md="6">
+              <app-addpopover [isMobileDevice]="isMobileDevice" [fieldName]="'complianceAdminName'" 
+               [inlineFormGroup]="form"  [fieldId]="'complianceAdminId'"  [sectionTitle]="'Complaince Admin'"></app-addpopover>  
+             </ion-col>
+          </ion-row>
+
+            <ion-row class="headerRow" style="margin:0px; padding: 0px;"> 
+              <ion-col size="12">
+                 Technicians
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col size-lg="3" size-xl="3" size="12"   size-md="6">
+                  <app-addpopover [isMobileDevice]="isMobileDevice" [fieldName]="'tech1Name'"  [dataSet]="userList"
+                  [inlineFormGroup]="form"  [fieldId]="'tech1Id'"  [sectionTitle]="'Tech 1'"></app-addpopover>          
+              </ion-col>
+              <ion-col size-lg="3" size-xl="3" size="12"   size-md="6">
+                <app-addpopover [isMobileDevice]="isMobileDevice" [fieldName]="'tech2Name'"   [dataSet]="userList"
+                [inlineFormGroup]="form"  [fieldId]="'tech2Id'"  [sectionTitle]="'Tech 2'"></app-addpopover>  
+              </ion-col>
+              <ion-col size-lg="3" size-xl="3" size="12"  size-md="6">
+               <app-addpopover [isMobileDevice]="isMobileDevice" [fieldName]="'tech3Name'"   [dataSet]="userList"
+                [inlineFormGroup]="form" [fieldId]="'tech3Id'"  [sectionTitle]="'Tech 3'"></app-addpopover>  
+              </ion-col>
+              <ion-col size-lg="3" size-xl="3" size="12"  size-md="6">
+                <app-addpopover [isMobileDevice]="isMobileDevice" [fieldName]="'tech4Name'"  [dataSet]="userList" 
+                 [inlineFormGroup]="form"  [fieldId]="'tech4Id'"  [sectionTitle]="'Tech 4'"></app-addpopover>  
+               </ion-col>
+          </ion-row>
+<!--
+            <ion-col size-lg="6" size-xl="3" size="12" size-md="12">
+              <ion-item>
+                  <span item-right style="width:100%;">
+                      <ion-icon name="add-circle-outline" (click)="presentTechPopover($event)" class="icon"></ion-icon>
+                  </span>
+                  <ion-label position="floating">Assigned To</ion-label>
+                  <ion-input readonly placeholder="Assign To" formControlName="assignedToFullName" #assignedTo ></ion-input> 
+                  <div class="error">
+                      <div> </div>
+                  </div>
+              </ion-item>
+          </ion-col>-->
+
+
+           <!-- <ion-col size-lg="4" size-xl="4" size="12"   size-md="6">
+              <ion-item>
+                <ion-label position="floating">Phone</ion-label> 
+                <ion-input  mode="md" formControlName="phoneNumber" ></ion-input>
+                <div class="error">
+                    <div *ngIf="!form.get('phoneNumber').valid && form.get('phoneNumber').touched">Phone Required</div>
+                </div>
+              </ion-item>
+            </ion-col> -->
+          
+
+          <ion-row class="headerRow" style="margin:0px; padding: 0px;"> 
+            <ion-col size="12">
+                Well Information
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size-lg="3" size-xl="4" size="12"   size-md="6">
+              <ion-item>
+                <ion-label position="floating">Licensee</ion-label> 
+                <ion-input  mode="md" formControlName="licensee" ></ion-input>
+                <div class="error">
+                    <div *ngIf="!form.get('licensee').valid && form.get('licensee').touched">Licensee Required</div>
+                </div>
+              </ion-item>
+            </ion-col>
+
+            <ion-col size-lg="3" size-xl="4" size="12"   size-md="6">
+              <ion-item>
+                <ion-label position="floating">License Number</ion-label> 
+                <ion-input  mode="md" formControlName="licenseNumber" ></ion-input>
+                <div class="error">
+                    <div *ngIf="!form.get('licenseNumber').valid && form.get('licenseNumber').touched">Licensee Number </div>
+                </div>
+              </ion-item>
+            </ion-col>
+
+
+            <ion-col size-lg="3" size-xl="4" size="12"   size-md="6">
+              <ion-item>
+                <ion-label position="floating">MSL OGC</ion-label> 
+                <ion-input  mode="md" formControlName="mslogc"></ion-input>
+                <div class="error">
+                    <div *ngIf="!form.get('mslogc').valid && form.get('mslogc').touched">MSL OLG Required </div>
+                </div>
+              </ion-item>
+            </ion-col>
+
+            <ion-col size-lg="3" size-xl="4" size="12"   size-md="6">
+              <ion-item>
+                <ion-label position="floating">Unique Well ID</ion-label> 
+                <ion-input  mode="md" formControlName="uniqueWellId"></ion-input>
+                <div class="error">
+                    <div *ngIf="!form.get('uniqueWellId').valid && form.get('uniqueWellId').touched">Unique Well ID </div>
+                </div>
+              </ion-item>
+            </ion-col>
+
+            <ion-col size-lg="3" size-xl="4" size="12"   size-md="6">
+              <ion-item>
+                <ion-label position="floating">Well Name</ion-label> 
+                <ion-input  mode="md" formControlName="wellName"></ion-input>
+                <div class="error">
+                    <div *ngIf="!form.get('wellName').valid && form.get('wellName').touched">Well Name</div>
+                </div>
+              </ion-item>
+            </ion-col>
+
+            <ion-col size-lg="3" size-xl="4" size="12"   size-md="6">
+              <ion-item>
+                <ion-label position="floating">Surface Location</ion-label> 
+                <ion-input  mode="md" formControlName="surfaceLocation"></ion-input>
+                <div class="error">
+                    <div *ngIf="!form.get('surfaceLocation').valid && form.get('surfaceLocation').touched">Surface Location Required</div>
+                </div>
+              </ion-item>
+            </ion-col>
+
+            <ion-col size-lg="3" size-xl="4" size="12"   size-md="6">
+              <ion-item>
+                <ion-label position="floating">Drilling Rig</ion-label> 
+                <ion-input  mode="md" formControlName="surfaceLocation"></ion-input>
+                <div class="error">
+                    <div *ngIf="!form.get('drillingRig').valid && form.get('drillingRig').touched">Drilling Rig Required</div>
+                </div>
+              </ion-item>
+            </ion-col>
+
+
+            <ion-col size-lg="3" size-xl="4" size="12"   size-md="6">
+              <app-calendarforform [inlineFormGroupName]="'spudDate'" [fieldName]="'spudDate'" [isMobileDevice]="isMobileDevice" [inlineFormGroup]="form" [sectionTitle]="'Spud Date'"></app-calendarforform>
+            </ion-col> 
+
+            <ion-col size-lg="3" size-xl="4" size="12"   size-md="6">
+              <app-calendarforform [inlineFormGroupName]="'releaseDate'" [fieldName]="'releaseDate'" [isMobileDevice]="isMobileDevice" [inlineFormGroup]="form" [sectionTitle]="'Release Date'"></app-calendarforform>
+            </ion-col> 
+
+          </ion-row>
+
+          <ion-row class="headerRow" style="margin:0px; padding: 0px;"> 
+            <ion-col size="12">
+               Well Contacts & Information
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size-lg="3" size-xl="4" size="12"   size-md="6">
+              <ion-item>
+                <ion-label position="floating">Reg Office</ion-label> 
+                <ion-input  mode="md" formControlName="regOffice1Name" ></ion-input>
+                <div class="error">
+                    <div *ngIf="!form.get('regOffice1Name').valid && form.get('regOffice1Name').touched">Reg Office Required</div>
+                </div>
+              </ion-item>
+            </ion-col>
+
+            <ion-col size-lg="3" size-xl="4" size="12"   size-md="6">
+              <ion-item>
+                <ion-label position="floating">Reg Office 2</ion-label> 
+                <ion-input  mode="md" formControlName="regOffice2Name" ></ion-input>
+                <div class="error">
+                  <!--  <div *ngIf="!form.get('regOffice2Name').valid && form.get('refOffice2Name').touched">Reg Office Required</div> -->
+                </div>
+              </ion-item>
+            </ion-col>
+
+            <ion-col size-lg="3" size-xl="4" size="12"   size-md="6">
+              <ion-item>
+                <ion-label position="floating">Licensee Contact</ion-label> 
+                <ion-input  mode="md" formControlName="licenseeContactName" ></ion-input>
+                <div class="error">
+                    <div *ngIf="!form.get('licenseeContactName').valid && form.get('licenseeContactName').touched">Licensee Required</div>
+                </div>
+              </ion-item>
+            </ion-col>
+
+
+          </ion-row>
+
+          <!-- 
+          <ion-row class="headerRow" style="margin:0px; padding: 0px;"> 
+            <ion-col size="12">
+                Well Information
+            </ion-col>
+          </ion-row>
+          <ion-row>
+          
+          </ion-row> -->
+
+    </form>
+  </ion-grid>
+</ion-content>

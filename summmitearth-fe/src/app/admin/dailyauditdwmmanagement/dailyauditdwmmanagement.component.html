@@ -1,0 +1,96 @@
+
+<ion-header >
+  <ion-toolbar color="primary">
+      <ion-buttons slot="start">
+          <ion-button (click)="backToAdmin()" >
+              <ion-icon slot="icon-only" name="arrow-round-back"></ion-icon>
+          </ion-button>
+      </ion-buttons>
+      <ion-title >
+              Manage DWM Audit Reports
+      </ion-title>
+      <ion-buttons slot="end">
+          <app-adminoptions [currentView]="'dailyauditdwm'" (itemSelected)='itemSelected($event)'></app-adminoptions>
+          <app-navmenu></app-navmenu>
+      </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="refreshPage($event, ionrefresher)" #ionrefresher>
+      <ion-refresher-content
+          pullingIcon="arrow-dropdown"
+          pullingText="Pull to refresh"
+          refreshingSpinner="circles"
+          refreshingText="Refreshing...">
+      </ion-refresher-content>
+  </ion-refresher>
+  <ion-grid>
+      <app-admintheadermenu></app-admintheadermenu>
+      <ion-row class="headerRow">
+          <ion-col>
+            DWM Audit Reports
+          </ion-col>
+      </ion-row>
+      <ion-row>
+          <ion-col>
+              <p-table [value]="audits" [paginator]="true" [rows]="25" #dt [globalFilterFields]="['inspectionDate', 'reportStatus', 'assignedToFullName', 'jobNumber']">
+  
+                   <ng-template pTemplate="caption">
+                     <ion-card class="search-card">
+                        <ion-grid>
+                            <form [formGroup]="form"> 
+                                <ion-row>
+                                    <ion-col size-md="2" offset="1">
+                                    <ion-label>Start Date</ion-label>
+                                    <app-calendarforlist  style="width:100%" (newDateRef)="updateDate($event)" hideLabel="true" dateLabel="Start Date" dateRef="{{form.value.startDate}}" compRef="startDate"  index="-1"></app-calendarforlist>
+                                    </ion-col>
+                                    <ion-col  size-md="2" >
+                                        <ion-label>End Date</ion-label>
+                                        <app-calendarforlist  style="width:100%" (newDateRef)="updateDate($event)" hideLabel="true" dateLabel="End Date" dateRef="{{form.value.endDate}}" compRef="endDate"  index="-1"></app-calendarforlist>
+                                    </ion-col>
+                                    <ion-col  size-md="2" align-self-end >
+                                        <ion-button expand="full" (click)="getReportList()">Search 
+                                            <ion-icon name="search"></ion-icon>
+                                        </ion-button>    
+                                    </ion-col>
+                                    <ion-col  size-md="3" offset="1" align-self-end >
+                                        <ion-label>Global Filter</ion-label>
+                                        <ion-input type="text"  size="20" placeholder=" " (input)="dt.filterGlobal($event.target.value, 'contains')" ></ion-input>
+                                    </ion-col>
+                                </ion-row>
+                            </form> 
+                        </ion-grid>
+                    </ion-card>   
+           
+                    
+                  </ng-template>
+                  <ng-template pTemplate="header">
+                      <tr>
+                          <th [pSortableColumn]="'inspectionDate'">Date  <p-sortIcon></p-sortIcon></th>
+                          <th [pSortableColumn]="'reportStatus'">Status  <p-sortIcon  ></p-sortIcon></th>
+                          <th [pSortableColumn]="'assignedToFullName'">Assigned To  <p-sortIcon  ></p-sortIcon></th>
+                          <th [pSortableColumn]="'emailAddress'">Job Number<p-sortIcon  ></p-sortIcon></th>
+                          <th style="width: 120px;">Actions</th>
+                      </tr>
+                  </ng-template>
+                  <ng-template pTemplate="body" let-audit>
+                      <tr>
+                          <td>{{audit.inspectionDate | date: 'longDate'}}</td>
+                          <td>{{audit.reportStatus}}</td>
+                          <td>{{audit.environmentalTechnician}}</td>
+                          <td>{{audit.jobNumber}}</td>
+                          <td>
+                              <button pButton type="button" (click)="viewReport(audit)" class="prime-btn" ><i class="pi pi-chevron-right prime-icon" ></i></button>
+                              <button pButton type="button" (click)="copyReport(audit)" class="prime-btn"><i class="pi pi-copy prime-icon"></i></button> 
+                              <button pButton *ngIf="audit.reportStatus === 'Open'" type="button" (click)="deleteReport(audit._id)" class="prime-btn"><i class="pi pi-minus-circle prime-icon"></i></button> 
+                          </td>
+                      </tr>
+                  </ng-template>
+              </p-table>
+          </ion-col>
+      </ion-row>
+     
+  </ion-grid> 
+
+</ion-content>

@@ -1,0 +1,63 @@
+<ion-list *ngIf="currentView === 'dfrSummary'">
+  <ion-item  (click)="menuItem('getWeather')">Get Weather</ion-item>
+  <ion-item  [disabled]="isLocked" (click)="menuItem('viewRigs')">View Rigs</ion-item>
+  <ion-item  [disabled]="isLocked" (click)="menuItem('dailyMud')">Daily Mud</ion-item>
+  <ion-item  [disabled]="isLocked" (click)="menuItem('mudSummary')">Mud Summary</ion-item>
+  <ion-item  (click)="createPDF()">Create DFR PDF</ion-item>
+  <ion-item  (click)="createExcelDFR()">Create DFR Excel</ion-item>
+  <ion-item  (click)="createFieldTicket()">Create Field Ticket</ion-item>
+  <ion-item  (click)="cacheOptions()">Cache Options</ion-item>
+  <ion-item [disabled]="isLocked" (click)="menuItem('submitDFR')" class='submitDFR'>Submit DFR</ion-item>
+</ion-list>
+
+<ion-list *ngIf="currentView === 'dailySummary'">
+    <ion-item  (click)="menuItem('addRig')">Add New Rig</ion-item>
+    <ion-item  (click)="menuItem('dailyMud')">Daily Mud</ion-item>
+    <ion-item  (click)="menuItem('mudSummary')">Mud Summary</ion-item>
+    <ion-item  (click)="menuItem('dfrSummary')">DFR Summary</ion-item>
+    <ion-item  (click)="createPDF()">Create DFR PDF</ion-item>
+    <ion-item  (click)="createExcelDFR()">Create DFR Excel</ion-item>
+    <ion-item  (click)="createFieldTicket()">Create Field Ticket</ion-item>
+    <ion-item  (click)="cacheOptions()">Cache Options</ion-item>
+    <ion-item (click)="menuItem('submitDFR')" class='submitDFR'>Submit DFR</ion-item>
+  </ion-list>
+
+  <ion-list *ngIf="currentView === 'dailyRig'">
+    <ion-item  (click)="menuItem('getCoordinates')">Get Coordinates</ion-item>
+    <ion-item  (click)="menuItem('addFieldTest')">Add Field Test</ion-item>
+    <ion-item  (click)="menuItem('addPhoto')">Add Photo</ion-item>
+    <ion-item  (click)="menuItem('addDisposal')">Add Disposal</ion-item>
+    <ion-item  (click)="menuItem('dailyMud')">Daily Mud</ion-item>
+    <ion-item  (click)="menuItem('mudSummary')">Mud Summary</ion-item>
+    <ion-item  (click)="menuItem('dfrSummary')">DFR Summary</ion-item>
+    <ion-item  (click)="createPDF()">Create DFR PDF</ion-item>
+    <ion-item  (click)="createExcelDFR()">Create DFR Excel</ion-item>
+    <ion-item  (click)="createFieldTicket()">Create Field Ticket</ion-item>
+    <ion-item  (click)="cacheOptions()">Cache Options</ion-item>
+    <ion-item (click)="menuItem('submitDFR')" class="submitDFR">Submit DFR</ion-item>
+  </ion-list>
+
+  <ion-list *ngIf="currentView === 'dailyMud'">
+    <ion-item  (click)="menuItem('addMud')">Add Mud</ion-item>
+    <ion-item  (click)="menuItem('viewRigs')">View Rigs</ion-item>
+    <ion-item  (click)="menuItem('mudSummary')">Mud Summary</ion-item>
+    <ion-item  (click)="menuItem('dfrSummary')">DFR Summary</ion-item>
+    <ion-item  (click)="createPDF()">Create DFR PDF</ion-item>
+    <ion-item  (click)="createExcelDFR()">Create DFR Excel</ion-item>
+    <ion-item  (click)="createFieldTicket()">Create Field Ticket</ion-item>
+    <ion-item  (click)="cacheOptions()">Cache Options</ion-item>
+    <ion-item (click)="menuItem('submitDFR')" class='submitDFR' >Submit DFR</ion-item>
+  </ion-list>
+
+
+  <ion-list *ngIf="currentView === 'mudSummary'">
+      <!-- <ion-item  (click)="menuItem('dailyMud')">Daily Mud</ion-item>-->
+      <ion-item  (click)="menuItem('dailyMud')">Daily Mud</ion-item>
+      <ion-item  (click)="menuItem('viewRigs')">View Rigs</ion-item>
+      <ion-item  (click)="menuItem('dfrSummary')">DFR Summary</ion-item>
+      <ion-item  (click)="createPDF()">Create DFR PDF</ion-item>
+      <ion-item  (click)="createExcelDFR()">Create DFR Excel</ion-item>
+      <ion-item  (click)="createFieldTicket()">Create Field Ticket</ion-item>
+      <ion-item  (click)="cacheOptions()">Cache Options</ion-item>
+      <ion-item (click)="menuItem('submitDFR')" class='submitDFR' >Submit DFR</ion-item>
+    </ion-list>

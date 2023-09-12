@@ -1,0 +1,74 @@
+
+<ion-header >
+    <ion-toolbar color="primary">
+        <ion-buttons slot="start">
+            <ion-button (click)="backToAdmin()" >
+                <ion-icon slot="icon-only" name="arrow-round-back"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+        <ion-title >
+                Manage Users
+        </ion-title>
+        <ion-buttons slot="end">
+            <app-adminoptions [currentView]="'manageusers'"></app-adminoptions>
+            <app-navmenu></app-navmenu>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-refresher slot="fixed" (ionRefresh)="refreshPage($event, ionrefresher)" #ionrefresher>
+        <ion-refresher-content
+            pullingIcon="arrow-dropdown"
+            pullingText="Pull to refresh"
+            refreshingSpinner="circles"
+            refreshingText="Refreshing...">
+        </ion-refresher-content>
+    </ion-refresher>
+    <ion-grid>
+        <app-admintheadermenu></app-admintheadermenu>
+        <ion-row class="headerRow">
+            <ion-col>
+                Users List
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <p-table [value]="users" [paginator]="true" [rows]="25" #dt [globalFilterFields]="['firstName', 'lastName', 'username', 'emailAddress']">
+                    <ng-template pTemplate="caption">
+                        <div style="text-align: right">
+                            <label>Global Filter: </label>
+                            <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+                            <input type="text" pInputText size="40" placeholder=" " (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
+                        </div>
+                    </ng-template>
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th [pSortableColumn]="'firstName'">First Name  <p-sortIcon></p-sortIcon></th>
+                            <th [pSortableColumn]="'lastName'">Last Name  <p-sortIcon  ></p-sortIcon></th>
+                            <th [pSortableColumn]="'username'">Username  <p-sortIcon ></p-sortIcon></th>
+                            <th [pSortableColumn]="'emailAddress'">Email <p-sortIcon  ></p-sortIcon></th>
+                            <th style="width: 100px;">Actions</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-user>
+                        <tr>
+                            <td>{{user.firstName}}</td>
+                            <td>{{user.lastName}}</td>
+                            <td>{{user.username}}</td>
+                            <td>{{user.emailAddress}}</td>
+                            <td>
+                                <button pButton type="button" (click)="updateUser(user)" class="prime-btn" ><i class="pi pi-chevron-right prime-icon" ></i></button>
+                               <!--<button pButton type="button" (click)="disableUser(user)" class="prime-btn"><i class="pi pi-minus-circle prime-icon"></i></button>--> 
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </ion-col>
+        </ion-row>
+
+      
+       
+    </ion-grid> 
+
+</ion-content>

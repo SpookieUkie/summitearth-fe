@@ -1,0 +1,42 @@
+<ion-card>
+    <ion-grid>
+        <form [formGroup]="form" >
+            <ion-row>
+                <ion-col size-lg="1" size-xl="1" size-md="1">
+                   <!--<ion-button  (click)="showMudPicker($event)">Search Mud</ion-button>--> 
+                   <ion-icon name="search" (click)="showMudPicker($event)" color="primary"></ion-icon>
+                </ion-col>
+
+                <ion-col size-lg="7" size-xl="7" size-md="7">
+                    <ion-item>
+                        <ion-label position="floating">Product</ion-label>              
+                        <ion-input formControlName="productName" (click)="showMudPickerCheck($event)" readonly class="clickEnableCls" #productName></ion-input> 
+                    </ion-item>
+                </ion-col>
+               
+                <ion-col size-lg="1" size-xl="1" size-md="1">
+                    <ion-item>
+                        <ion-label position="floating">Size</ion-label> 
+                        <ion-input formControlName="size"  (click)="showValue()" #size></ion-input>
+                    </ion-item>
+                </ion-col>
+                <ion-col size-lg="2" size-xl="2" size-md="2">
+                    <ion-item>
+                        <ion-label position="floating">Toxicity</ion-label> 
+                        <ion-input formControlName="toxicity" #toxicity></ion-input>
+                    </ion-item>
+                </ion-col>
+                <ion-col size-lg="1" size-xl="1" size-md="1">
+                    <ion-icon name="close-circle" (click)="removeMud()" class="singleRec" color="danger"  ></ion-icon>
+                </ion-col>
+            </ion-row>
+            
+            <ion-row>
+                <ion-col *ngFor="let loc of form.value.locations let i of index" size-lg="2" size-xl="2" size-md="2">
+                   <app-daily-mud-location (valueChanged)="updateMud($event)"   [mudLocation]="loc" [index]="i"></app-daily-mud-location>
+                </ion-col>
+            </ion-row>
+            
+        </form>
+    </ion-grid>
+</ion-card>

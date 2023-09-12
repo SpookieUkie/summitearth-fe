@@ -1,0 +1,503 @@
+
+<ion-header >
+    <ion-toolbar color="primary">
+        <ion-buttons slot="start">
+            <ion-button (click)="backToList()" >
+                <ion-icon slot="icon-only" name="arrow-round-back"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        <ion-title [hidden]="viewWidth < 576">
+          LWD Field Audit 
+        </ion-title>
+        <ion-buttons slot="end">
+            <ion-button icon-only (click)="showHideFormErrors()">
+                <ion-icon *ngIf="form.valid"   name="checkmark-circle" class="valid"  class="ion-float-right"></ion-icon>
+                <ion-icon *ngIf="!form.valid"  name="warning" class="warning" class="ion-float-right"></ion-icon>
+            </ion-button>
+            <ion-button icon-only (click)="onSaveForm();">
+                <ion-icon name="save" *ngIf="!form.dirty" class="valid"></ion-icon>
+                <ion-icon name="save" *ngIf="form.dirty" class='dirty'></ion-icon>
+          </ion-button>
+          <app-checklistoptions (itemSelected)="itemSelected($event)" [currentView]="'LWDFieldInspection'"></app-checklistoptions>
+          <app-navmenu></app-navmenu>  
+        </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content>
+    <ion-refresher slot="fixed" (ionRefresh)="refreshPage($event, ionrefresher)" #ionrefresher>
+        <ion-refresher-content
+          pullingIcon="arrow-dropdown"
+          pullingText="Pull to refresh"
+          refreshingSpinner="circles"
+          refreshingText="Refreshing...">
+        </ion-refresher-content>
+      </ion-refresher>
+   
+
+  <ion-grid size="12" >
+      <form [formGroup]="form" >
+          <ion-row class="pageTitleRow" [hidden]="viewWidth > 576"> 
+              <ion-col size="12">
+                  LWD Field Inspection Sheet
+              </ion-col>
+          </ion-row>
+
+          <ion-row class="headerRow" style="margin:0px; padding: 0px;"> 
+              <ion-col size="12">
+                  Daily Field Inspection
+              </ion-col>
+          </ion-row>
+      
+          <ion-row>
+                <ion-col size-lg="4" size-xl="4" size="12"   size-md="6">
+                  <ion-item>
+                      <ion-label position="floating">Summit Job #</ion-label> 
+                      <ion-input  mode="md" formControlName="jobNumber" ></ion-input>
+                      <div class="error">
+                          <div *ngIf="!form.get('jobNumber').valid && form.get('jobNumber').touched">Job Number Required</div>
+                      </div>
+                  </ion-item>
+              </ion-col>
+              <ion-col size-lg="4" size-xl="4" size="12"   size-md="6">
+                  <ion-item>
+                      <ion-label position="floating">Province/Country</ion-label> 
+                      <ion-select  interface="popover" (ionChange)="setCompliance()"  formControlName="province">
+                          <ion-select-option [value]="val.value" *ngFor="let val of provinces">{{val.value}}</ion-select-option>
+                      </ion-select>
+                      <div class="error">
+                          <div *ngIf="!form.get('province').valid && form.get('province').touched">Province/Country Required</div>
+                      </div>
+                  </ion-item>
+              </ion-col>
+              <ion-col size-lg="4" size-xl="4" size="12"   size-md="6">
+                    <ion-item>
+                        <ion-label position="floating">Client</ion-label>               
+                        <ion-select  interface="popover"  formControlName="clientName">
+                            <ion-select-option [value]="val.clientName" *ngFor="let val of clients">{{val.clientName}}</ion-select-option>
+                        </ion-select>
+           
+                        <div class="error">
+                            <div *ngIf="!form.get('clientName').valid && form.get('clientName').touched">Client Required</div>
+                        </div>
+                    </ion-item>
+                </ion-col>
+              <ion-col size-lg="4" size-xl="4" size="12"   size-md="6">
+                  <ion-item>
+                      <ion-label position="floating">Inspection Date</ion-label> 
+                      <ion-grid class="calendarGrid">
+                          <ion-row class="calendarGridRow" class="ion-justify-content-center">
+                              <ion-col class="calendarGridCol" size="1" class="ion-align-self-center">
+                                  <ion-icon name="calendar" class="calIcon" (click)="showCalendar($event, this.form.value.inspectionDate);" icon-only></ion-icon>
+                              </ion-col>
+                              <ion-col class="calendarGridCol" size="11">
+                                  <ion-input placeholder="Inspection Date" #inspectionDate readonly formControlName="inspectionDate" ></ion-input>
+                              </ion-col>
+                          </ion-row>
+                      </ion-grid>
+
+                      <div class="error">
+                          <div *ngIf="!form.get('inspectionDate').valid && form.get('inspectionDate').touched">Inspection Date Required</div>
+                      </div>
+                  </ion-item>
+              </ion-col>
+              <ion-col size-lg="4" size-xl="4" size="12"   size-md="6">
+                  <ion-item>
+                      <ion-label position="floating">Enviromental Technician</ion-label> 
+                      <ion-input  mode="md" formControlName="environmentalTechnician" ></ion-input>
+                      <div class="error">
+                          <div *ngIf="!form.get('environmentalTechnician').valid && form.get('environmentalTechnician').touched">Enviromental Technician Required</div>
+                      </div>
+                  </ion-item>
+              </ion-col>
+              <ion-col size-lg="4" size-xl="4" size="12"   size-md="6">
+                  <ion-item>
+                      <ion-label position="floating">Well Location</ion-label> 
+                      <ion-input  mode="md" formControlName="wellLocation" ></ion-input>
+                      <div class="error">
+                          <div *ngIf="!form.get('wellLocation').valid && form.get('wellLocation').touched">Well Location Required</div>
+                      </div>
+                  </ion-item>
+              </ion-col>
+              <ion-col size-lg="4" size-xl="4" size="12"   size-md="6">
+                  <ion-item>
+                      <ion-label position="floating">Drilling Rig</ion-label> 
+                      <ion-input  mode="md" formControlName="drillingRig" ></ion-input>
+                      <div class="error">
+                          <div *ngIf="!form.get('drillingRig').valid && form.get('drillingRig').touched">Drilling Rig Required</div>
+                      </div>
+                  </ion-item>
+              </ion-col> 
+              <ion-col size-lg="4" size-xl="4" size="12"   size-md="6">
+                <ion-item>
+                    <ion-label position="floating">Unique Well ID</ion-label> 
+                    <ion-input  mode="md" formControlName="uwi" ></ion-input>
+                    <div class="error">
+                        <div *ngIf="!form.get('uwi').valid && form.get('uwi').touched">Unique Well ID Required</div>
+                    </div>
+                </ion-item>
+              </ion-col>
+              <ion-col size-lg="4" size-xl="4" size="12"   size-md="6">
+                <ion-item>
+                    <ion-label position="floating">Time of Inspection</ion-label> 
+                    <ion-select size="10" interface="popover" formControlName="timeOfInspection">
+                        <ion-select-option [value]="val.value" *ngFor="let val of timeOfInspections">{{val.value}}</ion-select-option>   
+                    </ion-select>
+                    <div class="error">
+                        <div *ngIf="!form.get('timeOfInspection').valid && form.get('timeOfInspection').touched">Type of Inspection Required</div>
+                    </div>
+                </ion-item>
+            </ion-col>
+          </ion-row>
+
+     
+          <ion-row class="headerRow">
+              <ion-col>Sprayfield Information</ion-col>
+          </ion-row>
+
+         <div  *ngIf='form !== null'>
+          <div formArrayName="sprayfieldLocations">
+            <div *ngFor="let sprayfield of form.get('sprayfieldLocations').controls; let j=index;">  
+              <div [formGroupName]="j"  >
+                <ion-row>
+                    <ion-col size-lg="4" size-xl="4" size="12"   size-md="6">
+                        <ion-item>
+                            <ion-label position="floating">Sprayfield Location</ion-label> 
+                            <ion-input  mode="md" formControlName="sprayfieldLocation" ></ion-input>
+                            <div class="error">
+                              <div *ngIf="!sprayfield.get('sprayfieldLocation').valid && !sprayfield.get('sprayfieldLocation').touched === false">Sprayfield Location Required</div>
+                            </div>
+                        </ion-item>
+                    </ion-col>
+                    
+                    <ion-col size-lg="4" size-xl="4" size="12"   size-md="6" >
+                        <app-radioquestion class="radioIonItem" [isMobileDevice]="isMobileDevice" [fieldGroupName]="'sprayfieldPylons'+j" [fieldName]="'sprayfieldPylons'" [inlineFormGroup]="sprayfield" [sectionTitle]="'Pylons'"></app-radioquestion>             
+                    </ion-col>
+
+                  <ion-col size-lg="4" size-xl="4" size="12"   size-md="6" >
+                      <app-radioquestion class="radioIonItem" [isMobileDevice]="isMobileDevice" [fieldGroupName]="'sprayfieldWaterBodyIdentification'+j" [fieldName]="'sprayfieldWaterBodyIdentification'" [inlineFormGroup]="sprayfield" [sectionTitle]="'Water Body Identification'"></app-radioquestion> 
+                  </ion-col>
+
+                    <ion-col size-lg="4" size-xl="4" size="12"   size-md="6" >
+                        <app-radioquestion class="radioIonItem" [isMobileDevice]="isMobileDevice" [fieldGroupName]="'sprayfieldPooling'+j" [fieldName]="'sprayfieldPooling'" [inlineFormGroup]="sprayfield" [sectionTitle]="'Pooling'"></app-radioquestion> 
+                  </ion-col>
+
+                  <ion-col size-lg="4" size-xl="4" size="12"   size-md="6" >
+                        <app-radioquestion class="radioIonItem" [isMobileDevice]="isMobileDevice" [fieldGroupName]="'sprayfieldShalePiles'+j" [fieldName]="'sprayfieldShalePiles'" [inlineFormGroup]="sprayfield" [sectionTitle]="'Shale Piles'"></app-radioquestion> 
+                  </ion-col>
+
+                  <ion-col size-lg="4" size-xl="4" size="12"   size-md="6" >
+                        <app-radioquestion class="radioIonItem" [isMobileDevice]="isMobileDevice" [fieldGroupName]="'sprayfieldOutsidePylons'+j" [fieldName]="'sprayfieldOutsidePylons'" [inlineFormGroup]="sprayfield" [sectionTitle]="'Outside Pylons'"></app-radioquestion> 
+                  </ion-col>
+
+
+                  
+                  <ion-col size-lg="4" size-xl="4" size="12"   size-md="6" >
+                        <app-radioquestion class="radioIonItem" [isMobileDevice]="isMobileDevice" [fieldGroupName]="'sprayfieldOverlap'+j" [fieldName]="'sprayfieldOverlap'" [inlineFormGroup]="sprayfield" [sectionTitle]="'Overlap'"></app-radioquestion> 
+                  </ion-col>
+
+                    <ion-col size-lg="4" size-xl="4" size="12"   size-md="6">
+                        <ion-item>
+                            <ion-label position="floating">Sprayrate</ion-label> 
+                            <ion-input  mode="md" formControlName="sprayfieldSprayrate" type="number"></ion-input>
+                            <div class="error">
+                                <div *ngIf="!sprayfield.get('sprayfieldSprayrate').valid && sprayfield.get('sprayfieldSprayrate').touched">Sprayrate Required</div>
+                            </div>
+                        </ion-item>
+                    </ion-col>
+
+                    <ion-col size-lg="4" size-xl="4" size="12"   size-md="6">
+                        <ion-item>
+                            <ion-icon *ngIf="j>0" name="close-circle" class="singleRec" color="danger" slot="end"  (click)="removeSprayfield(j)"></ion-icon>   
+                            <ion-label position="floating">Field Use</ion-label> 
+                            <ion-input  mode="md" formControlName="sprayfieldFieldUse" ></ion-input>
+                            <div class="error">
+                                <div *ngIf="!sprayfield.get('sprayfieldFieldUse').valid && sprayfield.get('sprayfieldFieldUse').touched">Field Use Required</div>
+                            </div>
+                        </ion-item>
+                    </ion-col>
+                    
+                </ion-row>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+          <ion-row class="headerRow">
+              <ion-col>Well Info Documentation</ion-col>
+          </ion-row>
+
+          <ion-row> 
+              <ion-col size-lg="4" size-xl="4" size="12"   size-md="6">
+                  <app-radioquestion class="radioIonItem" [isMobileDevice]="isMobileDevice" [fieldGroupName]="'documentSafetyMeeting'" [fieldName]="'documentSafetyMeeting'" [inlineFormGroup]="form" [sectionTitle]="'Safety Meeting'"></app-radioquestion> 
+             </ion-col>
+
+             <ion-col size-lg="4" size-xl="4" size="12"   size-md="6">
+                <app-radioquestion class="radioIonItem" [isMobileDevice]="isMobileDevice" [fieldGroupName]="'documentLandUseAgreement'" [fieldName]="'documentLandUseAgreement'" [inlineFormGroup]="form" [sectionTitle]="'Land Use Agreement'"></app-radioquestion> 
+             </ion-col>
+
+             <ion-col size-lg="4" size-xl="4" size="12"   size-md="6">
+                <app-radioquestion class="radioIonItem" [isMobileDevice]="isMobileDevice" [fieldGroupName]="'documentWaterUseAgreement'" [fieldName]="'documentWaterUseAgreement'" [inlineFormGroup]="form" [sectionTitle]="'Water Use Agreement'"></app-radioquestion> 
+             </ion-col>
+
+             <ion-col size-lg="4" size-xl="4" size="12"   size-md="6">
+                <app-radioquestion class="radioIonItem" [isMobileDevice]="isMobileDevice"  [fieldGroupName]="'documentTDLWaterPermit'" [fieldName]="'documentTDLWaterPermit'" [inlineFormGroup]="form" [sectionTitle]="'TDL / Water Permit'"></app-radioquestion> 
+             </ion-col>
+
+             <ion-col size-lg="4" size-xl="4" size="12"   size-md="6">
+                <app-radioquestion class="radioIonItem" [isMobileDevice]="isMobileDevice" [fieldGroupName]="'documentOnsitePresprayMap'" [fieldName]="'documentOnsitePresprayMap'" [inlineFormGroup]="form" [sectionTitle]="'Onsite / Pre-spray Map'"></app-radioquestion> 
+             </ion-col>
+
+             <ion-col size-lg="4" size-xl="4" size="12"   size-md="6">
+                <app-radioquestion class="radioIonItem" [isMobileDevice]="isMobileDevice" [fieldGroupName]="'documentWaterAccessOrientation'" [fieldName]="'documentWaterAccessOrientation'" [inlineFormGroup]="form" [sectionTitle]="'Water Access Orientation'"></app-radioquestion> 
+             </ion-col>
+
+             <ion-col size-lg="4" size-xl="4" size="12"   size-md="6">
+                <app-radioquestion class="radioIonItem" [isMobileDevice]="isMobileDevice" [fieldGroupName]="'documentAerialPhotoSubmission'"  [fieldName]="'documentAerialPhotoSubmission'" [inlineFormGroup]="form" [sectionTitle]="'Aerial Photo Submission'"></app-radioquestion> 
+             </ion-col>
+
+             <ion-col size-lg="4" size-xl="4" size="12"   size-md="6">
+                <app-radioquestion class="radioIonItem" [isMobileDevice]="isMobileDevice" [fieldGroupName]="'documentLandTitleSearch'"  [fieldName]="'documentLandTitleSearch'" [inlineFormGroup]="form" [sectionTitle]="'Land Title Search'"></app-radioquestion> 
+             </ion-col>
+
+             <ion-col size-lg="4" size-xl="4" size="12"   size-md="6">
+                <app-radioquestion class="radioIonItem" [isMobileDevice]="isMobileDevice" [fieldGroupName]="'documentDWMP'" [fieldName]="'documentDWMP'" [inlineFormGroup]="form" [sectionTitle]="'DWMP'"></app-radioquestion> 
+             </ion-col>
+          </ion-row>
+
+
+         
+          
+
+          <ion-row class="headerRow">
+              <ion-col>Regulatory Compliance</ion-col>
+          </ion-row>
+
+          <ion-row>
+              <ion-col size-lg="4" size-xl="4" size="12"   size-md="6">
+                  <ion-item>
+                      <ion-label position="floating">Season</ion-label> 
+                      <ion-select size="10" (ionChange)="setCompliance()" interface="popover" formControlName="regCompSeason">
+                         <ion-select-option [value]="val.value" *ngFor="let val of seasons">{{val.value}}</ion-select-option>   
+                      </ion-select>
+                      <div class="error">
+                          <div *ngIf="!form.get('regCompSeason').valid && form.get('regCompSeason').touched">Season Required</div>
+                      </div>
+                  </ion-item>
+              </ion-col>
+              <ion-col size-lg="4" size-xl="4" size="12"   size-md="6">
+                  <app-radioquestion class="radioIonItem" [isMobileDevice]="isMobileDevice" [fieldGroupName]="'regCompReceivingSoilEC'" [fieldName]="'regCompReceivingSoilEC'" [inlineFormGroup]="form" [sectionTitle]="'Receiving Soil EC'"></app-radioquestion> 
+              </ion-col>
+              <ion-col size-lg="4" size-xl="4" size="12"   size-md="6">
+                  <app-radioquestion class="radioIonItem" [isMobileDevice]="isMobileDevice" [fieldGroupName]="'regCompReceivingSoilSAR'" [fieldName]="'regCompReceivingSoilSAR'" [inlineFormGroup]="form" [sectionTitle]="receivingSoilSARLabel"></app-radioquestion> 
+              </ion-col>
+              <ion-col size-lg="4" size-xl="4" size="12"   size-md="6">
+                  <app-radioquestion class="radioIonItem" [isMobileDevice]="isMobileDevice" [fieldGroupName]="'regCompSlope'" [fieldName]="'regCompSlope'" [inlineFormGroup]="form" [sectionTitle]="slopeLabel"></app-radioquestion> 
+              </ion-col>
+              <ion-col size-lg="4" size-xl="4" size="12"   size-md="6">
+                  <app-radioquestion class="radioIonItem" [isMobileDevice]="isMobileDevice" [fieldGroupName]="'regCompProximityToWater'" [fieldName]="'regCompProximityToWater'" [inlineFormGroup]="form" [sectionTitle]="proximityToWaterLabel"></app-radioquestion> 
+              </ion-col>
+              <ion-col size-lg="4" size-xl="4" size="12" [hidden]="hideBarrier" size-md="6">
+                  <app-radioquestion class="radioIonItem" [isMobileDevice]="isMobileDevice" [fieldGroupName]="'regCompUpgradientBarrier'" [fieldName]="'regCompUpgradientBarrier'" [inlineFormGroup]="form" [sectionTitle]="'Upgradient Barrier'"></app-radioquestion>
+              </ion-col>
+          </ion-row>
+
+
+          <ion-row class="headerRow">
+              <ion-col>Water Information</ion-col>
+          </ion-row>
+          <ion-row>
+              <ion-col size-lg="4" size-xl="4" size="12"   size-md="6">
+                  <app-radioquestion class="radioIonItem" [isMobileDevice]="isMobileDevice"  [fieldGroupName]="'tdlWaterPermit'"  [fieldName]="'tdlWaterPermit'" [inlineFormGroup]="form" [sectionTitle]="'TDL / Water Permit'"></app-radioquestion> 
+              </ion-col>
+
+              <ion-col size-lg="4" size-xl="4" size="12"   size-md="6">
+                  <app-radioquestion class="radioIonItem" [isMobileDevice]="isMobileDevice" [fieldGroupName]="'tdlPermitPostAtRig'"  [fieldName]="'tdlPermitPostAtRig'" [inlineFormGroup]="form" [sectionTitle]="'TDL / Permit Post @ Rig'"></app-radioquestion> 
+              </ion-col>
+
+              <ion-col size-lg="4" size-xl="4" size="12"   size-md="6">
+                  <app-radioquestion class="radioIonItem" [isMobileDevice]="isMobileDevice" [fieldGroupName]="'tdlCondtionsMetAndDocumented'" [fieldName]="'tdlCondtionsMetAndDocumented'" [inlineFormGroup]="form" [sectionTitle]="'TDL Conditions Met & Documented'"></app-radioquestion> 
+              </ion-col>
+
+              <ion-col size-lg="4" size-xl="4" size="12"   size-md="6">
+                  <app-radioquestion class="radioIonItem" [isMobileDevice]="isMobileDevice" [fieldGroupName]="'tdlPermitInWaterTruck'" [fieldName]="'tdlPermitInWaterTruck'" [inlineFormGroup]="form" [sectionTitle]="'TDL / Permit in Water Truck'"></app-radioquestion> 
+              </ion-col>
+
+              <ion-col size-lg="4" size-xl="4" size="12"   size-md="6">
+                  <app-radioquestion class="radioIonItem" [isMobileDevice]="isMobileDevice" [fieldGroupName]="'trackingSheetsInUse'" [fieldName]="'trackingSheetsInUse'" [inlineFormGroup]="form" [sectionTitle]="'Tracking Sheets in Use'"></app-radioquestion> 
+              </ion-col>
+
+
+              <ion-col size-lg="4" size-xl="4" size="12"   size-md="6">
+                  <app-radioquestion class="radioIonItem" [isMobileDevice]="isMobileDevice" [fieldGroupName]="'labResultsPostedAtRig'"  [fieldName]="'labResultsPostedAtRig'" [inlineFormGroup]="form" [sectionTitle]="'Lab Results posted at rig'"></app-radioquestion> 
+              </ion-col>
+
+              <ion-col size-lg="4" size-xl="4" size="12"   size-md="6">
+                  <app-radioquestion class="radioIonItem" [isMobileDevice]="isMobileDevice" [fieldGroupName]="'maxAllowablesPostedAtRig'" [fieldName]="'maxAllowablesPostedAtRig'" [inlineFormGroup]="form" [sectionTitle]="'Max Allowables posted at rig'"></app-radioquestion> 
+              </ion-col>
+
+          </ion-row>
+
+
+          <ion-row class="headerRow">
+              <ion-col>Field Testing</ion-col>
+          </ion-row>
+
+          <ion-row>
+              <ion-col size-lg="4" size-xl="4" size="12"   size-md="6">
+                  <app-radioquestion class="radioIonItem" [isMobileDevice]="isMobileDevice" [fieldGroupName]="'fieldTestTestKit'" [fieldName]="'fieldTestTestKit'" [inlineFormGroup]="form" [showNA]=false [sectionTitle]="'Test Kit in Good Condition'"></app-radioquestion> 
+              </ion-col>
+
+              <ion-col size-lg="4" size-xl="4" size="12"   size-md="6">
+                  <app-radioquestion class="radioIonItem" [isMobileDevice]="isMobileDevice" [fieldGroupName]="'fieldTestTestKit'" [fieldName]="'fieldTestProperEquipment'" [inlineFormGroup]="form" [showNA]=false [sectionTitle]="'Proper Equipment and Available Chemicals'"></app-radioquestion> 
+              </ion-col>
+
+              <ion-col size-lg="4" size-xl="4" size="12"   size-md="6">
+                  <app-radioquestion class="radioIonItem" [isMobileDevice]="isMobileDevice" [fieldGroupName]="'fieldTestProperTestingProcedures'"  [fieldName]="'fieldTestProperTestingProcedures'" [inlineFormGroup]="form" [showNA]=false [sectionTitle]="'Proper Testing Procedures'"></app-radioquestion> 
+              </ion-col>
+          </ion-row>
+
+
+
+
+          <ion-row class="headerRow">
+              <ion-col>Onsite Information</ion-col>
+          </ion-row>
+          <ion-row>
+              <ion-col size-lg="4" size-xl="4" size="12"   size-md="6">
+                  <ion-item>
+                      <ion-label position="floating">Well Type</ion-label> 
+                      <ion-select size="10" interface="popover" formControlName="onsiteInfoSpills">
+                            <ion-select-option [value]="val.value" *ngFor="let val of wellTypes">{{val.value}}</ion-select-option>        
+                      </ion-select>
+                      <div class="error">
+                          <div *ngIf="!form.get('onsiteInfoWellType').valid && form.get('onsiteInfoWellType').touched">Well Type Required</div>
+                      </div>
+                  </ion-item>
+              </ion-col>
+
+              <ion-col size-lg="4" size-xl="4" size="12"   size-md="6">
+                  <app-radioquestion class="radioIonItem" [isMobileDevice]="isMobileDevice" [fieldGroupName]="'onsiteInfoSpills'" [fieldName]="'onsiteInfoSpills'" [inlineFormGroup]="form" [sectionTitle]="'Spills'"></app-radioquestion> 
+              </ion-col>
+
+              <ion-col size-lg="4" size-xl="4" size="12"   size-md="6">
+                  <app-radioquestion class="radioIonItem" [isMobileDevice]="isMobileDevice" [fieldGroupName]="'onsiteInfoDripTrays'" [fieldName]="'onsiteInfoDripTrays'" [inlineFormGroup]="form" [sectionTitle]="'Drip Trays'"></app-radioquestion> 
+              </ion-col>
+          </ion-row>
+
+
+
+
+          <ion-row class="headerRow">
+              <ion-col>Cement</ion-col>
+          </ion-row>
+          <ion-row>
+              <ion-col size-lg="4" size-xl="4" size="12"   size-md="6">
+                  <ion-item>
+                      <ion-label position="floating">Storage Type</ion-label> 
+                      <ion-select size="10" interface="popover" formControlName="cementStorageType">
+                          <ion-select-option [value]="val.value" *ngFor="let val of cementStorageType">{{val.value}}</ion-select-option>   
+                      </ion-select>
+                      <div class="error">
+                          <div *ngIf="!form.get('cementStorageType').valid && form.get('cementStorageType').touched">Cement Storage Type Required</div>
+                      </div>
+                  </ion-item>
+              </ion-col>
+
+              <ion-col size-lg="4" size-xl="4" size="12"   size-md="6">
+                  <ion-item>
+                      <ion-label position="floating">Disposal Location</ion-label> 
+                      <ion-input  mode="md" formControlName="cementDisposalLocation" ></ion-input>
+                      <div class="error">
+                          <div *ngIf="!form.get('cementDisposalLocation').valid && form.get('cementDisposalLocation').touched">Disposal Location Required</div>
+                      </div>
+                  </ion-item>
+              </ion-col>
+
+              <ion-col size-lg="4" size-xl="4" size="12"   size-md="6">
+                  <ion-item>
+                      <ion-label position="floating">Drill Out Fluids Disposal</ion-label> 
+                      <ion-input  mode="md" formControlName="drilloutFluidsDisposal" ></ion-input>
+                      <div class="error">
+                          <div *ngIf="!form.get('drilloutFluidsDisposal').valid && form.get('drilloutFluidsDisposal').touched">Drill Out Fluids Required</div>
+                      </div>
+                  </ion-item>
+              </ion-col>
+          </ion-row>
+
+          <ion-row class="headerRow">
+            <ion-col>Photos</ion-col>
+          </ion-row>
+
+         <ion-row>
+            <ion-col size-lg="12" size-xl="12" size="12" *ngFor="let photo of genericPhotoList">
+                <app-generic-photo [basePath]="'checklist'" [genericPhoto]="photo" [reportType]="'Daily Audit DWM'" ></app-generic-photo>
+            </ion-col>
+         </ion-row>
+
+         <ion-row *ngIf="genericPhotoList.length === 0">
+            <ion-col size-lg="12" size-xl="12" size="12" class="noRecords" >
+                No Photos Uploaded
+             </ion-col>
+         </ion-row>
+
+         <ion-row class="headerRow">
+            <ion-col>Files</ion-col>
+        </ion-row>
+
+        <ion-row>
+            <ion-col size-lg="12" size-xl="12" size="12" *ngFor="let file of genericFileList">
+                <app-genericfile [basePath]="'checklist'" [genericFile]="file" [reportType]="'Daily Audit DWM'" ></app-genericfile>
+            </ion-col>
+        </ion-row>
+
+        <ion-row *ngIf="genericFileList.length === 0">
+            <ion-col size-lg="12" size-xl="12" size="12" class="noRecords" >
+                No Files Uploaded
+            </ion-col>
+        </ion-row>
+
+
+          <ion-row class="headerRow">
+              <ion-col>Comments</ion-col>
+          </ion-row>
+
+          <ion-row>
+              <ion-col size="12" size-lg="6" size-md="6" size-sm="12">
+                  <ion-item>
+                      <ion-label  position="floating" >Preventative/Corrective Actions</ion-label>
+                      <ion-textarea rows="4" placeHolder=" " formControlName="preventativeCorrectiveActions"></ion-textarea>
+                      <span class="error" *ngIf="!form.get('preventativeCorrectiveActions').valid && form.get('preventativeCorrectiveActions').touched">Preventative/Corrective Actions Required</span>
+                  </ion-item>
+              </ion-col>
+              <ion-col size="12" size-lg="6" size-md="6" size-sm="12">
+                  <ion-item>
+                      <ion-label  position="floating" >Comments</ion-label>
+                      <ion-textarea rows="4" placeHolder=" " formControlName="comments"></ion-textarea>
+                      <span class="error" *ngIf="!form.get('comments').valid && form.get('comments').touched">Comments Required</span>
+                  </ion-item>
+              </ion-col>
+              <ion-col size="12" size-lg="12" size-md="12" size-sm="12">
+                  <ion-item>
+                      <ion-label  position="floating" >Auditor Name</ion-label>
+                      <ion-input  mode="md" formControlName="auditorName" ></ion-input>
+                      <span class="error" *ngIf="!form.get('auditorName').valid && form.get('auditorName').touched">Auditor Name Required</span>
+                  </ion-item>
+              </ion-col>
+              <ion-col size="12" size-lg="12" size-md="12" size-sm="12" *ngIf="this.dailyAuditDwmModel !== null && this.dailyAuditDwmModel !== undefined">
+                 
+                      <app-signature [title]="'Auditor Signature'" (signatureDone)="getSignature($event)" [genericId]="genericId" [genericIdType]="genericIdType"></app-signature>
+                      <span class="error" *ngIf="!form.get('auditorSignature').valid && form.get('auditorSignature').touched">Auditor Signature Required</span>
+                  
+              </ion-col>
+          </ion-row>
+
+      </form>
+
+
+  </ion-grid>
+  
+  </ion-content>
+  

@@ -1,0 +1,49 @@
+<ion-app>
+    <ion-menu side="end"   menuId="first" color="secondary" (ionWillOpen)="ionWillOpen()"  contentId="content1">
+        <ion-header>
+          <ion-toolbar color="header">
+            <ion-title  class="menuLabel" *ngIf="currentUser != null">{{currentUser.firstName}} {{currentUser.lastName}} </ion-title>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content>
+          <ion-list >
+            <ion-item  (click)="navMenu('home')">
+              <ion-label>Tech Home</ion-label>
+              <ion-icon name="home"  slot="end"></ion-icon>
+            </ion-item>
+
+       
+            <!--<ion-item  (click)="navMenu('profile')">
+                <ion-label>Profile</ion-label>
+                <ion-icon name="person" slot="end"></ion-icon>
+              </ion-item>-->
+
+               <ion-item  (click)="navMenu('logout')">
+                  <ion-label>Logout</ion-label>
+                  <ion-icon name="log-out"  slot="end"></ion-icon>
+                </ion-item>
+
+               
+                <ion-item-divider>
+                    
+                </ion-item-divider> 
+
+                <ion-item  *ngIf="currentUser != null && currentUser.isAdmin" (click)="navMenu('admin')">
+                    <ion-label>Admin Home</ion-label>
+                    <ion-icon name="keypad"  slot="end"></ion-icon>
+                  </ion-item>
+
+               
+                  <app-notification></app-notification>
+              
+                  <app-networkstatus></app-networkstatus>
+                
+                 
+                  <div style="text-align: center; width: 100%;" >Version: {{version}}</div>
+          </ion-list>
+        </ion-content>
+      </ion-menu>
+      
+  <ion-router-outlet id="content1" main></ion-router-outlet>
+ <!--<router-outlet></router-outlet>--> 
+</ion-app>

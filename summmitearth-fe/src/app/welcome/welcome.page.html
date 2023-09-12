@@ -1,0 +1,63 @@
+
+<ion-header >
+
+  <ion-toolbar *ngIf="!isProduction" color="danger" >
+    <ion-title >
+      DEMO - Summit App
+    </ion-title>
+    <ion-buttons slot="end">
+      <app-navmenu></app-navmenu> 
+   </ion-buttons>
+ </ion-toolbar>
+
+  <ion-toolbar color="primary"  *ngIf="isProduction">
+      <ion-title [hidden]="viewWidth < 576">
+        Welcome to the Summit App
+      </ion-title>
+      <ion-buttons slot="end">
+         <app-navmenu></app-navmenu> 
+      </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="refreshPage($event, ionrefresher)" #ionrefresher>
+      <ion-refresher-content
+        pullingIcon="arrow-dropdown"
+        pullingText="Pull to refresh"
+        refreshingSpinner="circles"
+        refreshingText="Refreshing...">
+      </ion-refresher-content>
+    </ion-refresher>
+    
+
+  <ion-card class="search-card">
+      <ion-card-content>
+        <ion-text [hidden]="viewWidth > 576">
+            Welcome to the Summit App
+        </ion-text>
+            <ion-grid>
+                <ion-row >
+                   <ion-col size="12" offset-md="2" offset-lg="3" offset-xl="3">
+                      <button pButton type="button" size="12" size-sm="12" icon="pi pi-check" *ngIf="currentUser!.permissions!.dwmChecklists"  label="Checklists" (click)="navChecklist()"></button>
+                     
+                    <!--  <button pButton type="button" size="12" size-sm="12" icon="pi pi-list" *ngIf="currentUser!.permissions!.dfrPipelines" label="DFR - Pipelines" (click)="navAudit()"></button> -->
+
+                     <!-- <button pButton type="button" size="12" size-sm="12" icon="pi pi-list" *ngIf="currentUser!.permissions!.dfrRRRTech || currentUser!.permissions!.dfrRRRAdmin" label="DFR - RRR" (click)="navRRR()"></button> --> 
+
+                   <!--   <button pButton type="button" size="12" size-sm="12" icon="pi pi-list"  label="DFR - RRR" (click)="navRRR()"></button> -->
+
+                      <button pButton type="button" size="12" size-sm="12" icon="pi pi-plus" *ngIf="currentUser!.permissions!.dwmCalculators" label="Calculators" (click)="navCalc()"></button>
+
+                      <button pButton type="button" size="12" size-sm="12" icon="pi pi-map-marker" *ngIf="currentUser!.permissions!.dwmMapsTech || currentUser.permissions.dwmMapsAdmin" label="Maps" (click)="navMap()"></button>
+
+                      <button pButton type="button" size="12" size-sm="12" icon="pi pi-table"  label="DWM" (click)="navDWM()"></button>
+                   </ion-col>
+                </ion-row>
+            </ion-grid>
+      </ion-card-content>
+  </ion-card>
+
+  
+</ion-content>

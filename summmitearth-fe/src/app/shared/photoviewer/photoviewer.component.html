@@ -1,0 +1,15 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-button (click)="backToPage()" >
+                <ion-icon slot="icon-only" name="arrow-round-back"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+        <ion-title>
+        Photo
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+<ion-content class='myPhoto'>
+  <img [src]="photoUrl" class='myPhoto' />
+</ion-content>

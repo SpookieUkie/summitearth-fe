@@ -1,0 +1,40 @@
+<ion-item class="radioIonItem">
+    
+        <ion-grid class="radioGrid" [formGroup]="inlineFormGroup">
+            <ion-row>
+                <ion-col size="12" class="radioLabelCol">
+                    <!-- <ion-icon name="document" icon-only style="float: right;"  slot="end"></ion-icon> -->
+                    <label class="radioLabelVal">{{sectionTitle}}</label> 
+                    <span item-right style="width:100%; padding-top: 0px;" >
+                        <ion-icon name="document" (click)="presentNotePopup($event)" [hidden]="!selectedNA" [ngClass]='getNoteClass()' ></ion-icon>
+                       <!-- <ion-icon name="document" (click)="presentNotePopup($event)" [hidden]="!selectedNA"  class="icon"></ion-icon>-->
+                    </span>
+                </ion-col>
+            </ion-row>
+        
+            <ion-row class="radioRow">
+                <ion-col size="5" class="radioCol align-self-baseline">
+               <div class="radioDivItem"  >
+                        <p-radioButton name="{{fieldGroupName}}" class="radioPItem2a" label="Satisfactory" value="Satisfactory" (click)="showHideNote(false)"  [formControlName]="fieldName"></p-radioButton>
+                </div>
+                </ion-col>
+                <ion-col size="5" class="radioCol align-self-baseline">
+                    <div class="radioDivItem">
+                        <p-radioButton name="{{fieldGroupName}}" class="radioPItem" label="Unsatisfactory" value="Unsatisfactory" (click)="showHideNote(false)"  [formControlName]="fieldName"></p-radioButton>
+                    </div>
+                </ion-col>
+                <ion-col size="2" class="radioCol align-self-baseline" *ngIf="showNA">
+                    <div class="radioDivItem">
+                        <p-radioButton name="{{fieldGroupName}}" class="radioPItem" label="N/A" value="N/A" (click)="showHideNote(true)" [formControlName]="fieldName"></p-radioButton>
+                    </div>
+                </ion-col>
+            </ion-row>
+            <ion-row >
+                <div [ngClass]="getErrorClass()">
+                   <div *ngIf="!inlineFormGroup.get(fieldName).valid && inlineFormGroup.get(fieldName).touched">{{sectionTitle}} Required</div> 
+                </div>
+            </ion-row>
+
+        </ion-grid>
+    
+</ion-item>

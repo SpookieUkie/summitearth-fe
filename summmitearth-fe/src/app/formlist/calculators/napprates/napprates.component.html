@@ -1,0 +1,129 @@
+
+<ion-header >
+    <ion-toolbar color="primary">
+        <ion-buttons slot="start">
+            <ion-button (click)="backToList()" >
+                <ion-icon slot="icon-only" name="arrow-round-back"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+        <ion-title [hidden]="viewWidth < 576">
+          N Application Rate
+        </ion-title>
+        <ion-buttons slot="end">
+            <app-navmenu></app-navmenu>  
+        </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content>
+    <ion-refresher slot="fixed" (ionRefresh)="refreshPage($event, ionrefresher)" #ionrefresher>
+        <ion-refresher-content
+          pullingIcon="arrow-dropdown"
+          pullingText="Pull to refresh"
+          refreshingSpinner="circles"
+          refreshingText="Refreshing...">
+        </ion-refresher-content>
+      </ion-refresher>
+   
+  
+  <ion-grid  size="8" size-md="8" size-xs="12" size-sm="12" >
+      <form [formGroup]="form" >
+        <ion-row  size="8"  size-md="8" size-xs="12" size-sm="12">
+            <ion-col  size="8" size-xs="12" size-sm="12" offset="2" text-left>
+                <h4>Nitrogen Application Rates</h4>
+            </ion-col>
+        </ion-row>
+      <ion-row  size="8" size-xs="12" size-sm="12">   
+          <ion-col  size="8" size-xs="12" size-sm="12" >
+              <ion-item>
+                <label  class="label">Units Added:</label>
+                <ion-input (ionBlur)="onValChange()" formControlName="unitsAdded" size="12" clearInput  type="number"></ion-input>
+                <ion-text > bags (of Envirofloc, CaNO3 etc)</ion-text>
+              </ion-item>
+        </ion-col>  
+      </ion-row>
+
+
+      <ion-row  size="8" size-xs="12" size-sm="12">   
+          <ion-col  size="8" size-xs="12" size-sm="12" >
+              <ion-item>
+                <label  class="label">Mass of Unit:</label>
+                <ion-input  (ionBlur)="onValChange()" formControlName="massOfUnit"  size="12" clearInput type="number"></ion-input>
+                <ion-text > kg/bag (check product, size may vary)	</ion-text>
+              </ion-item>
+        </ion-col>  
+      </ion-row>
+
+
+
+      <ion-row  size="8" size-xs="12" size-sm="12">   
+          <ion-col  size="8" size-xs="12" size-sm="12" >
+              <ion-item>
+                <label  class="label">N in product:</label>
+                <ion-input (ionBlur)="onValChange()" formControlName="nInProduct"  size="2" clearInput type="number"></ion-input>
+                <ion-text > % (check product, % of N varies)		</ion-text>
+              </ion-item>
+        </ion-col>  
+      </ion-row>
+
+    
+      
+
+      <ion-row  size="8" size-xs="12" size-sm="12">   
+          <ion-col  size="8" size-xs="12" size-sm="12" >
+              <ion-item>
+                <label   class="label" >Volume:</label>
+                <ion-input (ionBlur)="onValChange()" formControlName="volume"   size="12" clearInput type="number"></ion-input>
+                <ion-text > m³ (Total volume with product added)		</ion-text>
+              </ion-item>
+        </ion-col>  
+      </ion-row>
+
+
+      <ion-row  size="8" size-xs="12" size-sm="12">   
+          <ion-col  size="8" size-xs="12" size-sm="12" >
+              <ion-item>
+                <label  class="label">Spray Rate:</label>
+                <ion-input (ionBlur)="onValChange()" formControlName="sprayRate"  size="12" clearInput type="number"></ion-input>
+                <ion-text > m³/ha  &lt;40 Summer, &lt;20 Winter			</ion-text>
+              </ion-item>
+        </ion-col>  
+      </ion-row>
+
+      <ion-row  size="8" size-xs="12" size-sm="12">   
+          <ion-col  size="8" size-xs="12" size-sm="12" >
+              <ion-item>
+                <label  class="label" >Disposal Area:</label>
+                <ion-input (ionBlur)="onValChange()" readonly  size="2" formControlName="disposalArea" class="readonly"  clearInput type="number"></ion-input>
+                <ion-text > ha  (minimum area required based on volume + rate)		</ion-text>
+              </ion-item>
+        </ion-col>  
+      </ion-row>
+
+      <ion-row  size="8" size-xs="12" size-sm="12">   
+          <ion-col  size="8" size-xs="12" size-sm="12" >
+              <ion-item>
+                <label  class="label">N application Rate:</label>
+                <ion-input (ionBlur)="onValChange()" formControlName="nApplicationRate" [ngClass]="getClass()" size="12" readonly type="number"></ion-input>
+                <ion-text > kg/ha		</ion-text>
+              </ion-item>
+        </ion-col>   
+        
+      </ion-row>
+
+      <ion-row  size="8" size-xs="12" size-sm="12">
+        <ion-col  size="8" size-xs="12" size-sm="12">
+            <ion-item>
+                <ion-text class="warning"> **TARGET TO BE BELOW 25kg/ha**</ion-text>
+                <ion-button (click)="clearForm()">Clear Form</ion-button>
+            </ion-item>
+        </ion-col>
+      </ion-row>
+     
+  </form>
+
+
+  </ion-grid>
+  
+  </ion-content>
+  

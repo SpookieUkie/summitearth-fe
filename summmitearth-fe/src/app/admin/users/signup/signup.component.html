@@ -1,0 +1,205 @@
+
+<ion-header >
+    <ion-toolbar color="primary">
+        <ion-title [hidden]="viewWidth < 576">
+          Manage User
+        </ion-title>
+        <ion-buttons slot="start">
+            <ion-button (click)="backToUsers()" >
+                <ion-icon slot="icon-only" name="arrow-round-back"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+        <ion-buttons slot="end">
+            <ion-button icon-only (click)="showHideFormErrors()">
+                <ion-icon *ngIf="form.valid"   name="checkmark-circle" class="valid"  float-right></ion-icon>
+                <ion-icon *ngIf="!form.valid"  name="warning" class="warning" float-right></ion-icon>
+            </ion-button>
+            <ion-button icon-only (click)="onSaveForm();">
+                    <ion-icon name="save" *ngIf="!form.dirty" class="valid"></ion-icon>
+                    <ion-icon name="save" *ngIf="form.dirty" class='dirty'></ion-icon>
+            </ion-button>
+            <app-adminoptions [currentView]="'adduser'"></app-adminoptions>
+            <app-navmenu></app-navmenu>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+  <ion-content>
+    <ion-refresher slot="fixed" (ionRefresh)="refreshPage($event, ionrefresher)" #ionrefresher>
+        <ion-refresher-content
+            pullingIcon="arrow-dropdown"
+            pullingText="Pull to refresh"
+            refreshingSpinner="circles"
+            refreshingText="Refreshing...">
+        </ion-refresher-content>
+    </ion-refresher>
+  
+    <ion-grid>
+        <form [formGroup]="form"> 
+        <ion-row class="headerRow" style="margin:0px; padding: 0px;"> 
+            <ion-col size="12">
+                Basic User Settings
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col size-lg="4" size-xl="3" size="12" size-md="6" size-sm="12">
+            <ion-item>
+                <ion-label position="floating">First Name</ion-label>
+                <ion-input formControlName='firstName'></ion-input>
+                <div class="error">
+                    <div *ngIf="!form.get('firstName').valid && form.get('firstName').touched">First Name Required</div>
+                </div>
+            </ion-item>
+            </ion-col>
+            <ion-col  size-lg="4" size-xl="3" size="12" size-md="6" size-sm="12" >
+                <ion-item>
+                    <ion-label position="floating">Last Name</ion-label>
+                    <ion-input formControlName='lastName'></ion-input>
+                    <div class="error">
+                        <div *ngIf="!form.get('lastName').valid && form.get('lastName').touched">Last Name Required</div>
+                    </div>
+                </ion-item>
+            </ion-col>
+            <ion-col  size-lg="4" size-xl="3" size="12" size-md="6" size-sm="12">
+                <ion-item>
+                    <ion-label position="floating">Email Address</ion-label>
+                    <ion-input formControlName='emailAddress'></ion-input>
+                    <div class="error">
+                        <div *ngIf="!form.get('emailAddress').valid && form.get('emailAddress').touched">Email Address Required</div>
+                    </div>
+                </ion-item>
+            </ion-col>
+            <ion-col  size-lg="4" size-xl="3" size="12" size-md="6" size-sm="12" >
+                <ion-item>
+                    <ion-label position="floating">Username</ion-label>
+                    <ion-input formControlName='username'></ion-input>
+                    <div class="error">
+                        <div *ngIf="!form.get('username').valid && form.get('username').touched">Username Required</div>
+                    </div>
+                </ion-item>
+            </ion-col>
+            <ion-col size-lg="4" size-xl="3" size="12" size-md="6" size-sm="12">
+                <ion-item>
+                    <ion-label position="stacked">Is Consultant</ion-label>
+                    <div>
+                        <label class="pillLabelNo">No</label>
+                        <ion-toggle formControlName="isConsultant" class="pillYesNo" (ionChange)="isConsultantChanged($event)" ></ion-toggle>
+                        <label class="pillLabelYes">Yes</label>
+                    </div>
+                    <div *ngIf='isMobileDevice' class="pillPadiOS"></div>
+                    <div *ngIf='!isMobileDevice' class="pillPadWeb"></div>
+                </ion-item>
+            </ion-col>
+            <ion-col  size-lg="4" size-xl="3" size="12" size-md="6" size-sm="12" >
+                <ion-item>
+                    <ion-label position="floating">Password</ion-label>
+                    <ion-input [disabled]="!isConsultant" formControlName='password' type="password"></ion-input>
+                    <div class="error">
+                        <div *ngIf="!form.get('password').valid && form.get('password').touched">Password Must be a minimum 8 characters.</div>
+                    </div>
+                </ion-item>
+            </ion-col>
+            <ion-col size-lg="4" size-xl="3" size="12" size-md="6" size-sm="12" >
+                <ion-item>
+                    <ion-label  position="floating">Confirm Password</ion-label>
+                    <ion-input #confirmPassword [disabled]="!isConsultant" type="password"></ion-input>
+                    <div class="error">
+                        <!-- <div *ngIf="!form.get('password').valid && form.get('passwrd').touched">First Name Required</div> -->
+                    </div>
+                </ion-item>
+            </ion-col>
+            <ion-col  size-lg="4" size-xl="3" size="12" size-md="6" size-sm="12" >
+                <ion-item>
+                    <ion-label position="floating">Cell Number</ion-label>
+                    <ion-input formControlName="cellPhone"></ion-input>
+                    <div class="error">
+                        <div *ngIf="!form.get('cellPhone').valid && form.get('cellPhone').touched">Cell Phone Required</div>
+                    </div>
+                </ion-item>
+            </ion-col>
+            <ion-col size-lg="4" size-xl="3" size="12" size-md="6" size-sm="12" >
+                <ion-item>
+                    <ion-label position="floating">Other Number</ion-label>
+                    <ion-input formControlName="otherPhone"></ion-input>
+                    <div class="error">
+                       <!-- <div *ngIf="!form.get('otherPhone').valid && form.get('otherPhone').touched">Other Phone Invalid</div>-->
+                    </div>
+                </ion-item>
+            </ion-col>
+            <ion-col size-lg="4" size-xl="3" size="12" size-md="6" size-sm="12" >
+                <ion-item>
+                    <ion-label position="stacked">Is Technician</ion-label>
+                    <div>
+                        <label class="pillLabelNo">No</label>
+                        <ion-toggle formControlName="isTech" class="pillYesNo" ></ion-toggle>
+                        <label class="pillLabelYes">Yes</label>
+                        <div *ngIf='isMobileDevice' class="pillPadiOS"></div>
+                        <div *ngIf='!isMobileDevice' class="pillPadWeb"></div>
+                    </div>
+                </ion-item>
+            </ion-col>
+            <ion-col size-lg="4" size-xl="3" size="12" size-md="6" size-sm="12">
+                <ion-item>
+                    <ion-label position="stacked">Is Administrator</ion-label>
+                    <div>
+                        <label class="pillLabelNo">No</label>
+                        <ion-toggle formControlName="isAdmin" class="pillYesNo" ></ion-toggle>
+                        <label class="pillLabelYes">Yes</label>
+                    </div>
+                    <div *ngIf='isMobileDevice' class="pillPadiOS"></div>
+                    <div *ngIf='!isMobileDevice' class="pillPadWeb"></div>
+                </ion-item>
+            </ion-col>
+            <ion-col size-lg="4" size-xl="3" size="12" size-md="6" size-sm="12">
+                <ion-item>
+                    <ion-label position="stacked">Is Active</ion-label>
+                    <div>
+                        <label class="pillLabelNo">No</label>
+                        <ion-toggle formControlName="isActive" class="pillYesNo" ></ion-toggle>
+                        <label class="pillLabelYes">Yes</label>
+                    </div>
+                    <div *ngIf='isMobileDevice' class="pillPadiOS"></div>
+                    <div *ngIf='!isMobileDevice' class="pillPadWeb"></div>
+                </ion-item>
+            </ion-col>
+        </ion-row>
+
+
+        <ion-row class="headerRow" style="margin:0px; padding: 0px;"> 
+            <ion-col size="12">
+               User Permissions
+            </ion-col>
+        </ion-row>
+
+        <ion-row > 
+            <ion-col size-lg="4" size-xl="3" size="12" size-md="6" size-sm="12"  >
+                <app-pillyesno [isMobileDevice]="isMobileDevice" [fieldName]="'dwmChecklists'" [inlineFormGroup]="form" [inlineFormGroupName]="'permissions'" [sectionTitle]="'DWM Checklist'"></app-pillyesno>
+            </ion-col>
+            <ion-col size-lg="4" size-xl="3" size="12" size-md="6" size-sm="12"  >
+                <app-pillyesno [isMobileDevice]="isMobileDevice" [fieldName]="'dfrPipelines'" [inlineFormGroup]="form" [inlineFormGroupName]="'permissions'" [sectionTitle]="'DFR - Pipelines'"></app-pillyesno>
+            </ion-col>
+            <ion-col size-lg="4" size-xl="3" size="12" size-md="6" size-sm="12"  >
+                <app-pillyesno [isMobileDevice]="isMobileDevice" [fieldName]="'dwmCalculators'" [inlineFormGroup]="form" [inlineFormGroupName]="'permissions'" [sectionTitle]="'DWM Calculators'"></app-pillyesno>
+            </ion-col>
+            <ion-col size-lg="4" size-xl="3" size="12" size-md="6" size-sm="12"  >
+                <app-pillyesno [isMobileDevice]="isMobileDevice" [fieldName]="'dwmMapsTech'" [inlineFormGroup]="form" [inlineFormGroupName]="'permissions'" [sectionTitle]="'Summit Maps - Tech'"></app-pillyesno>
+            </ion-col>
+            <ion-col size-lg="4" size-xl="3" size="12" size-md="6" size-sm="12"  >
+                <app-pillyesno [isMobileDevice]="isMobileDevice" [fieldName]="'dwmMapsAdmin'" [inlineFormGroup]="form" [inlineFormGroupName]="'permissions'" [sectionTitle]="'Summit Maps - Admin'"></app-pillyesno>
+            </ion-col>
+
+            <ion-col size-lg="4" size-xl="3" size="12" size-md="6" size-sm="12"  >
+                <app-pillyesno [isMobileDevice]="isMobileDevice" [fieldName]="'dfrRRRTech'" [inlineFormGroup]="form" [inlineFormGroupName]="'permissions'" [sectionTitle]="'RRR Tech'"></app-pillyesno>
+            </ion-col>
+
+            <ion-col size-lg="4" size-xl="3" size="12" size-md="6" size-sm="12"  >
+                <app-pillyesno [isMobileDevice]="isMobileDevice" [fieldName]="'dfrRRRAdmin'" [inlineFormGroup]="form" [inlineFormGroupName]="'permissions'" [sectionTitle]="'RRR Admin'"></app-pillyesno>
+            </ion-col>
+        </ion-row>  
+
+        </form>
+    </ion-grid>
+      
+ 
+
+  </ion-content>

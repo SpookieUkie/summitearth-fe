@@ -1,0 +1,80 @@
+
+<ion-header >
+    <ion-toolbar color="primary">
+        <ion-title [hidden]="viewWidth < 576">
+          Manage Clients
+        </ion-title>
+        <ion-buttons slot="start">
+            <ion-button (click)="backToAdmin()" >
+                <ion-icon slot="icon-only" name="arrow-round-back"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+        <ion-buttons slot="end">
+            <app-adminoptions [currentView]="'clients'"></app-adminoptions>
+            <app-navmenu></app-navmenu>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+  <ion-content>
+    <ion-refresher slot="fixed" (ionRefresh)="refreshPage($event, ionrefresher)" #ionrefresher>
+        <ion-refresher-content
+            pullingIcon="arrow-dropdown"
+            pullingText="Pull to refresh"
+            refreshingSpinner="circles"
+            refreshingText="Refreshing...">
+        </ion-refresher-content>
+    </ion-refresher>
+  
+    <ion-grid>
+        <app-admintheadermenu></app-admintheadermenu>
+        <ion-row class="headerRow">
+            <ion-col>
+               Manage Clients
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <p-table [value]="clients" [paginator]="true" [rows]="25" #dt [globalFilterFields]="['dfrDate', 'dfrStatus', 'assignedToFullName', 'projectName', 'projectNumber']">
+    
+                     <ng-template pTemplate="caption">
+                       <ion-card class="search-card">
+                           <ion-grid>
+                                  <ion-row>
+                                      <ion-col  size-md="4" offset="4">
+                                          <ion-label>Global Filter</ion-label>
+                                          <ion-input type="text" style="background-color:#ffffff"  size="20" placeholder=" " (input)="dt.filterGlobal($event.target.value, 'contains')" ></ion-input>
+                                      </ion-col>
+                                  </ion-row>
+                          </ion-grid>
+                      </ion-card>   
+             
+                      
+                    </ng-template>
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th [pSortableColumn]="'clientName'">Client  <p-sortIcon></p-sortIcon></th>
+                            <th [pSortableColumn]="'address'">Address  <p-sortIcon  ></p-sortIcon></th>
+                            <th [pSortableColumn]="'keyContact'">Key Contact <p-sortIcon ></p-sortIcon></th>
+                            <th [pSortableColumn]="'isActive'">Active<p-sortIcon  ></p-sortIcon></th>
+                            <th style="width: 120px;">Actions</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-client>
+                        <tr>
+                            <td>{{client.clientName}}</td>
+                            <td>{{client.address}}</td>
+                            <td>{{client.keyContact}}</td>
+                            <td><span *ngIf="client.isActive">Yes</span><span *ngIf="!client.isActive">No</span></td>
+                            <td>
+                                <button pButton type="button" (click)="editClient(client)" class="prime-btn" ><i class="pi pi-chevron-right prime-icon" ></i></button>
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </ion-col>
+        </ion-row>
+       
+    </ion-grid> 
+
+  </ion-content>

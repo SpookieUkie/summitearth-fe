@@ -1,0 +1,58 @@
+
+<ion-header >
+    <ion-toolbar *ngIf="!isProduction" color="danger" >
+        <ion-title  >
+           Login - DEMO 
+        </ion-title>
+    </ion-toolbar>
+    <ion-toolbar color="primary" *ngIf="isProduction">
+        <ion-title   [hidden]="viewWidth < 576" >
+            Login - Summit Earth DFR
+        </ion-title>
+    </ion-toolbar>
+    
+
+
+</ion-header>
+
+  <ion-content class="login" >
+
+    <ion-grid class="signin"  >
+        <form [formGroup]="form" style="margin:0px; padding: 0px; width: 100%;"> 
+            <ion-row class="headerRowLogin"> 
+                <ion-col size="8" offset="2">
+                    <ion-label >{{status}}</ion-label>
+                </ion-col>
+            </ion-row>
+       
+       
+        <ion-row style="background-color:rgba(245, 245, 245, 0.2)">
+            <ion-col  size="8"  offset="2"  >
+                <ion-item>
+                    <ion-label position="floating">Username</ion-label>
+                    <ion-input formControlName='username' autocomplete="false"></ion-input>
+                
+                </ion-item>
+            </ion-col>
+        </ion-row>
+        <ion-row style="background-color:rgba(245, 245, 245, 0.2)">
+            <ion-col  size="8"  offset="2"  >
+                <ion-item >
+                    <ion-label position="floating">Password</ion-label>
+                    <ion-input formControlName='password' type="password" autocomplete="false" (keydown.enter)="login()"></ion-input>
+                </ion-item>
+            </ion-col> 
+        </ion-row>
+        <ion-row style="background-color:rgba(245, 245, 245, 0.2);">
+            <ion-col  size="8"  offset="2" >
+                  <ion-button size="small" (click)="login()" (keydown.enter)="login()"  style="height: 40px;" [disabled]="!isCurrent && !isMobile" expand="block">{{buttonLabel}}</ion-button>
+            </ion-col> 
+        </ion-row>
+      
+        
+        </form>
+    </ion-grid>
+      
+ 
+
+  </ion-content>

@@ -1,0 +1,156 @@
+<ion-list *ngIf="currentView === 'adminhome'">
+    <ion-item  (click)="menuItem('projects')">Manage Projects</ion-item>
+    <ion-item  (click)="menuItem('muds')">Manage Mud</ion-item>
+    <ion-item  (click)="menuItem('users')">Manage Users</ion-item>
+    <ion-item  (click)="menuItem('clients')">Manage Clients</ion-item>
+    <ion-item  (click)="menuItem('dfrs')">Manage DFR's</ion-item>
+    <ion-item  (click)="menuItem('dailyauditdwm')">Manage Daily DWM Audits</ion-item>
+    <ion-item  (click)="menuItem('fieldticketoptions')">Set Field Ticket Opt.</ion-item>
+</ion-list>
+
+<ion-list *ngIf="currentView === 'manageusers'">
+    <ion-item  (click)="menuItem('adduser')">Add User</ion-item>
+    <ion-item  (click)="menuItem('muds')">Manage Mud</ion-item>
+    <ion-item  (click)="menuItem('projects')">Manage Projects</ion-item>
+    <ion-item  (click)="menuItem('users')">Manage Users</ion-item>
+    <ion-item  (click)="menuItem('clients')">Manage Clients</ion-item>
+    <ion-item  (click)="menuItem('dfrs')">Manage DFR's</ion-item>
+    <ion-item  (click)="menuItem('dailyauditdwm')">Manage Daily DWM Audits</ion-item>
+    <ion-item  (click)="menuItem('fieldticketoptions')">Set Field Ticket Opt.</ion-item>
+    <ion-item  (click)="menuItem('admin')">Admin Home</ion-item>
+    <ion-item  (click)="menuItem('tech')">Tech Home</ion-item>
+</ion-list>
+
+<ion-list *ngIf="currentView === 'manageprojects'">
+    <ion-item  (click)="menuItem('addempdfr')">Add DFR - EPM Project</ion-item>
+    <ion-item  (click)="menuItem('addrrrdfr')">Add DFR - RRR Project</ion-item>
+    <ion-item  (click)="menuItem('projects')">Manage Projects</ion-item>
+    <ion-item  (click)="menuItem('muds')">Manage Mud</ion-item>
+    <ion-item  (click)="menuItem('users')">Manage Users</ion-item>
+    <ion-item  (click)="menuItem('clients')">Manage Clients</ion-item>
+    <ion-item  (click)="menuItem('dfrs')">Manage DFR's</ion-item>
+    <ion-item  (click)="menuItem('dailyauditdwm')">Manage Daily DWM Audits</ion-item>
+    <ion-item  (click)="menuItem('fieldticketoptions')">Set Field Ticket Opt.</ion-item>
+    <ion-item  (click)="menuItem('admin')">Admin Home</ion-item>
+    <ion-item  (click)="menuItem('tech')">Tech Home</ion-item>
+</ion-list>
+
+<ion-list *ngIf="currentView === 'managedailydwmaudits'">
+    <ion-item  (click)="menuItem('projects')">Manage Projects</ion-item>
+    <ion-item  (click)="menuItem('users')">Manage Users</ion-item>
+    <ion-item  (click)="menuItem('muds')">Manage Mud</ion-item>
+    <ion-item  (click)="menuItem('clients')">Manage Clients</ion-item>
+    <ion-item  (click)="menuItem('dfrs')">Manage DFR's</ion-item>
+    <ion-item  (click)="menuItem('fieldticketoptions')">Set Field Ticket Opt.</ion-item>
+    <ion-item  (click)="menuItem('admin')">Admin Home</ion-item>
+    <ion-item  (click)="menuItem('tech')">Tech Home</ion-item>
+</ion-list>
+
+<ion-list *ngIf="currentView === 'clients'">
+    <ion-item  (click)="menuItem('addclient')">Add Client</ion-item>
+    <ion-item  (click)="menuItem('projects')">Manage Projects</ion-item>
+    <ion-item  (click)="menuItem('muds')">Manage Mud</ion-item>
+    <ion-item  (click)="menuItem('users')">Manage Users</ion-item>
+    <ion-item  (click)="menuItem('clients')">Manage Clients</ion-item>
+    <ion-item  (click)="menuItem('dfrs')">Manage DFR's</ion-item>
+    <ion-item  (click)="menuItem('dailyauditdwm')">Manage Daily DWM Audits</ion-item>
+    <ion-item  (click)="menuItem('fieldticketoptions')">Set Field Ticket Opt.</ion-item>
+    <ion-item  (click)="menuItem('admin')">Admin Home</ion-item>
+    <ion-item  (click)="menuItem('tech')">Tech Home</ion-item>
+</ion-list>
+
+<ion-list *ngIf="currentView === 'editproject'">
+    <ion-item  (click)="menuItem('addlocation')">Add Location</ion-item>
+    <ion-item  (click)="menuItem('projects')">Manage Projects</ion-item>
+    <ion-item  (click)="menuItem('muds')">Manage Mud</ion-item>
+    <ion-item  (click)="menuItem('users')">Manage Users</ion-item>
+    <ion-item  (click)="menuItem('clients')">Manage Clients</ion-item>
+    <ion-item  (click)="menuItem('dfrs')">Manage DFR's</ion-item>
+    <ion-item  (click)="menuItem('dailyauditdwm')">Manage Daily DWM Audits</ion-item>
+    <ion-item  (click)="menuItem('fieldticketoptions')">Set Field Ticket Opt.</ion-item>
+    <ion-item  (click)="menuItem('admin')">Admin Home</ion-item>
+    <ion-item  (click)="menuItem('tech')">Tech Home</ion-item>
+</ion-list>
+
+<ion-list *ngIf="currentView === 'adduser'">
+    <ion-item  (click)="menuItem('projects')">Manage Projects</ion-item>
+    <ion-item  (click)="menuItem('muds')">Manage Mud</ion-item>
+    <ion-item  (click)="menuItem('users')">Manage Users</ion-item>
+    <ion-item  (click)="menuItem('clients')">Manage Clients</ion-item>
+    <ion-item  (click)="menuItem('dfrs')">Manage DFR's</ion-item>
+    <ion-item  (click)="menuItem('fieldticketoptions')">Set Field Ticket Opt.</ion-item>
+    <ion-item  (click)="menuItem('admin')">Admin Home</ion-item>
+    <ion-item  (click)="menuItem('tech')">Tech Home</ion-item>
+</ion-list>
+
+<ion-list *ngIf="currentView === 'addclient'">
+    <ion-item  (click)="menuItem('projects')">Manage Projects</ion-item>
+    <ion-item  (click)="menuItem('muds')">Manage Mud</ion-item>
+    <ion-item  (click)="menuItem('users')">Manage Users</ion-item>
+    <ion-item  (click)="menuItem('clients')">Manage Clients</ion-item>
+    <ion-item  (click)="menuItem('dfrs')">Manage DFR's</ion-item>
+    <ion-item  (click)="menuItem('fieldticketoptions')">Set Field Ticket Opt.</ion-item>
+    <ion-item  (click)="menuItem('admin')">Admin Home</ion-item>
+    <ion-item  (click)="menuItem('tech')">Tech Home</ion-item>
+</ion-list>
+
+<ion-list *ngIf="currentView === 'addproject'">
+    <ion-item  (click)="menuItem('projects')">Manage Projects</ion-item>
+    <ion-item  (click)="menuItem('muds')">Manage Mud</ion-item>
+    <ion-item  (click)="menuItem('clients')">Manage Clients</ion-item>
+    <ion-item  (click)="menuItem('users')">Manage Users</ion-item>
+    <ion-item  (click)="menuItem('dfrs')">Manage DFR's</ion-item>
+    <ion-item  (click)="menuItem('dailyauditdwm')">Manage Daily DWM Audits</ion-item>
+    <ion-item  (click)="menuItem('fieldticketoptions')">Set Field Ticket Opt.</ion-item>
+    <ion-item  (click)="menuItem('admin')">Admin Home</ion-item>
+    <ion-item  (click)="menuItem('tech')">Tech Home</ion-item>
+</ion-list>
+
+<ion-list *ngIf="currentView === 'dfrs'">
+    <ion-item  (click)="menuItem('createFieldTicket')">Create Field Ticket</ion-item>
+    <ion-item  (click)="menuItem('createExcelDFR')">Create DFR Report - EPM</ion-item>
+    <ion-item  (click)="menuItem('newempdfrreport')">Create New DFR - EPM</ion-item>
+    <ion-item  (click)="menuItem('newrrrdfrreport')">Create New DFR - RRR</ion-item>
+    <ion-item  (click)="menuItem('projects')">Manage Projects</ion-item>
+    <ion-item  (click)="menuItem('muds')">Manage Mud</ion-item>
+    <ion-item  (click)="menuItem('clients')">Manage Clients</ion-item>
+    <ion-item  (click)="menuItem('users')">Manage Users</ion-item>
+    <ion-item  (click)="menuItem('dailyauditdwm')">Manage Daily DWM Audits</ion-item>
+    <ion-item  (click)="menuItem('fieldticketoptions')">Set Field Ticket Opt.</ion-item>
+    <ion-item  (click)="menuItem('admin')">Admin Home</ion-item>
+    <ion-item  (click)="menuItem('tech')">Tech Home</ion-item>
+</ion-list>
+
+<ion-list *ngIf="currentView === 'fieldticketoptions'">
+        <ion-item  (click)="menuItem('addfieldticketoptions')">Add Field Ticket Opt</ion-item>
+        <ion-item  (click)="menuItem('projects')">Manage Projects</ion-item>
+        <ion-item  (click)="menuItem('muds')">Manage Mud</ion-item>
+        <ion-item  (click)="menuItem('clients')">Manage Clients</ion-item>
+        <ion-item  (click)="menuItem('users')">Manage Users</ion-item>
+        <ion-item  (click)="menuItem('dfrs')">Manage DFR's</ion-item>
+        <ion-item  (click)="menuItem('dailyauditdwm')">Manage Daily DWM Audits</ion-item>
+        <ion-item  (click)="menuItem('admin')">Admin Home</ion-item>
+        <ion-item  (click)="menuItem('tech')">Tech Home</ion-item>
+</ion-list>
+
+<ion-list *ngIf="currentView === 'muds'">
+    <ion-item  (click)="menuItem('addfieldticketoptions')">Add Field Ticket Opt</ion-item>
+    <ion-item  (click)="menuItem('projects')">Manage Projects</ion-item>
+    <ion-item  (click)="menuItem('clients')">Manage Clients</ion-item>
+    <ion-item  (click)="menuItem('users')">Manage Users</ion-item>
+    <ion-item  (click)="menuItem('dfrs')">Manage DFR's</ion-item>
+    <ion-item  (click)="menuItem('dailyauditdwm')">Manage Daily DWM Audits</ion-item>
+    <ion-item  (click)="menuItem('admin')">Admin Home</ion-item>
+    <ion-item  (click)="menuItem('tech')">Tech Home</ion-item>
+</ion-list>
+
+<ion-list *ngIf="currentView === 'muditem'">
+    <ion-item  (click)="menuItem('muds')">Manage Mud</ion-item>
+    <ion-item  (click)="menuItem('projects')">Manage Projects</ion-item>
+    <ion-item  (click)="menuItem('clients')">Manage Clients</ion-item>
+    <ion-item  (click)="menuItem('users')">Manage Users</ion-item>
+    <ion-item  (click)="menuItem('dfrs')">Manage DFR's</ion-item>
+    <ion-item  (click)="menuItem('dailyauditdwm')">Manage Daily DWM Audits</ion-item>
+    <ion-item  (click)="menuItem('admin')">Admin Home</ion-item>
+    <ion-item  (click)="menuItem('tech')">Tech Home</ion-item>
+</ion-list>

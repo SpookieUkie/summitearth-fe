@@ -1,0 +1,58 @@
+<ion-header >
+
+    <ion-toolbar *ngIf="!isProduction" color="danger" >
+        <ion-title >
+          DEMO - Summit App - Admin
+        </ion-title>
+        <ion-buttons slot="end">
+            <app-adminoptions [currentView]="'adminhome'"></app-adminoptions>
+            <app-navmenu style="height:48px; width:48px;" ></app-navmenu>
+        </ion-buttons>
+     </ion-toolbar>
+
+    <ion-toolbar color="primary" *ngIf="isProduction">
+        <ion-title>
+                Admin
+        </ion-title>
+        <ion-buttons slot="end">
+            <app-adminoptions [currentView]="'adminhome'"></app-adminoptions>
+            <app-navmenu style="height:48px; width:48px;" ></app-navmenu>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+     
+   <ion-grid style="width:100% ">
+        <app-admintheadermenu></app-admintheadermenu>
+        <ion-row>
+            <ion-col size-xs="12" size-sm="12" size-md="6"  size="6"  align-self-center>
+                <app-reportcharts align-self-center [reportType]="RT_SubmittedDfrs" chartType='doughnut' reportTitle="DFR's Submitted"></app-reportcharts>
+            </ion-col>
+            <ion-col size-xs="12" size-sm="12" size-md="6" size="6"  align-self-center>
+                <app-reportcharts align-self-center [reportType]="RT_MudUsed" chartType='doughnut' reportTitle="Top 10 Mud Products Volumes"></app-reportcharts>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col size-xs="12" size-sm="12" size-md="6" size="6"  align-self-center>
+                <app-reportcharts [reportType]="RT_DisposalSummary" reportTitle="Disposal Summary - Past 30 Days"></app-reportcharts>
+            </ion-col>
+            <ion-col size-xs="12" size-sm="12" size-md="6" size="6" align-self-center>
+                <app-reportcharts [reportType]="RT_LoginByOS" reportTitle="Login by OS - Past 30 Days"></app-reportcharts>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col size-xs="12" size-sm="12" size-md="6" size="6" align-self-center>
+                <app-reportcharts  [reportType]="RT_LoginByDevice" reportTitle="Login by Device - Past 30 Days"></app-reportcharts>
+            </ion-col>
+            <ion-col size-xs="12" size-sm="12" size-md="6" size="6" align-self-center>
+                <app-reportcharts  [reportType]="RT_LoginByAgent" reportTitle="Login by Agent - Past 30 Days"></app-reportcharts>
+            </ion-col>
+        </ion-row>
+
+    </ion-grid> 
+    
+   
+
+
+</ion-content>

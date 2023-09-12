@@ -1,0 +1,10 @@
+<ion-row *ngIf="!isMobile" >
+  <ion-col size="12" offset-lg="3" offset-md="3" offset-xl="4"  offset-md="3" offset-sm="2" >
+    <button pButton type="button" size="2" size-sm="2" label="DFR Summary" (click)="moveTo('dfrSummary')"></button>
+    <button pButton type="button" size="2" size-sm="2" label="Daily Rigs" (click)="moveTo('viewRigs')"></button>
+    <button pButton type="button" size="2" size-sm="2" label="Daily Mud" (click)="moveTo('dailyMud')"></button>
+    <button pButton type="button" size="2" size-sm="2" label="Mud Summary" (click)="moveTo('mudSummary')"></button>
+   <!-- <button pButton type="button" size="2" size-sm="2" label="Create DFR Excel" (click)="moveTo('dfrs')"></button> -->
+   <!-- <button pButton type="button" size="2" size-sm="2" label="DFR List" (click)="moveTo('dfrs')"></button>-->
+  </ion-col>
+</ion-row>
